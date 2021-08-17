@@ -9,11 +9,11 @@ This is a platform game with puzzles.
 ## TO DOs
 
 * [x] Create player as a rectangle
-* [] Add gravity
-* [] Add a floor
-* [] Lateral movement
-* [] Add keyboard input as the play keys
-* [] Add jump capability
-* [] Add objects as rectangles
-* [] Solid objects => Collisions
+* [ ] Add gravity
+* [ ] Add a floor
+* [ ] Lateral movement
+* [ ] Add keyboard input as the play keys
+* [ ] Add jump capability
+* [ ] Add objects as rectangles
+* [ ] Solid objects => Collisions
 * TBD
