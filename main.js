@@ -14,6 +14,7 @@ let floor;
 let rightKeyPressed = false;
 let leftKeyPressed = false;
 let jumpKeyPressed = false;
+let playerTouchedTheFloor = false;
 
 class Coord {
     constructor(x, y) {
@@ -34,7 +35,7 @@ class Player {
 
     applyGravity() {
         this.ySpeed += LOOP_TIME * DEFAULT_GRAVITY;
-        if (this.position.y >= SCREEN_HEIGHT -FLOOR_HEIGHT -this.height) {
+        if (this.ySpeed > 0 && this.position.y >= SCREEN_HEIGHT -FLOOR_HEIGHT -this.height) {
             this.ySpeed = 0;
         }
     }
@@ -52,6 +53,7 @@ class Player {
         this.position.y += this.ySpeed;
         if (this.position.y >= SCREEN_HEIGHT -FLOOR_HEIGHT -this.height) {
             this.position.y = SCREEN_HEIGHT -FLOOR_HEIGHT -this.height;
+            playerTouchedTheFloor = true;
         }
         if (this.position.y <= 0) {
             this.position.y = 0;
@@ -68,6 +70,7 @@ class Player {
         this.xSpeed = 0;
         if (rightKeyPressed) this.xSpeed += 2;
         if (leftKeyPressed) this.xSpeed -= 2;
+        if (playerTouchedTheFloor && jumpKeyPressed) this.ySpeed -= 4;
     }
 }
 
@@ -125,6 +128,10 @@ function initializeKeyboardListeners() {
             rightKeyPressed = true;
         }
 
+        if (event.key == " ") {
+            jumpKeyPressed = true;
+        }
+
         player.updateSpeed();
     });
 
@@ -135,6 +142,11 @@ function initializeKeyboardListeners() {
 
         if (event.key == "ArrowRight") {
             rightKeyPressed = false;
+        }
+
+        if (event.key == " ") {
+            jumpKeyPressed = false;
+            playerTouchedTheFloor = false;
         }
 
         player.updateSpeed();

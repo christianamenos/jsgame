@@ -17,8 +17,24 @@ This is a platform game with puzzles.
 * [x] Lateral movement
 * [x] Add keyboard input as the play keys
 * [x] Add limits to the screen, at the top and each horizontal side
-* [ ] Add jump capability
+* [x] Add jump capability
 * [ ] Add objects as rectangles
 * [ ] Add objects as circle
 * [ ] Solid objects => Collisions
-* TBD
+* [ ] Platforms
+* [ ] Objects to collect
+* [ ] Holes in the floor
+* [ ] Electric components
+* [ ] Start game
+* [ ] End game / Game over
+* [ ] Sever
+* [ ] Server logic and dialog
+* [ ] Doors
+* [ ] Multiple scenes
+* [ ] Change scene
+* [ ] Sounds / Music
+* [ ] Astronaut humanized
+
+### Nice to have
+
+* [ ] Map (?)
