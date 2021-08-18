@@ -1,6 +1,8 @@
 const canvas = document.getElementById('viewport');
 const context = canvas.getContext('2d');
 
+const FPS_RATE = 60;
+const LOOP_TIME = 1/FPS_RATE;
 const SCREEN_WIDTH = canvas.width;
 const SCREEN_HEIGHT = canvas.height;
 const DEFAULT_GRAVITY = 9.81;
@@ -23,7 +25,7 @@ class Player {
     }
 
     applyGravity() {
-        this.ySpeed += 1/DEFAULT_GRAVITY;
+        this.ySpeed += LOOP_TIME * DEFAULT_GRAVITY;
     }
 
     move() {
@@ -44,7 +46,7 @@ function cleanViewport() {
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
-const playerCoord = new Coord(300, 150);
+const playerCoord = new Coord(300, 0);
 const player = new Player(playerCoord);
 player.draw(context);
 setInterval(function() {
@@ -52,7 +54,7 @@ setInterval(function() {
     player.move();
     cleanViewport();
     player.draw(context);
-}, 10);
+}, LOOP_TIME);
 
 
 

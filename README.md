@@ -11,10 +11,14 @@ This is a platform game with puzzles.
 * [x] Create player as a rectangle
 * [x] Move player
 * [x] Add gravity
+* [ ] Fix gravity function
+* [ ] Fix set interval to get 60 FPS
 * [ ] Add a floor
 * [ ] Lateral movement
 * [ ] Add keyboard input as the play keys
+* [ ] Add limits to the screen, at the top and each horizontal side
 * [ ] Add jump capability
 * [ ] Add objects as rectangles
+* [ ] Add objects as circle
 * [ ] Solid objects => Collisions
 * TBD
