@@ -15,7 +15,7 @@ This is a platform game with puzzles.
 * [x] Fix set interval to get 60 FPS
 * [x] Add a floor
 * [x] Lateral movement
-* [ ] Add keyboard input as the play keys
+* [x] Add keyboard input as the play keys
 * [ ] Add limits to the screen, at the top and each horizontal side
 * [ ] Add jump capability
 * [ ] Add objects as rectangles

@@ -7,9 +7,13 @@ const SCREEN_WIDTH = canvas.width;
 const SCREEN_HEIGHT = canvas.height;
 const DEFAULT_GRAVITY = 9.81;
 const FLOOR_HEIGHT = 30;
+const DEFAULT_PLAYER_HEIGHT = 50;
 
 let player;
 let floor;
+let rightKeyPressed = false;
+let leftKeyPressed = false;
+let jumpKeyPressed = false;
 
 class Coord {
     constructor(x, y) {
@@ -22,9 +26,9 @@ class Player {
     constructor(coordinates) {
         this.position = coordinates;
         this.width = 25;
-        this.height = 50;
+        this.height = DEFAULT_PLAYER_HEIGHT;
         this.color = '#ff0000';
-        this.xSpeed = -2;
+        this.xSpeed = 0;
         this.ySpeed = 0;
     }
 
@@ -49,6 +53,12 @@ class Player {
         if (this.position.y >= SCREEN_HEIGHT -FLOOR_HEIGHT -this.height) {
             this.position.y = SCREEN_HEIGHT -FLOOR_HEIGHT -this.height;
         }
+    }
+
+    updateSpeed() {
+        this.xSpeed = 0;
+        if (rightKeyPressed) this.xSpeed += 2;
+        if (leftKeyPressed) this.xSpeed -= 2;
     }
 }
 
@@ -89,15 +99,38 @@ function calculateScene() {
 }
 
 function initializeScene() {
-    const playerCoord = new Coord(300, 0);
+    const playerCoord = new Coord(300, SCREEN_HEIGHT - FLOOR_HEIGHT - DEFAULT_PLAYER_HEIGHT);
     player = new Player(playerCoord);
+    initializeKeyboardListeners();
     const floorCoord = new Coord(0, SCREEN_HEIGHT - FLOOR_HEIGHT);
     floor = new Rectangle(floorCoord, SCREEN_WIDTH, FLOOR_HEIGHT);
 }
 
+function initializeKeyboardListeners() {
+    document.addEventListener("keydown", function(event) {
+        if (event.key == "ArrowLeft") {
+            leftKeyPressed = true;
+        }
+
+        if (event.key == "ArrowRight") {
+            rightKeyPressed = true;
+        }
+
+        player.updateSpeed();
+    });
+
+    document.addEventListener("keyup", function(event) {
+        if (event.key == "ArrowLeft") {
+            leftKeyPressed = false;
+        }
+
+        if (event.key == "ArrowRight") {
+            rightKeyPressed = false;
+        }
+
+        player.updateSpeed();
+    });
+}
+
 initializeScene();
 setInterval(gameLoop, LOOP_TIME);
-
-
-
-
