@@ -53,6 +53,15 @@ class Player {
         if (this.position.y >= SCREEN_HEIGHT -FLOOR_HEIGHT -this.height) {
             this.position.y = SCREEN_HEIGHT -FLOOR_HEIGHT -this.height;
         }
+        if (this.position.y <= 0) {
+            this.position.y = 0;
+        }
+        if (this.position.x >= SCREEN_WIDTH -this.width) {
+            this.position.x = SCREEN_WIDTH -this.width;
+        }
+        if (this.position.x <= 0) {
+            this.position.x = 0;
+        }
     }
 
     updateSpeed() {
