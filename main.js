@@ -6,6 +6,10 @@ const LOOP_TIME = 1/FPS_RATE;
 const SCREEN_WIDTH = canvas.width;
 const SCREEN_HEIGHT = canvas.height;
 const DEFAULT_GRAVITY = 9.81;
+const FLOOR_HEIGHT = 30;
+
+let player;
+let floor;
 
 class Coord {
     constructor(x, y) {
@@ -20,17 +24,15 @@ class Player {
         this.width = 25;
         this.height = 50;
         this.color = '#ff0000';
-        this.xSpeed = 0;
+        this.xSpeed = -2;
         this.ySpeed = 0;
     }
 
     applyGravity() {
         this.ySpeed += LOOP_TIME * DEFAULT_GRAVITY;
-    }
-
-    move() {
-        this.position.x += this.xSpeed;
-        this.position.y += this.ySpeed;
+        if (this.position.y >= SCREEN_HEIGHT -FLOOR_HEIGHT -this.height) {
+            this.ySpeed = 0;
+        }
     }
 
     draw(context) {
@@ -39,6 +41,14 @@ class Player {
         context.fillStyle = this.color; // RGB R G B - 0 - f 16 * 16  = 256
         context.fill();
         context.closePath();
+    }
+
+    move() {
+        this.position.x += this.xSpeed;
+        this.position.y += this.ySpeed;
+        if (this.position.y >= SCREEN_HEIGHT -FLOOR_HEIGHT -this.height) {
+            this.position.y = SCREEN_HEIGHT -FLOOR_HEIGHT -this.height;
+        }
     }
 }
 
@@ -58,23 +68,35 @@ class Rectangle {
     }
 }
 
+function gameLoop() {
+    drawScene();
+    calculateScene();
+}
+
+function drawScene() {
+    cleanViewport();
+    floor.draw(context, '#663333');
+    player.draw(context);
+}
+
 function cleanViewport() {
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
-const playerCoord = new Coord(300, 0);
-const player = new Player(playerCoord);
-player.draw(context);
-const floorCoord = new Coord(0, SCREEN_HEIGHT - 30);
-const floor = new Rectangle(floorCoord, SCREEN_WIDTH, 30);
-
-setInterval(function() {
+function calculateScene() {
     player.applyGravity();
     player.move();
-    cleanViewport();
-    player.draw(context);
-    floor.draw(context, '#663333');
-}, LOOP_TIME);
+}
+
+function initializeScene() {
+    const playerCoord = new Coord(300, 0);
+    player = new Player(playerCoord);
+    const floorCoord = new Coord(0, SCREEN_HEIGHT - FLOOR_HEIGHT);
+    floor = new Rectangle(floorCoord, SCREEN_WIDTH, FLOOR_HEIGHT);
+}
+
+initializeScene();
+setInterval(gameLoop, LOOP_TIME);
 
 
 
