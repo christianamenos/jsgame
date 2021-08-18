@@ -42,6 +42,22 @@ class Player {
     }
 }
 
+class Rectangle {
+    constructor(coordinates, width, height) {
+        this.position = coordinates;
+        this.width = width;
+        this.height = height;
+    }
+
+    draw(context, color) {
+        context.beginPath();
+        context.rect(this.position.x, this.position.y, this.width, this.height);
+        context.fillStyle = color;
+        context.fill();
+        context.closePath();
+    }
+}
+
 function cleanViewport() {
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
@@ -49,11 +65,15 @@ function cleanViewport() {
 const playerCoord = new Coord(300, 0);
 const player = new Player(playerCoord);
 player.draw(context);
+const floorCoord = new Coord(0, SCREEN_HEIGHT - 30);
+const floor = new Rectangle(floorCoord, SCREEN_WIDTH, 30);
+
 setInterval(function() {
     player.applyGravity();
     player.move();
     cleanViewport();
     player.draw(context);
+    floor.draw(context, '#663333');
 }, LOOP_TIME);
 
 
