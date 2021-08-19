@@ -15,6 +15,7 @@ let rightKeyPressed = false;
 let leftKeyPressed = false;
 let jumpKeyPressed = false;
 let playerTouchedTheFloor = false;
+let circle;
 
 class Coord {
     constructor(x, y) {
@@ -90,6 +91,21 @@ class Rectangle {
     }
 }
 
+class Circle {
+    constructor(coordinate, radius) {
+        this.position = coordinate;
+        this.radius = radius;
+    }
+
+    draw(context, color) {
+        context.beginPath();
+        context.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2, false);
+        context.fillStyle = color;
+        context.fill();
+        context.closePath();
+    }
+}
+
 function gameLoop() {
     drawScene();
     calculateScene();
@@ -99,6 +115,7 @@ function drawScene() {
     cleanViewport();
     floor.draw(context, '#663333');
     player.draw(context);
+    circle.draw(context, '#000099');
 }
 
 function cleanViewport() {
@@ -111,6 +128,8 @@ function calculateScene() {
 }
 
 function initializeScene() {
+    const circleCoord = new Coord(80, 80);
+    circle = new Circle(circleCoord, 25);
     const playerCoord = new Coord(300, SCREEN_HEIGHT - FLOOR_HEIGHT - DEFAULT_PLAYER_HEIGHT);
     player = new Player(playerCoord);
     initializeKeyboardListeners();

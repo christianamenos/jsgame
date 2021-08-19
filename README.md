@@ -18,8 +18,8 @@ This is a platform game with puzzles.
 * [x] Add keyboard input as the play keys
 * [x] Add limits to the screen, at the top and each horizontal side
 * [x] Add jump capability
-* [ ] Add objects as rectangles
-* [ ] Add objects as circle
+* [x] Add objects as rectangles
+* [x] Add objects as circle
 * [ ] Solid objects => Collisions
 * [ ] Platforms
 * [ ] Objects to collect
