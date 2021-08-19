@@ -20,7 +20,7 @@ This is a platform game with puzzles.
 * [x] Add jump capability
 * [x] Add objects as rectangles
 * [x] Add objects as circle
-* [ ] Solid objects => Collisions
+* [x] Solid objects => Collisions
 * [ ] Platforms
 * [ ] Objects to collect
 * [ ] Holes in the floor

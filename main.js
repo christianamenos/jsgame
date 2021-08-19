@@ -106,6 +106,32 @@ class Circle {
     }
 }
 
+function areRectanglesColliding(boxAPosition, boxAWidth, boxAHeight, boxBPositon, boxBWidth, boxBHeight) {
+    return boxAPosition.x < boxBPositon.x + boxBWidth
+    && boxAPosition.x + boxAWidth > boxBPositon.x
+    && boxAPosition.y < boxBPositon.y + boxBHeight
+    && boxAPosition.y + boxAHeight > boxBPositon.y;
+}
+
+function areCirclesColliding(circleAPosition, radiusA, circleBPosition, radiusB) {
+    const xDistance = circleBPosition.x - circleAPosition.x;
+    const yDistance = circleBPosition.y - circleAPosition.y;
+    const distance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+    return distance < radiusA + radiusB;
+}
+
+function isCircleCollidingWithRectangle(circleCenter, circleRadius, boxPosition, boxWidth, boxHeight) {
+    const xDistance = Math.abs(circleCenter.x - (boxPosition.x + boxWidth/2));
+    const yDistance = Math.abs(circleCenter.y - (boxPosition.y + boxHeight/2));
+    if (xDistance > boxWidth/2 + circleRadius) return false;
+    if (yDistance > boxHeight/2 + circleRadius) return false;
+    if (xDistance <= (boxWidth/2)) return true;
+    if (yDistance <= (boxHeight/2)) return true;
+    const cornerDistanceX = xDistance - boxWidth/2;
+    const cornerDistanceY = yDistance - boxHeight/2;
+    return Math.pow(cornerDistanceX, 2) + Math.pow(cornerDistanceY, 2) <= Math.pow(circleRadius, 2);
+}
+
 function gameLoop() {
     drawScene();
     calculateScene();
@@ -115,7 +141,6 @@ function drawScene() {
     cleanViewport();
     floor.draw(context, '#663333');
     player.draw(context);
-    circle.draw(context, '#000099');
 }
 
 function cleanViewport() {
@@ -128,8 +153,6 @@ function calculateScene() {
 }
 
 function initializeScene() {
-    const circleCoord = new Coord(80, 80);
-    circle = new Circle(circleCoord, 25);
     const playerCoord = new Coord(300, SCREEN_HEIGHT - FLOOR_HEIGHT - DEFAULT_PLAYER_HEIGHT);
     player = new Player(playerCoord);
     initializeKeyboardListeners();
