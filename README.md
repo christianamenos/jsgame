@@ -21,7 +21,9 @@ This is a platform game with puzzles.
 * [x] Add objects as rectangles
 * [x] Add objects as circle
 * [x] Solid objects => Collisions
-* [ ] Platforms
+* [x] Platforms
+* [x] Convert floor to platform and draw the floor
+* [ ] Make floor solid and player stand
 * [ ] Objects to collect
 * [ ] Holes in the floor
 * [ ] Electric components

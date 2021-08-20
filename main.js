@@ -32,6 +32,7 @@ class Player {
         this.color = '#ff0000';
         this.xSpeed = 0;
         this.ySpeed = 0;
+        this.boundingContainer = new BoundingBox(this.position, this.width, this.height);
     }
 
     applyGravity() {
@@ -106,30 +107,83 @@ class Circle {
     }
 }
 
-function areRectanglesColliding(boxAPosition, boxAWidth, boxAHeight, boxBPositon, boxBWidth, boxBHeight) {
-    return boxAPosition.x < boxBPositon.x + boxBWidth
-    && boxAPosition.x + boxAWidth > boxBPositon.x
-    && boxAPosition.y < boxBPositon.y + boxBHeight
-    && boxAPosition.y + boxAHeight > boxBPositon.y;
+class CollisionManager {
+    constructor() {}
+
+    static areRectanglesColliding(boxAPosition, boxAWidth, boxAHeight, boxBPositon, boxBWidth, boxBHeight) {
+        return boxAPosition.x < boxBPositon.x + boxBWidth
+        && boxAPosition.x + boxAWidth > boxBPositon.x
+        && boxAPosition.y < boxBPositon.y + boxBHeight
+        && boxAPosition.y + boxAHeight > boxBPositon.y;
+    }
+    
+    static areCirclesColliding(circleAPosition, radiusA, circleBPosition, radiusB) {
+        const xDistance = circleBPosition.x - circleAPosition.x;
+        const yDistance = circleBPosition.y - circleAPosition.y;
+        const distance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+        return distance < radiusA + radiusB;
+    }
+    
+    static isCircleCollidingWithRectangle(circleCenter, circleRadius, boxPosition, boxWidth, boxHeight) {
+        const xDistance = Math.abs(circleCenter.x - (boxPosition.x + boxWidth/2));
+        const yDistance = Math.abs(circleCenter.y - (boxPosition.y + boxHeight/2));
+        if (xDistance > boxWidth/2 + circleRadius) return false;
+        if (yDistance > boxHeight/2 + circleRadius) return false;
+        if (xDistance <= (boxWidth/2)) return true;
+        if (yDistance <= (boxHeight/2)) return true;
+        const cornerDistanceX = xDistance - boxWidth/2;
+        const cornerDistanceY = yDistance - boxHeight/2;
+        return Math.pow(cornerDistanceX, 2) + Math.pow(cornerDistanceY, 2) <= Math.pow(circleRadius, 2);
+    }
 }
 
-function areCirclesColliding(circleAPosition, radiusA, circleBPosition, radiusB) {
-    const xDistance = circleBPosition.x - circleAPosition.x;
-    const yDistance = circleBPosition.y - circleAPosition.y;
-    const distance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
-    return distance < radiusA + radiusB;
+class BoundingContainer {
+    getBoudingType() {
+        return this.constructor.name;
+    }
 }
 
-function isCircleCollidingWithRectangle(circleCenter, circleRadius, boxPosition, boxWidth, boxHeight) {
-    const xDistance = Math.abs(circleCenter.x - (boxPosition.x + boxWidth/2));
-    const yDistance = Math.abs(circleCenter.y - (boxPosition.y + boxHeight/2));
-    if (xDistance > boxWidth/2 + circleRadius) return false;
-    if (yDistance > boxHeight/2 + circleRadius) return false;
-    if (xDistance <= (boxWidth/2)) return true;
-    if (yDistance <= (boxHeight/2)) return true;
-    const cornerDistanceX = xDistance - boxWidth/2;
-    const cornerDistanceY = yDistance - boxHeight/2;
-    return Math.pow(cornerDistanceX, 2) + Math.pow(cornerDistanceY, 2) <= Math.pow(circleRadius, 2);
+class BoundingBox extends BoundingContainer {
+    constructor(topLeftCoordinate, width, height) {
+        super();
+        this.position = topLeftCoordinate;
+        this.width = width;
+        this.height = height;
+    }
+}
+
+class BoundingCircle extends BoundingContainer {
+    constructor(centerCoordinate, radius) {
+        super();
+        this.position = centerCoordinate;
+        this.radius = radius;
+    }
+}
+
+class Platform {
+    constructor(topLeftCoordinate, width, height, isAffectedByGravity, isSolidObject) {
+        this.position = topLeftCoordinate;
+        this.width = width;
+        this.height = height;
+        this.color = '#663333';
+        this.boundingContainer = new BoundingBox(this.position, this.width, this.height);
+        this.isAffectedByGravity = !!isAffectedByGravity;
+        this.isSolidObject = !isSolidObject;
+        this.xSpeed = 0;
+        this.ySpeed = 0;
+        this.sprite = new Rectangle(this.position, this.width, this.height);
+    }
+
+    applyGravity(gravity) {
+        if (this.isAffectedByGravity) {
+            if (!gravity) gravity = DEFAULT_GRAVITY;
+            this.ySpeed += LOOP_TIME * gravity;
+        }
+    }
+
+    draw(context) {
+        this.sprite.draw(context, this.color);
+    }
 }
 
 function gameLoop() {
@@ -139,7 +193,7 @@ function gameLoop() {
 
 function drawScene() {
     cleanViewport();
-    floor.draw(context, '#663333');
+    floor.draw(context);
     player.draw(context);
 }
 
@@ -157,7 +211,7 @@ function initializeScene() {
     player = new Player(playerCoord);
     initializeKeyboardListeners();
     const floorCoord = new Coord(0, SCREEN_HEIGHT - FLOOR_HEIGHT);
-    floor = new Rectangle(floorCoord, SCREEN_WIDTH, FLOOR_HEIGHT);
+    floor = new Platform(floorCoord, SCREEN_WIDTH, FLOOR_HEIGHT);
 }
 
 function initializeKeyboardListeners() {
