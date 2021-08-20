@@ -37,9 +37,11 @@ class Player {
 
     applyGravity() {
         this.ySpeed += LOOP_TIME * DEFAULT_GRAVITY;
+        /*
         if (this.ySpeed > 0 && this.position.y >= SCREEN_HEIGHT -FLOOR_HEIGHT -this.height) {
             this.ySpeed = 0;
         }
+        */
     }
 
     draw(context) {
@@ -51,12 +53,15 @@ class Player {
     }
 
     move() {
+        this.applyGravity();
         this.position.x += this.xSpeed;
         this.position.y += this.ySpeed;
+        /*
         if (this.position.y >= SCREEN_HEIGHT -FLOOR_HEIGHT -this.height) {
             this.position.y = SCREEN_HEIGHT -FLOOR_HEIGHT -this.height;
             playerTouchedTheFloor = true;
         }
+        */
         if (this.position.y <= 0) {
             this.position.y = 0;
         }
@@ -108,32 +113,56 @@ class Circle {
 }
 
 class CollisionManager {
-    constructor() {}
 
-    static areRectanglesColliding(boxAPosition, boxAWidth, boxAHeight, boxBPositon, boxBWidth, boxBHeight) {
-        return boxAPosition.x < boxBPositon.x + boxBWidth
-        && boxAPosition.x + boxAWidth > boxBPositon.x
-        && boxAPosition.y < boxBPositon.y + boxBHeight
-        && boxAPosition.y + boxAHeight > boxBPositon.y;
+    static areBoundingContainersColliding(container1, container2) {
+        const boundingType1 = container1.getBoudingType();
+        const boundingType2 = container2.getBoudingType();
+        const boxContainerType = BoundingBox.prototype.constructor.name;
+        const circleContainerType = BoundingCircle.prototype.constructor.name;
+        if (boundingType1 == boxContainerType
+            && boundingType2 == boxContainerType) {
+            areRectanglesColliding(container1, container2);
+        } else if (boundingType1 == boxContainerType && boundingType2 == circleContainerType
+            || boundingType1 == circleContainerType && boundingType2 == boxContainerType) {
+            if (boundingType1 == boxContainerType) {
+                const containerAux = container2;
+                containerAux = container1;
+                container1 = container2;
+                container2 = container3;
+            }
+            isCircleCollidingWithRectangle(container1, container2);
+        } else if (boundingType1 == circleContainerType
+            && boundingType2 == circleContainerType) {
+            areCirclesColliding(container1, container2);
+        }
+    }
+
+    static areRectanglesColliding(container1, container2) {
+        return container1.position.x < container2.position.x + container2.width
+        && container1.position.x + container1.width > container2.position.x
+        && container1.position.y < container2.position.y + container2.height
+        && container1.position.y + container1.height > container2.position.y;
     }
     
-    static areCirclesColliding(circleAPosition, radiusA, circleBPosition, radiusB) {
-        const xDistance = circleBPosition.x - circleAPosition.x;
-        const yDistance = circleBPosition.y - circleAPosition.y;
+    static areCirclesColliding(container1, container2) {
+        const xDistance = container2.postion.x - container1.positon.x;
+        const yDistance = container2.postion.y - container1.positon.y;
         const distance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
-        return distance < radiusA + radiusB;
+        return distance < container1.radius + container2.radius;
     }
     
-    static isCircleCollidingWithRectangle(circleCenter, circleRadius, boxPosition, boxWidth, boxHeight) {
-        const xDistance = Math.abs(circleCenter.x - (boxPosition.x + boxWidth/2));
-        const yDistance = Math.abs(circleCenter.y - (boxPosition.y + boxHeight/2));
-        if (xDistance > boxWidth/2 + circleRadius) return false;
-        if (yDistance > boxHeight/2 + circleRadius) return false;
-        if (xDistance <= (boxWidth/2)) return true;
-        if (yDistance <= (boxHeight/2)) return true;
-        const cornerDistanceX = xDistance - boxWidth/2;
-        const cornerDistanceY = yDistance - boxHeight/2;
-        return Math.pow(cornerDistanceX, 2) + Math.pow(cornerDistanceY, 2) <= Math.pow(circleRadius, 2);
+    static isCircleCollidingWithRectangle(circleContainer, boxContainer) {
+        const halfBoxWidth = boxContainer.width/2;
+        const halfBoxHeight = boxContainer.height/2;
+        const xDistance = Math.abs(circleContainer.position.x - (boxContainer.position.x + halfBoxWidth));
+        const yDistance = Math.abs(circleContainer.position.y - (boxContainer.position.y + halfBoxHeight));
+        if (xDistance > halfBoxWidth + circleContainer.radius) return false;
+        if (yDistance > halfBoxHeight + circleContainer.radius) return false;
+        if (xDistance <= halfBoxWidth) return true;
+        if (yDistance <= halfBoxHeight) return true;
+        const cornerDistanceX = xDistance - halfBoxWidth;
+        const cornerDistanceY = yDistance - halfBoxHeight;
+        return Math.pow(cornerDistanceX, 2) + Math.pow(cornerDistanceY, 2) <= Math.pow(circleContainer.radius, 2);
     }
 }
 
@@ -181,6 +210,12 @@ class Platform {
         }
     }
 
+    move() {
+        this.applyGravity();
+        this.position.x += this.xSpeed;
+        this.position.y += this.ySpeed;
+    }
+
     draw(context) {
         this.sprite.draw(context, this.color);
     }
@@ -202,8 +237,8 @@ function cleanViewport() {
 }
 
 function calculateScene() {
-    player.applyGravity();
     player.move();
+    floor.move();
 }
 
 function initializeScene() {
