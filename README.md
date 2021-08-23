@@ -23,7 +23,7 @@ This is a platform game with puzzles.
 * [x] Solid objects => Collisions
 * [x] Platforms
 * [x] Convert floor to platform and draw the floor
-* [ ] Make floor solid and player stand
+* [x] Make floor solid and player stand
 * [ ] Objects to collect
 * [ ] Holes in the floor
 * [ ] Electric components
@@ -36,6 +36,11 @@ This is a platform game with puzzles.
 * [ ] Change scene
 * [ ] Sounds / Music
 * [ ] Astronaut humanized
+
+### Bugs
+
+* [x] The player disapears after some time colliding with the ground
+* [x] Jump is not working
 
 ### Nice to have
 
