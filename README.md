@@ -24,6 +24,7 @@ This is a platform game with puzzles.
 * [x] Platforms
 * [x] Convert floor to platform and draw the floor
 * [x] Make floor solid and player stand
+* [ ] Add solid object
 * [ ] Objects to collect
 * [ ] Holes in the floor
 * [ ] Electric components
@@ -41,7 +42,14 @@ This is a platform game with puzzles.
 
 * [x] The player disapears after some time colliding with the ground
 * [x] Jump is not working
+* [ ] Fall over floor is failing
+* [ ] Jumping over solid object
 
 ### Nice to have
 
 * [ ] Map (?)
+
+### Questions
+
+* Can we build a computer like the one in Code Lyoko show?
+

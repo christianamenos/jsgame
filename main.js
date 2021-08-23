@@ -11,6 +11,7 @@ const DEFAULT_PLAYER_HEIGHT = 50;
 
 let player;
 let floor;
+let solidObject1;
 let rightKeyPressed = false;
 let leftKeyPressed = false;
 let isPlayerJumping = false;
@@ -36,10 +37,10 @@ class Player {
     this.boundingContainer = new BoundingBox(this.position, this.width, this.height);
   }
 
-  applyGravity(playerTouchingTheFloorFromTop) {
+  applyGravity(playerTouchingSolidObjectFromTop) {
     if (isPlayerFalling) {
       this.ySpeed += LOOP_TIME * DEFAULT_GRAVITY;
-      if (playerTouchingTheFloorFromTop) {
+      if (playerTouchingSolidObjectFromTop) {
         this.ySpeed = 0;
       }
     }
@@ -48,14 +49,16 @@ class Player {
   draw(context) {
     context.beginPath();
     context.rect(this.position.x, this.position.y, this.width, this.height);
-    context.fillStyle = this.color; // RGB R G B - 0 - f 16 * 16  = 256
+    context.fillStyle = this.color;
     context.fill();
     context.closePath();
   }
 
   move() {
     const playerTouchingTheFloorFromTop = collisionPlayerFloorFromTop();
-    this.applyGravity(playerTouchingTheFloorFromTop);
+    const playerTouchingSolidObjectsFromTop = isPlayerCollidingFromTop();
+    const playerTouchingSolidObjectFromTop = playerTouchingTheFloorFromTop && playerTouchingSolidObjectsFromTop;
+    this.applyGravity(playerTouchingSolidObjectFromTop);
 
     this.position.x += this.xSpeed;
     this.position.y += this.ySpeed;
@@ -74,6 +77,14 @@ class Player {
       this.position.y = floor.position.y - this.height;
       isPlayerFalling = false;
     }
+
+    if (playerTouchingSolidObjectsFromTop) {
+      this.position.y = solidObject1.position.y - this.height;
+    } else if (isPlayerCollidingFromLeft()) {
+      this.position.x = solidObject1.position.x - this.width;
+    } else if (isPlayerCollidingFromRight()) {
+      this.position.x = solidObject1.position.x + solidObject1.width;
+    }
   }
 
   updateSpeed() {
@@ -83,9 +94,42 @@ class Player {
     if (!isPlayerFalling && isPlayerJumping) {
       this.ySpeed -= 4;
       isPlayerFalling = true;
-      // jumpKeyPressed = false;
     }
   }
+}
+
+function isPlayerCollidingFromLeft() {
+  const areColiding = CollisionManager.areBoundingContainersColliding(
+    player.boundingContainer,
+    solidObject1.boundingContainer
+  );
+  if (areColiding && player.xSpeed > 0) {
+    return true;
+  }
+  return false;
+}
+
+function isPlayerCollidingFromTop() {
+  const areColiding = CollisionManager.areBoundingContainersColliding(
+    player.boundingContainer,
+    solidObject1.boundingContainer
+  );
+  if (areColiding && player.ySpeed > 0) {
+    isPlayerJumping = false;
+    return true;
+  }
+  return false;
+}
+
+function isPlayerCollidingFromRight() {
+  const areColiding = CollisionManager.areBoundingContainersColliding(
+    player.boundingContainer,
+    solidObject1.boundingContainer
+  );
+  if (areColiding && player.xSpeed < 0) {
+    return true;
+  }
+  return false;
 }
 
 function collisionPlayerFloorFromTop() {
@@ -250,6 +294,7 @@ function drawScene() {
   cleanViewport();
   floor.draw(context);
   player.draw(context);
+  solidObject1.draw(context);
 }
 
 function cleanViewport() {
@@ -259,6 +304,7 @@ function cleanViewport() {
 function calculateScene() {
   player.move();
   floor.move();
+  solidObject1.move();
 }
 
 function initializeScene() {
@@ -267,6 +313,8 @@ function initializeScene() {
   initializeKeyboardListeners();
   const floorCoord = new Coord(0, SCREEN_HEIGHT - FLOOR_HEIGHT);
   floor = new Platform(floorCoord, SCREEN_WIDTH, FLOOR_HEIGHT);
+  const solidObject1Coord = new Coord(400, SCREEN_HEIGHT - FLOOR_HEIGHT - 40);
+  solidObject1 = new Platform(solidObject1Coord, 40, 40);
 }
 
 function initializeKeyboardListeners() {
