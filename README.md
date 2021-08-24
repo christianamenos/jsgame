@@ -26,6 +26,8 @@ This is a platform game with puzzles.
 * [x] Make floor solid and player stand
 * [ ] Add solid object
 * [ ] Objects to collect
+* [ ] Separate code in different files
+* [ ] Join JavaScript files into a single one minimizing the code as a results of watching the changes, try to avoid manual steps
 * [ ] Holes in the floor
 * [ ] Electric components
 * [ ] Start game
