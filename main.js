@@ -8,6 +8,7 @@ const SCREEN_HEIGHT = canvas.height;
 const DEFAULT_GRAVITY = 9.81;
 const FLOOR_HEIGHT = 30;
 const DEFAULT_PLAYER_HEIGHT = 50;
+const COLLISION_SPACER = 0.001;
 
 let player;
 let floor;
@@ -16,7 +17,6 @@ let rightKeyPressed = false;
 let leftKeyPressed = false;
 let isPlayerJumping = false;
 let jumpKeyPressed = false;
-let isPlayerFalling = true;
 let circle;
 
 class Coord {
@@ -27,8 +27,9 @@ class Coord {
 }
 
 class Player {
-  constructor(coordinates) {
-    this.position = coordinates;
+  constructor(topLeftcoordinate) {
+    this.position = topLeftcoordinate;
+    this.oldPosition = new Coord(topLeftcoordinate.x, topLeftcoordinate.y);
     this.width = 25;
     this.height = DEFAULT_PLAYER_HEIGHT;
     this.color = "#ff0000";
@@ -37,13 +38,12 @@ class Player {
     this.boundingContainer = new BoundingBox(this.position, this.width, this.height);
   }
 
-  applyGravity(playerTouchingSolidObjectFromTop) {
-    if (isPlayerFalling) {
-      this.ySpeed += LOOP_TIME * DEFAULT_GRAVITY;
-      if (playerTouchingSolidObjectFromTop) {
-        this.ySpeed = 0;
-      }
-    }
+  applyGravity() {
+    this.ySpeed += LOOP_TIME * DEFAULT_GRAVITY;
+  }
+
+  stopFalling() {
+    this.ySpeed = 0;
   }
 
   draw(context) {
@@ -54,48 +54,106 @@ class Player {
     context.closePath();
   }
 
-  move() {
-    const playerTouchingTheFloorFromTop = collisionPlayerFloorFromTop();
-    const playerTouchingSolidObjectsFromTop = isPlayerCollidingFromTop();
-    const playerTouchingSolidObjectFromTop = playerTouchingTheFloorFromTop && playerTouchingSolidObjectsFromTop;
-    this.applyGravity(playerTouchingSolidObjectFromTop);
-
-    this.position.x += this.xSpeed;
-    this.position.y += this.ySpeed;
-
+  keepInsideViewportLimits() {
     if (this.position.y <= 0) {
+      this.oldPosition.y = this.position.y;
       this.position.y = 0;
     }
     if (this.position.x >= SCREEN_WIDTH - this.width) {
+      this.oldPosition.x = this.position.x;
       this.position.x = SCREEN_WIDTH - this.width;
     }
     if (this.position.x <= 0) {
+      this.oldPosition.x = this.position.x;
       this.position.x = 0;
     }
+  }
 
-    if (isPlayerFalling && playerTouchingTheFloorFromTop) {
-      this.position.y = floor.position.y - this.height;
-      isPlayerFalling = false;
-    }
+  move() {
+    const isPlayerCollidingWithFloor = CollisionManager.areBoundingContainersColliding(this.boundingContainer, floor.boundingContainer);
+    const isPlayerTouchingTheFloorFromTop = isPlayerCollidingWithFloor && isCollidingFromTop(player, floor);
+    const isPlayerCollidingWithSolid = CollisionManager.areBoundingContainersColliding(this.boundingContainer, solidObject1.boundingContainer);
+    const isPlayerTouchingSolidObjectFromTop = isPlayerCollidingWithSolid && isCollidingFromTop(player, solidObject1);
 
-    if (playerTouchingSolidObjectsFromTop) {
-      this.position.y = solidObject1.position.y - this.height;
-    } else if (isPlayerCollidingFromLeft()) {
-      this.position.x = solidObject1.position.x - this.width;
-    } else if (isPlayerCollidingFromRight()) {
-      this.position.x = solidObject1.position.x + solidObject1.width;
+    const isPlayerOverSolidSurface = isPlayerTouchingTheFloorFromTop || isPlayerTouchingSolidObjectFromTop;
+    if (isPlayerOverSolidSurface) {
+      isPlayerJumping = false;
+      this.stopFalling();
+      if (isPlayerTouchingTheFloorFromTop) {
+        this.adjustPositonToTopOfElement(floor);
+      } else if(isPlayerTouchingSolidObjectFromTop) {
+        this.adjustPositonToTopOfElement(solidObject1);
+      }
+      this.oldPosition.x = this.position.x;
+      this.position.x += this.xSpeed;
+    } else {
+      this.oldPosition.y = this.position.y;
+      this.applyGravity();
+
+      if (isPlayerCollidingWithSolid) {
+        if (isCollidingFromLeft(player, solidObject1)) {
+          console.log('LEFT');
+          this.position.x = solidObject1.position.x - this.width - COLLISION_SPACER;
+        } else if (isCollidingFromRight(player, solidObject1)) {
+          console.log('RIGHT');
+          this.position.x = solidObject1.position.x + solidObject1.width + COLLISION_SPACER;
+        } else {
+          this.oldPosition.x = this.position.x;
+          this.position.x += this.xSpeed;
+        }
+      } else {
+        this.oldPosition.x = this.position.x;
+        this.position.x += this.xSpeed;
+      }
     }
+    
+    this.position.y += this.ySpeed;
+
+    this.keepInsideViewportLimits();
+  }
+
+  adjustPositonToTopOfElement(object) {
+    this.position.y = object.position.y - this.height - COLLISION_SPACER;
   }
 
   updateSpeed() {
     this.xSpeed = 0;
     if (rightKeyPressed) this.xSpeed += 2;
     if (leftKeyPressed) this.xSpeed -= 2;
-    if (!isPlayerFalling && isPlayerJumping) {
+    if (!isPlayerJumping && jumpKeyPressed) {
       this.ySpeed -= 4;
-      isPlayerFalling = true;
+      isPlayerJumping = true;
+      jumpKeyPressed = false; // TODO: review if needed
     }
   }
+}
+
+function isCollidingFromTop(object1, object2) {
+  return (
+    object1.position.y + object1.height >= object2.position.y &&
+    object1.oldPosition.y + object1.height < object2.oldPosition.y
+  );
+}
+
+function isCollidingFromBottom(object1, object2) {
+  return (
+    object1.position.y <= object2.position.y + object2.height &&
+    object1.oldPosition.y > object2.oldPosition.y + object2.height
+  );
+}
+
+function isCollidingFromRight(object1, object2) {
+  return (
+    object1.position.x <= object2.position.x + object2.width &&
+    object1.oldPosition.x > object2.oldPosition.x + object2.with
+  );
+}
+
+function isCollidingFromLeft(object1, object2) {
+  return (
+    object1.position.x + object1.width >= object2.position.x &&
+    object1.oldPosition.x + object1.width < object2.oldPosition.x
+  );
 }
 
 function isPlayerCollidingFromLeft() {
@@ -114,8 +172,7 @@ function isPlayerCollidingFromTop() {
     player.boundingContainer,
     solidObject1.boundingContainer
   );
-  if (areColiding && player.ySpeed > 0) {
-    isPlayerJumping = false;
+  if (areColiding && player.ySpeed >= 0) {
     return true;
   }
   return false;
@@ -137,8 +194,7 @@ function collisionPlayerFloorFromTop() {
     player.boundingContainer,
     floor.boundingContainer
   );
-  if (areColiding && player.ySpeed > 0) {
-    isPlayerJumping = false;
+  if (areColiding && player.ySpeed >= 0) {
     return true;
   }
   return false;
@@ -191,7 +247,7 @@ class CollisionManager {
         const containerAux = container2;
         containerAux = container1;
         container1 = container2;
-        container2 = container3;
+        container2 = containerAux;
       }
       return CollisionManager.isCircleCollidingWithRectangle(container1, container2);
     } else if (boundingType1 == circleContainerType && boundingType2 == circleContainerType) {
@@ -201,10 +257,10 @@ class CollisionManager {
 
   static areRectanglesColliding(container1, container2) {
     return (
-      container1.position.x < container2.position.x + container2.width &&
-      container1.position.x + container1.width > container2.position.x &&
-      container1.position.y < container2.position.y + container2.height &&
-      container1.position.y + container1.height > container2.position.y
+      container1.position.x <= container2.position.x + container2.width &&
+      container1.position.x + container1.width >= container2.position.x &&
+      container1.position.y <= container2.position.y + container2.height &&
+      container1.position.y + container1.height >= container2.position.y
     );
   }
 
@@ -212,7 +268,7 @@ class CollisionManager {
     const xDistance = container2.postion.x - container1.positon.x;
     const yDistance = container2.postion.y - container1.positon.y;
     const distance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
-    return distance < container1.radius + container2.radius;
+    return distance <= container1.radius + container2.radius;
   }
 
   static isCircleCollidingWithRectangle(circleContainer, boxContainer) {
@@ -220,13 +276,13 @@ class CollisionManager {
     const halfBoxHeight = boxContainer.height / 2;
     const xDistance = Math.abs(circleContainer.position.x - (boxContainer.position.x + halfBoxWidth));
     const yDistance = Math.abs(circleContainer.position.y - (boxContainer.position.y + halfBoxHeight));
-    if (xDistance > halfBoxWidth + circleContainer.radius) return false;
-    if (yDistance > halfBoxHeight + circleContainer.radius) return false;
-    if (xDistance < halfBoxWidth) return true;
-    if (yDistance < halfBoxHeight) return true;
+    if (xDistance >= halfBoxWidth + circleContainer.radius) return false;
+    if (yDistance >= halfBoxHeight + circleContainer.radius) return false;
+    if (xDistance <= halfBoxWidth) return true;
+    if (yDistance <= halfBoxHeight) return true;
     const cornerDistanceX = xDistance - halfBoxWidth;
     const cornerDistanceY = yDistance - halfBoxHeight;
-    return Math.pow(cornerDistanceX, 2) + Math.pow(cornerDistanceY, 2) < Math.pow(circleContainer.radius, 2);
+    return Math.pow(cornerDistanceX, 2) + Math.pow(cornerDistanceY, 2) <= Math.pow(circleContainer.radius, 2);
   }
 }
 
@@ -256,6 +312,7 @@ class BoundingCircle extends BoundingContainer {
 class Platform {
   constructor(topLeftCoordinate, width, height, isAffectedByGravity, isSolidObject) {
     this.position = topLeftCoordinate;
+    this.oldPosition = new Coord(topLeftCoordinate.x, topLeftCoordinate.y);
     this.width = width;
     this.height = height;
     this.color = "#663333";
@@ -269,6 +326,7 @@ class Platform {
 
   applyGravity(gravity) {
     if (this.isAffectedByGravity) {
+      // && !this.isOverSolidObject
       if (!gravity) gravity = DEFAULT_GRAVITY;
       this.ySpeed += LOOP_TIME * gravity;
     }
@@ -293,8 +351,8 @@ function gameLoop() {
 function drawScene() {
   cleanViewport();
   floor.draw(context);
-  player.draw(context);
   solidObject1.draw(context);
+  player.draw(context);
 }
 
 function cleanViewport() {
@@ -327,9 +385,8 @@ function initializeKeyboardListeners() {
       rightKeyPressed = true;
     }
 
-    if (event.key == " ") {
+    if (!isPlayerJumping && event.key == " ") {
       jumpKeyPressed = true;
-      isPlayerJumping = true;
     }
 
     player.updateSpeed();
@@ -344,9 +401,11 @@ function initializeKeyboardListeners() {
       rightKeyPressed = false;
     }
 
+    /*
     if (event.key == " ") {
       jumpKeyPressed = false;
     }
+    */
 
     player.updateSpeed();
   });

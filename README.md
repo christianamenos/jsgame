@@ -25,9 +25,9 @@ This is a platform game with puzzles.
 * [x] Convert floor to platform and draw the floor
 * [x] Make floor solid and player stand
 * [ ] Add solid object
-* [ ] Objects to collect
 * [ ] Separate code in different files
 * [ ] Join JavaScript files into a single one minimizing the code as a results of watching the changes, try to avoid manual steps
+* [ ] Objects to collect
 * [ ] Holes in the floor
 * [ ] Electric components
 * [ ] Start game
@@ -53,5 +53,5 @@ This is a platform game with puzzles.
 
 ### Questions
 
-* Can we build a computer like the one in Code Lyoko show?
-
+* [x] Can we build a computer like the one in Code Lyoko show?
+* 
