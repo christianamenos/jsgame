@@ -24,9 +24,9 @@ This is a platform game with puzzles.
 * [x] Platforms
 * [x] Convert floor to platform and draw the floor
 * [x] Make floor solid and player stand
-* [ ] Add solid object
-* [ ] Separate code in different files
-* [ ] Join JavaScript files into a single one minimizing the code as a results of watching the changes, try to avoid manual steps
+* [x] Add solid object
+* [x] Separate code in different files
+* [x] Join JavaScript files into a single one minimizing the code as a results of watching the changes, try to avoid manual steps
 * [ ] Objects to collect
 * [ ] Holes in the floor
 * [ ] Electric components
@@ -44,8 +44,12 @@ This is a platform game with puzzles.
 
 * [x] The player disapears after some time colliding with the ground
 * [x] Jump is not working
-* [ ] Fall over floor is failing
-* [ ] Jumping over solid object
+* [x] Fall over floor is failing
+* [x] Jumping over solid object
+* [x] Fix issues with lateral collisions
+* [x] Solved undetected jumps
+* [x] When the player jumps goes slower I think
+* [x] In some cases, the lateral collision detection also is not noticed properly, sometimes it happens, sometimes no, so I think it's because of the same nature of error.
 
 ### Nice to have
 

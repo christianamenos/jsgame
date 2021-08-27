@@ -71,14 +71,14 @@ class CollisionManager {
   static isCollidingFromRight(object1, object2) {
     return (
       object1.position.x <= object2.position.x + object2.width &&
-      object1.oldPosition.x > object2.oldPosition.x + object2.width
+      object1.oldPosition.x >= object2.oldPosition.x + object2.width
     );
   }
   
   static isCollidingFromLeft(object1, object2) {
     return (
       object1.position.x + object1.width >= object2.position.x &&
-      object1.oldPosition.x + object1.width < object2.oldPosition.x
+      object1.oldPosition.x + object1.width <= object2.oldPosition.x
     );
   }
   

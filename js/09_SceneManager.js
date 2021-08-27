@@ -1,6 +1,6 @@
 function gameLoop() {
-  drawScene();
   calculateScene();
+  drawScene();
 }
 
 function drawScene() {
@@ -28,6 +28,7 @@ function initializeScene() {
   floor = new Platform(floorCoord, SCREEN_WIDTH, FLOOR_HEIGHT);
   const solidObject1Coord = new Coord(400, SCREEN_HEIGHT - FLOOR_HEIGHT - 40);
   solidObject1 = new Platform(solidObject1Coord, 40, 40);
+  drawScene();
 }
 
 function initializeKeyboardListeners() {
@@ -55,12 +56,6 @@ function initializeKeyboardListeners() {
     if (event.key == "ArrowRight") {
       rightKeyPressed = false;
     }
-
-    /*
-      if (event.key == " ") {
-        jumpKeyPressed = false;
-      }
-      */
 
     player.updateSpeed();
   });
