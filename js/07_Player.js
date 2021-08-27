@@ -30,14 +30,19 @@ class Player {
     if (this.position.y <= 0) {
       this.oldPosition.y = this.position.y;
       this.position.y = 0;
+      this.ySpeed = 0;
+    }
+    if (this.position.x <= 0) {
+      this.oldPosition.x = this.position.x;
+      this.position.x = 0;
     }
     if (this.position.x >= SCREEN_WIDTH - this.width) {
       this.oldPosition.x = this.position.x;
       this.position.x = SCREEN_WIDTH - this.width;
     }
-    if (this.position.x <= 0) {
-      this.oldPosition.x = this.position.x;
-      this.position.x = 0;
+    if (this.position.y + this.height >= SCREEN_HEIGHT) {
+      isPaused = true;
+      isGameOver = true;
     }
   }
 

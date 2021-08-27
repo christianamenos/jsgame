@@ -29,11 +29,13 @@ This is a platform game with puzzles.
 * [x] Join JavaScript files into a single one minimizing the code as a results of watching the changes, try to avoid manual steps
 * [x] Generalize collisions and implement collision from bottom
 * [x] Created additional platforms
-* [ ] Holes in the floor
-* [ ] End game / Game over
+* [x] Holes in the floor
+* [x] Game over
+* [ ] Update game loop for chrome and firefox
 * [ ] Objects to collect
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
+* [ ] Improved Game over / End game
 * [ ] Start game
 * [ ] Sever
 * [ ] Server logic and dialog

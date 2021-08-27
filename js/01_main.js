@@ -17,3 +17,5 @@ let leftKeyPressed = false;
 let isPlayerJumping = false;
 let jumpKeyPressed = false;
 let circle;
+let isPaused = false;
+let isGameOver = false;

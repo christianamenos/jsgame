@@ -1,6 +1,11 @@
 function gameLoop() {
-  calculateScene();
-  drawScene();
+  if (!isPaused && !isGameOver) {
+    calculateScene();
+    drawScene();
+  } else {
+    alert('GAME OVER!');
+    document.location.reload();
+  }
 }
 
 function drawScene() {
@@ -31,12 +36,17 @@ function initializeScene() {
 }
 
 function createSolidObjectsAndPlatforms() {
-  const floorCoord = new Coord(0, SCREEN_HEIGHT - FLOOR_HEIGHT);
-  solidObjects.push(new Platform(floorCoord, SCREEN_WIDTH, FLOOR_HEIGHT));
+  const floor1Coord = new Coord(0, SCREEN_HEIGHT - FLOOR_HEIGHT);
+  solidObjects.push(new Platform(floor1Coord, SCREEN_WIDTH/2 + 10, FLOOR_HEIGHT));
+
+  const floor2Coord = new Coord(SCREEN_WIDTH/2 + 100, SCREEN_HEIGHT - FLOOR_HEIGHT);
+  solidObjects.push(new Platform(floor2Coord, 150, FLOOR_HEIGHT));
+  /*
   const boxCoord = new Coord(400, SCREEN_HEIGHT - FLOOR_HEIGHT - 40);
   solidObjects.push(new Platform(boxCoord, 40, 40));
   const p1Coord = new Coord(300, SCREEN_HEIGHT - FLOOR_HEIGHT - 80);
   solidObjects.push(new Platform(p1Coord, 80, 20));
+  */
 }
 
 function initializeKeyboardListeners() {
