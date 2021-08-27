@@ -41,36 +41,39 @@ class Player {
     }
   }
 
+  isColliding() {
+    let isColliding = false;
+    solidObjects.forEach((platform) => {
+      if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, platform.boundingContainer)) {
+        if (CollisionManager.isCollidingFromTop(player, platform)) {
+          isPlayerJumping = false;
+          this.stopFalling();
+          this.adjustPositonToTopOfElement(platform);
+          isColliding = true;
+        }
+
+        if (CollisionManager.isCollidingFromLeft(player, platform)) {
+          this.adjustPostionToLeftOfElement(platform);
+        } else if (CollisionManager.isCollidingFromRight(player, platform)) {
+          this.adjustPostionToRightOfElement(platform);
+        } else if (CollisionManager.isCollidingFromBottom(player, platform)) {
+          this.adjustPostionToBottomOfElement(platform);
+          this.ySpeed = 0;
+        }
+      }
+    });
+    return isColliding;
+  }
+
   move() {
     this.oldPosition.x = this.position.x;
     this.position.x += this.xSpeed;
 
-    const isPlayerCollidingWithFloor = CollisionManager.areBoundingContainersColliding(this.boundingContainer, floor.boundingContainer);
-    const isPlayerTouchingTheFloorFromTop = isPlayerCollidingWithFloor && CollisionManager.isCollidingFromTop(player, floor);
-    const isPlayerCollidingWithSolid = CollisionManager.areBoundingContainersColliding(this.boundingContainer, solidObject1.boundingContainer);
-    const isPlayerTouchingSolidObjectFromTop = isPlayerCollidingWithSolid && CollisionManager.isCollidingFromTop(player, solidObject1);
-    const isPlayerTouchingSolidObjectFromBottom = isPlayerCollidingWithSolid && CollisionManager.isCollidingFromBottom(player, solidObject1);
+    let playerTouchedPlatform = this.isColliding();
 
-    const isPlayerOverSolidSurface = isPlayerTouchingTheFloorFromTop || isPlayerTouchingSolidObjectFromTop;
-    if (isPlayerOverSolidSurface) {
-      isPlayerJumping = false;
-      this.stopFalling();
-      if (isPlayerTouchingTheFloorFromTop) {
-        this.adjustPositonToTopOfElement(floor);
-      } else if (isPlayerTouchingSolidObjectFromTop) {
-        this.adjustPositonToTopOfElement(solidObject1);
-      }
-    } else {
+    if (!playerTouchedPlatform) {
       this.oldPosition.y = this.position.y;
       this.applyGravity();
-    }
-
-    if (isPlayerCollidingWithSolid) {
-      if (CollisionManager.isCollidingFromLeft(player, solidObject1)) {
-        this.adjustPostionToLeftOfElement(solidObject1);
-      } else if (CollisionManager.isCollidingFromRight(player, solidObject1)) {
-        this.adjustPostionToRightOfElement(solidObject1);
-      }
     }
 
     this.position.y += this.ySpeed;
@@ -90,13 +93,15 @@ class Player {
     this.position.x = object.position.x + object.width + COLLISION_SPACER;
   }
 
+  adjustPostionToBottomOfElement(object) {
+    this.position.y = object.position.y + object.height + COLLISION_SPACER;
+  }
+
   updateSpeed() {
     this.xSpeed = 0;
-    if (rightKeyPressed)
-      this.xSpeed += 2;
-    if (leftKeyPressed)
-      this.xSpeed -= 2;
-    if (!isPlayerJumping && this.ySpeed <= LOOP_TIME*DEFAULT_GRAVITY && jumpKeyPressed) {
+    if (rightKeyPressed) this.xSpeed += 2;
+    if (leftKeyPressed) this.xSpeed -= 2;
+    if (!isPlayerJumping && this.ySpeed <= LOOP_TIME * DEFAULT_GRAVITY && jumpKeyPressed) {
       this.ySpeed -= 4;
       isPlayerJumping = true;
       jumpKeyPressed = false;

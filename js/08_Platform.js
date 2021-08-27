@@ -15,7 +15,6 @@ class Platform {
 
   applyGravity(gravity) {
     if (this.isAffectedByGravity) {
-      // && !this.isOverSolidObject
       if (!gravity)
         gravity = DEFAULT_GRAVITY;
       this.ySpeed += LOOP_TIME * gravity;

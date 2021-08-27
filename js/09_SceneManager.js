@@ -5,8 +5,9 @@ function gameLoop() {
 
 function drawScene() {
   cleanViewport();
-  floor.draw(context);
-  solidObject1.draw(context);
+  solidObjects.map(plat => {
+    plat.draw(context);
+  });
   player.draw(context);
 }
 
@@ -16,19 +17,26 @@ function cleanViewport() {
 
 function calculateScene() {
   player.move();
-  floor.move();
-  solidObject1.move();
+  solidObjects.map(plat => {
+    plat.move();
+  });
 }
 
 function initializeScene() {
-  const playerCoord = new Coord(300, 150); // SCREEN_HEIGHT - FLOOR_HEIGHT - DEFAULT_PLAYER_HEIGHT);
+  const playerCoord = new Coord(300, 50);
   player = new Player(playerCoord);
   initializeKeyboardListeners();
-  const floorCoord = new Coord(0, SCREEN_HEIGHT - FLOOR_HEIGHT);
-  floor = new Platform(floorCoord, SCREEN_WIDTH, FLOOR_HEIGHT);
-  const solidObject1Coord = new Coord(400, SCREEN_HEIGHT - FLOOR_HEIGHT - 40);
-  solidObject1 = new Platform(solidObject1Coord, 40, 40);
+  createSolidObjectsAndPlatforms();
   drawScene();
+}
+
+function createSolidObjectsAndPlatforms() {
+  const floorCoord = new Coord(0, SCREEN_HEIGHT - FLOOR_HEIGHT);
+  solidObjects.push(new Platform(floorCoord, SCREEN_WIDTH, FLOOR_HEIGHT));
+  const boxCoord = new Coord(400, SCREEN_HEIGHT - FLOOR_HEIGHT - 40);
+  solidObjects.push(new Platform(boxCoord, 40, 40));
+  const p1Coord = new Coord(300, SCREEN_HEIGHT - FLOOR_HEIGHT - 80);
+  solidObjects.push(new Platform(p1Coord, 80, 20));
 }
 
 function initializeKeyboardListeners() {

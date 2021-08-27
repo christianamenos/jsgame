@@ -65,7 +65,8 @@ function minifyJS(cb) {
 function zip(cb) {
   cb();
 }
-
 exports.default = function() {
     watch(`${sourceDir}*.js`, series(clean, createDestinationFolder, jsBundle, minifyJS));
 }
+exports.build = series(clean, createDestinationFolder, jsBundle, minifyJS);
+exports.bundle = series(clean, createDestinationFolder, jsBundle, minifyJS, zip);

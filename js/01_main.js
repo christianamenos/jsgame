@@ -11,8 +11,7 @@ const DEFAULT_PLAYER_HEIGHT = 50;
 const COLLISION_SPACER = 0.001;
 
 let player;
-let floor;
-let solidObject1;
+let solidObjects = [];
 let rightKeyPressed = false;
 let leftKeyPressed = false;
 let isPlayerJumping = false;
