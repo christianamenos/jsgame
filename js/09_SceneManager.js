@@ -6,6 +6,7 @@ function gameLoop() {
     alert('GAME OVER!');
     document.location.reload();
   }
+  requestAnimationFrame(gameLoop);
 }
 
 function drawScene() {
@@ -80,4 +81,4 @@ function initializeKeyboardListeners() {
 }
 
 initializeScene();
-setInterval(gameLoop, LOOP_TIME * 100);
+gameLoop();

@@ -31,7 +31,7 @@ This is a platform game with puzzles.
 * [x] Created additional platforms
 * [x] Holes in the floor
 * [x] Game over
-* [ ] Update game loop for chrome and firefox
+* [x] Update game loop for chrome and firefox
 * [ ] Objects to collect
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
