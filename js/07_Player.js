@@ -48,7 +48,7 @@ class Player {
 
   isColliding() {
     let hasLanded = false;
-    platforms.forEach(platform => {
+    scenes[currentScene].platforms.forEach((platform) => {
       if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, platform.boundingContainer)) {
         if (CollisionManager.isCollidingFromTop(player, platform)) {
           isPlayerJumping = false;
@@ -68,7 +68,7 @@ class Player {
       }
     });
 
-    coins = coins.filter(coin => {
+    scenes[currentScene].coins = scenes[currentScene].coins.filter((coin) => {
       if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, coin.boundingContainer)) {
         coinCounter++;
         return false;
@@ -76,11 +76,14 @@ class Player {
       return true;
     });
 
-    doors.forEach(door => {
-      if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, door.boundingContainer)) {
-        alert('Change scene!');
+    scenes[currentScene].doors.forEach((door) => {
+      if (
+        door.status == 1 &&
+        CollisionManager.areBoundingContainersColliding(this.boundingContainer, door.boundingContainer)
+      ) {
+        changeScene(door.nextScene);
       }
-    })
+    });
     return hasLanded;
   }
 

@@ -36,8 +36,10 @@ This is a platform game with puzzles.
 * [x] Objects to collect
 * [x] Add a counter
 * [x] Detect door collisions
-* [ ] Multiple scenes
-* [ ] Change scene
+* [x] Multiple scenes
+* [x] Change scene
+* [ ] Reposition player on change scene
+* [ ] Key tutorial in first scene
 * [ ] Doors improved
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components

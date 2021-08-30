@@ -10,11 +10,11 @@ const PLATFORM_HEIGHT = 15;
 const DEFAULT_PLAYER_HEIGHT = 50;
 const COIN_WIDTH = 5;
 const COLLISION_SPACER = 0.001;
+const NUM_SCENES = 2;
 
+let currentScene = 0;
 let player;
-let platforms = [];
-let coins = [];
-let doors = [];
+let scenes = [];
 let rightKeyPressed = false;
 let leftKeyPressed = false;
 let isPlayerJumping = false;

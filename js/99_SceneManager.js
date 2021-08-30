@@ -12,13 +12,13 @@ function gameLoop() {
 function drawScene() {
   cleanViewport();
   drawCounter(context, coinCounter);
-  platforms.forEach(plat => {
+  scenes[currentScene].platforms.forEach(plat => {
     plat.draw(context);
   });
-  coins.forEach(coin => {
+  scenes[currentScene].coins.forEach(coin => {
     coin.draw(context);
   });
-  doors.forEach(door => {
+  scenes[currentScene].doors.forEach(door => {
     door.draw(context);
   });
   player.draw(context);
@@ -30,7 +30,7 @@ function cleanViewport() {
 
 function calculateScene() {
   player.move();
-  platforms.map(plat => {
+  scenes[currentScene].platforms.map(plat => {
     plat.move();
   });
 }
@@ -50,30 +50,45 @@ function drawCounter(context, count) {
 }
 
 function createplatformsAndPlatforms() {
+  
+  // LEVEL 1
+  const scene = new Scene();
   const p1coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT);
-  platforms.push(new Platform(p1coord, SCREEN_WIDTH/3, PLATFORM_HEIGHT));
+  scene.platforms.push(new Platform(p1coord, SCREEN_WIDTH/3, PLATFORM_HEIGHT));
   const p2coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*2);
-  platforms.push(new Platform(p2coord, 70, PLATFORM_HEIGHT));
+  scene.platforms.push(new Platform(p2coord, 70, PLATFORM_HEIGHT));
   const p3coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*3);
-  platforms.push(new Platform(p3coord, 40, PLATFORM_HEIGHT));
+  scene.platforms.push(new Platform(p3coord, 40, PLATFORM_HEIGHT));
 
   const p4coord = new Coord(SCREEN_WIDTH/3 + 70, SCREEN_HEIGHT - PLATFORM_HEIGHT);
-  platforms.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
+  scene.platforms.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
 
   const p5coord = new Coord(SCREEN_WIDTH/3 + 220, SCREEN_HEIGHT - PLATFORM_HEIGHT*3);
-  platforms.push(new Platform(p5coord, 55, PLATFORM_HEIGHT));
+  scene.platforms.push(new Platform(p5coord, 55, PLATFORM_HEIGHT));
 
   const p6coord = new Coord(SCREEN_WIDTH - 75, SCREEN_HEIGHT - PLATFORM_HEIGHT*5);
-  platforms.push(new Platform(p6coord, 75, PLATFORM_HEIGHT));
+  scene.platforms.push(new Platform(p6coord, 75, PLATFORM_HEIGHT));
 
   const leftDoorCoord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*3 - DEFAULT_PLAYER_HEIGHT*1.25);
-  doors.push(new Door(leftDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 2));
+  scene.doors.push(new Door(leftDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 0, 2));
 
   const rightDoorCoord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT/2, SCREEN_HEIGHT - PLATFORM_HEIGHT*5 - DEFAULT_PLAYER_HEIGHT*1.25);
-  doors.push(new Door(rightDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 1));
+  scene.doors.push(new Door(rightDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 1, 1));
 
   const coinCoord = new Coord(SCREEN_WIDTH/3 + 120, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT/2);
-  coins.push(new Coin(coinCoord, COIN_WIDTH));
+  scene.coins.push(new Coin(coinCoord, COIN_WIDTH));
+  scenes.push(scene);
+
+  // LEVEL 2
+  const scene2 = new Scene();
+  scene2.platforms.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
+  scenes.push(scene2);
+}
+
+function changeScene(scene) {
+  currentScene = scene;
+  // TODO: set the player to the position of the door in the new scene
+  // TODO: clean and draw first frame
 }
 
 function initializeKeyboardListeners() {
