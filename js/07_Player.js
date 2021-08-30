@@ -48,7 +48,7 @@ class Player {
 
   isColliding() {
     let isColliding = false;
-    solidObjects.forEach((platform) => {
+    solidObjects.forEach(platform => {
       if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, platform.boundingContainer)) {
         if (CollisionManager.isCollidingFromTop(player, platform)) {
           isPlayerJumping = false;
@@ -66,6 +66,14 @@ class Player {
           this.ySpeed = 0;
         }
       }
+    });
+
+    coins = coins.filter(coin => {
+      if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, coin.boundingContainer)) {
+        coinCounter++;
+        return false;
+      }
+      return true;
     });
     return isColliding;
   }

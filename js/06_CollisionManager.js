@@ -9,7 +9,7 @@ class CollisionManager {
     } else if ((boundingType1 == boxContainerType && boundingType2 == circleContainerType) ||
       (boundingType1 == circleContainerType && boundingType2 == boxContainerType)) {
       if (boundingType1 == boxContainerType) {
-        const containerAux = container2;
+        let containerAux = container2;
         containerAux = container1;
         container1 = container2;
         container2 = containerAux;

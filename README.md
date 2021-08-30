@@ -32,16 +32,18 @@ This is a platform game with puzzles.
 * [x] Holes in the floor
 * [x] Game over
 * [x] Update game loop for chrome and firefox
-* [ ] Objects to collect
+* [x] First level design
+* [x] Objects to collect
+* [x] Add a counter
+* [ ] Multiple scenes
+* [ ] Change scene
+* [ ] Doors improved
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
 * [ ] Improved Game over / End game
 * [ ] Start game
 * [ ] Sever
 * [ ] Server logic and dialog
-* [ ] Doors
-* [ ] Multiple scenes
-* [ ] Change scene
 * [ ] Sounds / Music
 * [ ] Astronaut humanized
 

@@ -11,8 +11,12 @@ function gameLoop() {
 
 function drawScene() {
   cleanViewport();
+  drawCounter(context, coinCounter);
   solidObjects.map(plat => {
     plat.draw(context);
+  });
+  coins.map(coin => {
+    coin.draw(context);
   });
   player.draw(context);
 }
@@ -34,6 +38,12 @@ function initializeScene() {
   initializeKeyboardListeners();
   createSolidObjectsAndPlatforms();
   drawScene();
+}
+
+function drawCounter(context, count) {
+  context.font = '16px Arial';
+  context.fillStyle = '#333';
+  context.fillText(`Score: ${count}`, 8, 20);
 }
 
 function createSolidObjectsAndPlatforms() {
@@ -58,6 +68,9 @@ function createSolidObjectsAndPlatforms() {
 
   const rightDoorCoord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT/2, SCREEN_HEIGHT - PLATFORM_HEIGHT*5 - DEFAULT_PLAYER_HEIGHT*1.25);
   solidObjects.push(new Platform(rightDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, '#3c3'));
+
+  const coinCoord = new Coord(SCREEN_WIDTH/3 + 120, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT/2);
+  coins.push(new Coin(coinCoord, COIN_WIDTH));
 }
 
 function initializeKeyboardListeners() {
