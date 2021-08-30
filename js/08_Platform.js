@@ -1,10 +1,13 @@
 class Platform {
-  constructor(topLeftCoordinate, width, height, isAffectedByGravity, isSolidObject) {
+  constructor(topLeftCoordinate, width, height, color, isAffectedByGravity, isSolidObject) {
+    if (!color) {
+      color = "#663333";
+    }
     this.position = topLeftCoordinate;
     this.oldPosition = new Coord(topLeftCoordinate.x, topLeftCoordinate.y);
     this.width = width;
     this.height = height;
-    this.color = "#663333";
+    this.color = color;
     this.boundingContainer = new BoundingBox(this.position, this.width, this.height);
     this.isAffectedByGravity = !!isAffectedByGravity;
     this.isSolidObject = !isSolidObject;

@@ -4,7 +4,7 @@ class Player {
     this.oldPosition = new Coord(topLeftcoordinate.x, topLeftcoordinate.y);
     this.width = 25;
     this.height = DEFAULT_PLAYER_HEIGHT;
-    this.color = "#ff0000";
+    this.color = "#39f";
     this.xSpeed = 0;
     this.ySpeed = 0;
     this.boundingContainer = new BoundingBox(this.position, this.width, this.height);

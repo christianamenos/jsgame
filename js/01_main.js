@@ -6,7 +6,7 @@ const LOOP_TIME = 1 / FPS_RATE;
 const SCREEN_WIDTH = canvas.width;
 const SCREEN_HEIGHT = canvas.height;
 const DEFAULT_GRAVITY = 9.81;
-const FLOOR_HEIGHT = 30;
+const PLATFORM_HEIGHT = 15;
 const DEFAULT_PLAYER_HEIGHT = 50;
 const COLLISION_SPACER = 0.001;
 

@@ -29,7 +29,7 @@ function calculateScene() {
 }
 
 function initializeScene() {
-  const playerCoord = new Coord(300, 50);
+  const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT*3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
   player = new Player(playerCoord);
   initializeKeyboardListeners();
   createSolidObjectsAndPlatforms();
@@ -37,27 +37,39 @@ function initializeScene() {
 }
 
 function createSolidObjectsAndPlatforms() {
-  const floor1Coord = new Coord(0, SCREEN_HEIGHT - FLOOR_HEIGHT);
-  solidObjects.push(new Platform(floor1Coord, SCREEN_WIDTH/2 + 10, FLOOR_HEIGHT));
+  const p1coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT);
+  solidObjects.push(new Platform(p1coord, SCREEN_WIDTH/3, PLATFORM_HEIGHT));
+  const p2coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*2);
+  solidObjects.push(new Platform(p2coord, 70, PLATFORM_HEIGHT));
+  const p3coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*3);
+  solidObjects.push(new Platform(p3coord, 40, PLATFORM_HEIGHT));
 
-  const floor2Coord = new Coord(SCREEN_WIDTH/2 + 100, SCREEN_HEIGHT - FLOOR_HEIGHT);
-  solidObjects.push(new Platform(floor2Coord, 150, FLOOR_HEIGHT));
-  /*
-  const boxCoord = new Coord(400, SCREEN_HEIGHT - FLOOR_HEIGHT - 40);
-  solidObjects.push(new Platform(boxCoord, 40, 40));
-  const p1Coord = new Coord(300, SCREEN_HEIGHT - FLOOR_HEIGHT - 80);
-  solidObjects.push(new Platform(p1Coord, 80, 20));
-  */
+  const p4coord = new Coord(SCREEN_WIDTH/3 + 70, SCREEN_HEIGHT - PLATFORM_HEIGHT);
+  solidObjects.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
+
+  const p5coord = new Coord(SCREEN_WIDTH/3 + 220, SCREEN_HEIGHT - PLATFORM_HEIGHT*3);
+  solidObjects.push(new Platform(p5coord, 55, PLATFORM_HEIGHT));
+
+  const p6coord = new Coord(SCREEN_WIDTH - 75, SCREEN_HEIGHT - PLATFORM_HEIGHT*5);
+  solidObjects.push(new Platform(p6coord, 75, PLATFORM_HEIGHT));
+
+  const leftDoorCoord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*3 - DEFAULT_PLAYER_HEIGHT*1.25);
+  solidObjects.push(new Platform(leftDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, '#c33'));
+
+  const rightDoorCoord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT/2, SCREEN_HEIGHT - PLATFORM_HEIGHT*5 - DEFAULT_PLAYER_HEIGHT*1.25);
+  solidObjects.push(new Platform(rightDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, '#3c3'));
 }
 
 function initializeKeyboardListeners() {
   document.addEventListener("keydown", function (event) {
     if (event.key == "ArrowLeft") {
       leftKeyPressed = true;
+      event.preventDefault();
     }
 
     if (event.key == "ArrowRight") {
       rightKeyPressed = true;
+      event.preventDefault();
     }
 
     if (!isPlayerJumping && event.key == " ") {
