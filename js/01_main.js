@@ -12,8 +12,9 @@ const COIN_WIDTH = 5;
 const COLLISION_SPACER = 0.001;
 
 let player;
-let solidObjects = [];
+let platforms = [];
 let coins = [];
+let doors = [];
 let rightKeyPressed = false;
 let leftKeyPressed = false;
 let isPlayerJumping = false;

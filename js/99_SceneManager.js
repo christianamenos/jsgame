@@ -12,11 +12,14 @@ function gameLoop() {
 function drawScene() {
   cleanViewport();
   drawCounter(context, coinCounter);
-  solidObjects.map(plat => {
+  platforms.forEach(plat => {
     plat.draw(context);
   });
-  coins.map(coin => {
+  coins.forEach(coin => {
     coin.draw(context);
+  });
+  doors.forEach(door => {
+    door.draw(context);
   });
   player.draw(context);
 }
@@ -27,7 +30,7 @@ function cleanViewport() {
 
 function calculateScene() {
   player.move();
-  solidObjects.map(plat => {
+  platforms.map(plat => {
     plat.move();
   });
 }
@@ -36,7 +39,7 @@ function initializeScene() {
   const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT*3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
   player = new Player(playerCoord);
   initializeKeyboardListeners();
-  createSolidObjectsAndPlatforms();
+  createplatformsAndPlatforms();
   drawScene();
 }
 
@@ -46,28 +49,28 @@ function drawCounter(context, count) {
   context.fillText(`Score: ${count}`, 8, 20);
 }
 
-function createSolidObjectsAndPlatforms() {
+function createplatformsAndPlatforms() {
   const p1coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT);
-  solidObjects.push(new Platform(p1coord, SCREEN_WIDTH/3, PLATFORM_HEIGHT));
+  platforms.push(new Platform(p1coord, SCREEN_WIDTH/3, PLATFORM_HEIGHT));
   const p2coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*2);
-  solidObjects.push(new Platform(p2coord, 70, PLATFORM_HEIGHT));
+  platforms.push(new Platform(p2coord, 70, PLATFORM_HEIGHT));
   const p3coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*3);
-  solidObjects.push(new Platform(p3coord, 40, PLATFORM_HEIGHT));
+  platforms.push(new Platform(p3coord, 40, PLATFORM_HEIGHT));
 
   const p4coord = new Coord(SCREEN_WIDTH/3 + 70, SCREEN_HEIGHT - PLATFORM_HEIGHT);
-  solidObjects.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
+  platforms.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
 
   const p5coord = new Coord(SCREEN_WIDTH/3 + 220, SCREEN_HEIGHT - PLATFORM_HEIGHT*3);
-  solidObjects.push(new Platform(p5coord, 55, PLATFORM_HEIGHT));
+  platforms.push(new Platform(p5coord, 55, PLATFORM_HEIGHT));
 
   const p6coord = new Coord(SCREEN_WIDTH - 75, SCREEN_HEIGHT - PLATFORM_HEIGHT*5);
-  solidObjects.push(new Platform(p6coord, 75, PLATFORM_HEIGHT));
+  platforms.push(new Platform(p6coord, 75, PLATFORM_HEIGHT));
 
   const leftDoorCoord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*3 - DEFAULT_PLAYER_HEIGHT*1.25);
-  solidObjects.push(new Platform(leftDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, '#c33'));
+  doors.push(new Door(leftDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 2));
 
   const rightDoorCoord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT/2, SCREEN_HEIGHT - PLATFORM_HEIGHT*5 - DEFAULT_PLAYER_HEIGHT*1.25);
-  solidObjects.push(new Platform(rightDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, '#3c3'));
+  doors.push(new Door(rightDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 1));
 
   const coinCoord = new Coord(SCREEN_WIDTH/3 + 120, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT/2);
   coins.push(new Coin(coinCoord, COIN_WIDTH));

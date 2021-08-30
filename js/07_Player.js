@@ -47,14 +47,14 @@ class Player {
   }
 
   isColliding() {
-    let isColliding = false;
-    solidObjects.forEach(platform => {
+    let hasLanded = false;
+    platforms.forEach(platform => {
       if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, platform.boundingContainer)) {
         if (CollisionManager.isCollidingFromTop(player, platform)) {
           isPlayerJumping = false;
           this.stopFalling();
           this.adjustPositonToTopOfElement(platform);
-          isColliding = true;
+          hasLanded = true;
         }
 
         if (CollisionManager.isCollidingFromLeft(player, platform)) {
@@ -75,16 +75,22 @@ class Player {
       }
       return true;
     });
-    return isColliding;
+
+    doors.forEach(door => {
+      if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, door.boundingContainer)) {
+        alert('Change scene!');
+      }
+    })
+    return hasLanded;
   }
 
   move() {
     this.oldPosition.x = this.position.x;
     this.position.x += this.xSpeed;
 
-    let playerTouchedPlatform = this.isColliding();
+    let hasLanded = this.isColliding();
 
-    if (!playerTouchedPlatform) {
+    if (!hasLanded) {
       this.oldPosition.y = this.position.y;
       this.applyGravity();
     }

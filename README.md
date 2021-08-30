@@ -35,6 +35,7 @@ This is a platform game with puzzles.
 * [x] First level design
 * [x] Objects to collect
 * [x] Add a counter
+* [x] Detect door collisions
 * [ ] Multiple scenes
 * [ ] Change scene
 * [ ] Doors improved
