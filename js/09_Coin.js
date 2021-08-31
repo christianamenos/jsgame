@@ -1,13 +1,13 @@
 class Coin {
-  constructor(topLeftCoordinate, radius, color) {
+  constructor(topLeftCoord, radius, color) {
     if (!color) {
       color = "#bb0";
     }
-    this.position = topLeftCoordinate;
+    this.pos = topLeftCoord;
     this.radius = radius;
     this.color = color;
-    this.boundingContainer = new BoundingCircle(this.position, this.radius*0.7);
-    this.sprite = new Circle(this.position, this.radius);
+    this.boundBox = new BoundingCircle(this.pos, this.radius*0.7);
+    this.sprite = new Circle(this.pos, this.radius);
   }
 
   draw(context) {

@@ -1,13 +1,13 @@
 class Player {
-  constructor(topLeftcoordinate) {
-    this.position = topLeftcoordinate;
-    this.oldPosition = new Coord(topLeftcoordinate.x, topLeftcoordinate.y);
+  constructor(topLeftCoord) {
+    this.pos = topLeftCoord;
+    this.oldPos = Coord.cloneCoord(this.pos);
     this.width = 25;
     this.height = DEFAULT_PLAYER_HEIGHT;
     this.color = "#39f";
     this.xSpeed = 0;
     this.ySpeed = 0;
-    this.boundingContainer = new BoundingBox(this.position, this.width, this.height);
+    this.boundBox = new BoundingBox(Coord.cloneCoord(this.pos), this.width, this.height);
   }
 
   applyGravity() {
@@ -20,27 +20,27 @@ class Player {
 
   draw(context) {
     context.beginPath();
-    context.rect(this.position.x, this.position.y, this.width, this.height);
+    context.rect(this.pos.x, this.pos.y, this.width, this.height);
     context.fillStyle = this.color;
     context.fill();
     context.closePath();
   }
 
   keepInsideViewportLimits() {
-    if (this.position.y <= 0) {
-      this.oldPosition.y = this.position.y;
-      this.position.y = 0;
+    if (this.pos.y <= 0) {
+      this.oldPos.y = this.pos.y;
+      this.pos.y = 0;
       this.ySpeed = 0;
     }
-    if (this.position.x <= 0) {
-      this.oldPosition.x = this.position.x;
-      this.position.x = 0;
+    if (this.pos.x <= 0) {
+      this.oldPos.x = this.pos.x;
+      this.pos.x = 0;
     }
-    if (this.position.x >= SCREEN_WIDTH - this.width) {
-      this.oldPosition.x = this.position.x;
-      this.position.x = SCREEN_WIDTH - this.width;
+    if (this.pos.x >= SCREEN_WIDTH - this.width) {
+      this.oldPos.x = this.pos.x;
+      this.pos.x = SCREEN_WIDTH - this.width;
     }
-    if (this.position.y + this.height >= SCREEN_HEIGHT) {
+    if (this.pos.y + this.height >= SCREEN_HEIGHT) {
       isPaused = true;
       isGameOver = true;
     }
@@ -49,7 +49,7 @@ class Player {
   isColliding() {
     let hasLanded = false;
     scenes[currentScene].platforms.forEach((platform) => {
-      if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, platform.boundingContainer)) {
+      if (CollisionManager.areBoundingContainersColliding(this.boundBox, platform.boundBox)) {
         if (CollisionManager.isCollidingFromTop(player, platform)) {
           isPlayerJumping = false;
           this.stopFalling();
@@ -69,7 +69,7 @@ class Player {
     });
 
     scenes[currentScene].coins = scenes[currentScene].coins.filter((coin) => {
-      if (CollisionManager.areBoundingContainersColliding(this.boundingContainer, coin.boundingContainer)) {
+      if (CollisionManager.areBoundingContainersColliding(this.boundBox, coin.boundBox)) {
         coinCounter++;
         return false;
       }
@@ -79,44 +79,45 @@ class Player {
     scenes[currentScene].doors.forEach((door) => {
       if (
         door.status == 1 &&
-        CollisionManager.areBoundingContainersColliding(this.boundingContainer, door.boundingContainer)
+        CollisionManager.areBoundingContainersColliding(this.boundBox, door.boundBox)
       ) {
-        changeScene(door.nextScene);
+        changeScene(door.nextScene, door.nextPlayerPos);
       }
     });
     return hasLanded;
   }
 
   move() {
-    this.oldPosition.x = this.position.x;
-    this.position.x += this.xSpeed;
+    this.oldPos.x = this.pos.x;
+    this.pos.x += this.xSpeed;
 
     let hasLanded = this.isColliding();
 
     if (!hasLanded) {
-      this.oldPosition.y = this.position.y;
+      this.oldPos.y = this.pos.y;
       this.applyGravity();
     }
 
-    this.position.y += this.ySpeed;
+    this.pos.y += this.ySpeed;
+    this.boundBox.pos.copyCoord(this.pos);
 
     this.keepInsideViewportLimits();
   }
 
   adjustPositonToTopOfElement(object) {
-    this.position.y = object.position.y - this.height;
+    this.pos.y = object.pos.y - this.height;
   }
 
   adjustPostionToLeftOfElement(object) {
-    this.position.x = object.position.x - this.width - COLLISION_SPACER;
+    this.pos.x = object.pos.x - this.width - COLLISION_SPACER;
   }
 
   adjustPostionToRightOfElement(object) {
-    this.position.x = object.position.x + object.width + COLLISION_SPACER;
+    this.pos.x = object.pos.x + object.width + COLLISION_SPACER;
   }
 
   adjustPostionToBottomOfElement(object) {
-    this.position.y = object.position.y + object.height + COLLISION_SPACER;
+    this.pos.y = object.pos.y + object.height + COLLISION_SPACER;
   }
 
   updateSpeed() {
@@ -127,8 +128,8 @@ class Player {
       this.ySpeed -= 4;
       isPlayerJumping = true;
       jumpKeyPressed = false;
-      this.oldPosition.y = this.position.y;
-      this.position.y -= COLLISION_SPACER;
+      this.oldPos.y = this.pos.y;
+      this.pos.y -= COLLISION_SPACER;
     }
   }
 }

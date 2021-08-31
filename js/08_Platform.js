@@ -1,19 +1,19 @@
 class Platform {
-  constructor(topLeftCoordinate, width, height, color, isAffectedByGravity, isSolidObject) {
+  constructor(topLeftCoord, width, height, color, isAffectedByGravity, isSolidObject) {
     if (!color) {
       color = "#663333";
     }
-    this.position = topLeftCoordinate;
-    this.oldPosition = new Coord(topLeftCoordinate.x, topLeftCoordinate.y);
+    this.pos = topLeftCoord;
+    this.oldPos = Coord.cloneCoord(topLeftCoord);
     this.width = width;
     this.height = height;
     this.color = color;
-    this.boundingContainer = new BoundingBox(this.position, this.width, this.height);
+    this.boundBox = new BoundingBox(Coord.cloneCoord(this.pos), this.width, this.height);
     this.isAffectedByGravity = !!isAffectedByGravity;
     this.isSolidObject = !isSolidObject;
     this.xSpeed = 0;
     this.ySpeed = 0;
-    this.sprite = new Rectangle(this.position, this.width, this.height);
+    this.sprite = new Rectangle(this.pos, this.width, this.height);
   }
 
   applyGravity(gravity) {
@@ -26,8 +26,9 @@ class Platform {
 
   move() {
     this.applyGravity();
-    this.position.x += this.xSpeed;
-    this.position.y += this.ySpeed;
+    this.pos.x += this.xSpeed;
+    this.pos.y += this.ySpeed;
+    this.boundBox.pos.copyCoord(this.pos);
   }
 
   draw(context) {

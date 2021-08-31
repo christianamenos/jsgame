@@ -5,9 +5,9 @@ class BoundingContainer {
 }
 
 class BoundingBox extends BoundingContainer {
-  constructor(topLeftCoordinate, width, height) {
+  constructor(topLeftCoord, width, height) {
     super();
-    this.position = topLeftCoordinate;
+    this.pos = topLeftCoord;
     this.width = width;
     this.height = height;
   }
@@ -16,7 +16,7 @@ class BoundingBox extends BoundingContainer {
 class BoundingCircle extends BoundingContainer {
   constructor(centerCoordinate, radius) {
     super();
-    this.position = centerCoordinate;
+    this.pos = centerCoordinate;
     this.radius = radius;
   }
 }

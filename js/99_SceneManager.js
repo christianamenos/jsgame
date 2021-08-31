@@ -50,7 +50,6 @@ function drawCounter(context, count) {
 }
 
 function createplatformsAndPlatforms() {
-  
   // LEVEL 1
   const scene = new Scene();
   const p1coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT);
@@ -70,10 +69,12 @@ function createplatformsAndPlatforms() {
   scene.platforms.push(new Platform(p6coord, 75, PLATFORM_HEIGHT));
 
   const leftDoorCoord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT*3 - DEFAULT_PLAYER_HEIGHT*1.25);
-  scene.doors.push(new Door(leftDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 0, 2));
+  const nextPlayerPosD1 = null;
+  scene.doors.push(new Door(leftDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 0, nextPlayerPosD1, 2));
 
   const rightDoorCoord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT/2, SCREEN_HEIGHT - PLATFORM_HEIGHT*5 - DEFAULT_PLAYER_HEIGHT*1.25);
-  scene.doors.push(new Door(rightDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 1, 1));
+  const nextPlayerPosD2 = new Coord(SCREEN_WIDTH/2, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT*2);
+  scene.doors.push(new Door(rightDoorCoord, PLATFORM_HEIGHT/2, DEFAULT_PLAYER_HEIGHT*1.25, 1, nextPlayerPosD2, 1));
 
   const coinCoord = new Coord(SCREEN_WIDTH/3 + 120, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT/2);
   scene.coins.push(new Coin(coinCoord, COIN_WIDTH));
@@ -85,9 +86,10 @@ function createplatformsAndPlatforms() {
   scenes.push(scene2);
 }
 
-function changeScene(scene) {
+function changeScene(scene, newpos) {
   currentScene = scene;
-  // TODO: set the player to the position of the door in the new scene
+  player.pos = newpos;
+  // TODO: set the player to the pos of the door in the new scene
   // TODO: clean and draw first frame
 }
 

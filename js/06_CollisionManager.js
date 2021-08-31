@@ -22,10 +22,10 @@ class CollisionManager {
 
   static areRectanglesColliding(container1, container2) {
     return (
-      container1.position.x <= container2.position.x + container2.width &&
-      container1.position.x + container1.width >= container2.position.x &&
-      container1.position.y <= container2.position.y + container2.height &&
-      container1.position.y + container1.height >= container2.position.y
+      container1.pos.x <= container2.pos.x + container2.width &&
+      container1.pos.x + container1.width >= container2.pos.x &&
+      container1.pos.y <= container2.pos.y + container2.height &&
+      container1.pos.y + container1.height >= container2.pos.y
     );
   }
 
@@ -39,8 +39,8 @@ class CollisionManager {
   static isCircleCollidingWithRectangle(circleContainer, boxContainer) {
     const halfBoxWidth = boxContainer.width / 2;
     const halfBoxHeight = boxContainer.height / 2;
-    const xDistance = Math.abs(circleContainer.position.x - (boxContainer.position.x + halfBoxWidth));
-    const yDistance = Math.abs(circleContainer.position.y - (boxContainer.position.y + halfBoxHeight));
+    const xDistance = Math.abs(circleContainer.pos.x - (boxContainer.pos.x + halfBoxWidth));
+    const yDistance = Math.abs(circleContainer.pos.y - (boxContainer.pos.y + halfBoxHeight));
     if (xDistance >= halfBoxWidth + circleContainer.radius)
       return false;
     if (yDistance >= halfBoxHeight + circleContainer.radius)
@@ -56,29 +56,29 @@ class CollisionManager {
 
   static isCollidingFromTop(object1, object2) {
     return (
-      object1.position.y + object1.height >= object2.position.y &&
-      object1.oldPosition.y + object1.height < object2.oldPosition.y
+      object1.pos.y + object1.height >= object2.pos.y &&
+      object1.oldPos.y + object1.height < object2.oldPos.y
     );
   }
   
   static isCollidingFromBottom(object1, object2) {
     return (
-      object1.position.y <= object2.position.y + object2.height &&
-      object1.oldPosition.y > object2.oldPosition.y + object2.height
+      object1.pos.y <= object2.pos.y + object2.height &&
+      object1.oldPos.y > object2.oldPos.y + object2.height
     );
   }
   
   static isCollidingFromRight(object1, object2) {
     return (
-      object1.position.x <= object2.position.x + object2.width &&
-      object1.oldPosition.x >= object2.oldPosition.x + object2.width
+      object1.pos.x <= object2.pos.x + object2.width &&
+      object1.oldPos.x >= object2.oldPos.x + object2.width
     );
   }
   
   static isCollidingFromLeft(object1, object2) {
     return (
-      object1.position.x + object1.width >= object2.position.x &&
-      object1.oldPosition.x + object1.width <= object2.oldPosition.x
+      object1.pos.x + object1.width >= object2.pos.x &&
+      object1.oldPos.x + object1.width <= object2.oldPos.x
     );
   }
 }
