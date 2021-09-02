@@ -23,6 +23,9 @@ function drawScene() {
   scenes[currentScene].doors.forEach((door) => {
     door.draw(context);
   });
+  scenes[currentScene].servers.forEach((server) => {
+    server.draw(context);
+  });
   player.draw(context);
 }
 
@@ -53,49 +56,62 @@ function drawCounter(context, count) {
 
 function createplatformsAndPlatforms() {
   // LEVEL 1
-  const scene = new Scene();
+  const scene1 = new Scene();
   const p1coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT);
-  scene.platforms.push(new Platform(p1coord, SCREEN_WIDTH / 3, PLATFORM_HEIGHT));
+  scene1.platforms.push(new Platform(p1coord, SCREEN_WIDTH / 3, PLATFORM_HEIGHT));
   const p2coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 2);
-  scene.platforms.push(new Platform(p2coord, 70, PLATFORM_HEIGHT));
+  scene1.platforms.push(new Platform(p2coord, 70, PLATFORM_HEIGHT));
   const p3coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3);
-  scene.platforms.push(new Platform(p3coord, 40, PLATFORM_HEIGHT));
+  scene1.platforms.push(new Platform(p3coord, 40, PLATFORM_HEIGHT));
 
   const p4coord = new Coord(SCREEN_WIDTH / 3 + 70, SCREEN_HEIGHT - PLATFORM_HEIGHT);
-  scene.platforms.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
+  scene1.platforms.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
 
   const p5coord = new Coord(SCREEN_WIDTH / 3 + 220, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3);
-  scene.platforms.push(new Platform(p5coord, 55, PLATFORM_HEIGHT));
+  scene1.platforms.push(new Platform(p5coord, 55, PLATFORM_HEIGHT));
 
   const p6coord = new Coord(SCREEN_WIDTH - 75, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5);
-  scene.platforms.push(new Platform(p6coord, 75, PLATFORM_HEIGHT));
+  scene1.platforms.push(new Platform(p6coord, 75, PLATFORM_HEIGHT));
 
   const leftDoorCoord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT * 1.25);
   const nextPlayerPosD1 = null;
-  scene.doors.push(new Door(leftDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 0, nextPlayerPosD1, 2));
+  scene1.doors.push(new Door(leftDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 0, nextPlayerPosD1, 2));
 
   const rightDoorCoord = new Coord(
     SCREEN_WIDTH - PLATFORM_HEIGHT / 2,
     SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT * 1.25
   );
-  const nextPlayerPosD2 = new Coord(SCREEN_WIDTH / 2, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT * 2);
-  scene.doors.push(new Door(rightDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 1, nextPlayerPosD2, 1));
+  const nextPlayerPosD2 = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT * 2);
+  scene1.doors.push(new Door(rightDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 1, nextPlayerPosD2, 1));
 
   const coinCoord = new Coord(SCREEN_WIDTH / 3 + 120, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT / 2);
-  scene.coins.push(new Coin(coinCoord, COIN_WIDTH));
-  scenes.push(scene);
+  scene1.coins.push(new Coin(coinCoord, COIN_WIDTH));
+  scenes.push(scene1);
 
   // LEVEL 2
   const scene2 = new Scene();
-  scene2.platforms.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
+
+  const doorL2D1Coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT * 1.25);
+  const nextPlayerPosL2D1 = new Coord(SCREEN_WIDTH - 10 - player.width, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
+  scene2.doors.push(new Door(doorL2D1Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 0, nextPlayerPosL2D1, 1));
+
+  const p1L2coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5);
+  scene2.platforms.push(new Platform(p1L2coord, 70, PLATFORM_HEIGHT));
+
+  const p2L2coord = Coord.clone(p4coord);
+  scene2.platforms.push(new Platform(p2L2coord, 100, PLATFORM_HEIGHT));
+
+  const s1L2coord = new Coord(p2L2coord.x + scene2.platforms[1].width/2 - 40, p2L2coord.y - 80);
+  const s1L2 = new Server(s1L2coord);
+  scene2.servers.push(s1L2);
+  
+  
   scenes.push(scene2);
 }
 
 function changeScene(scene, newpos) {
   currentScene = scene;
   player.pos = newpos;
-  // TODO: set the player to the pos of the door in the new scene
-  // TODO: clean and draw first frame
 }
 
 function initializeKeyboardListeners() {

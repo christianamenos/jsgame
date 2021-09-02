@@ -4,7 +4,7 @@ class Coord {
     this.y = y;
   }
 
-  static cloneCoord(coord) {
+  static clone(coord) {
     return new Coord(coord.x, coord.y);
   }
 

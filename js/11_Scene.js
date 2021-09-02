@@ -3,5 +3,6 @@ class Scene {
         this.platforms = [];
         this.coins = [];
         this.doors = [];
+        this.servers = [];
     }
 }

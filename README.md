@@ -41,13 +41,14 @@ This is a platform game with puzzles.
 * [x] Fix gulp execution
 * [x] Added cool background
 * [x] Reposition player on change scene
+* [x] Sever
+* [ ] Moving platforms
 * [ ] Key tutorial in first scene
 * [ ] Doors improved
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
 * [ ] Improved Game over / End game
 * [ ] Start game
-* [ ] Sever
 * [ ] Server logic and dialog
 * [ ] Sounds / Music
 * [ ] Astronaut humanized

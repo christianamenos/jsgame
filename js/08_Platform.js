@@ -4,11 +4,11 @@ class Platform {
       color = "#663333";
     }
     this.pos = topLeftCoord;
-    this.oldPos = Coord.cloneCoord(topLeftCoord);
+    this.oldPos = Coord.clone(topLeftCoord);
     this.width = width;
     this.height = height;
     this.color = color;
-    this.boundBox = new BoundingBox(Coord.cloneCoord(this.pos), this.width, this.height);
+    this.boundBox = new BoundingBox(Coord.clone(this.pos), this.width, this.height);
     this.isAffectedByGravity = !!isAffectedByGravity;
     this.isSolidObject = !isSolidObject;
     this.xSpeed = 0;

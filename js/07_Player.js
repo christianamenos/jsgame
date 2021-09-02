@@ -1,13 +1,13 @@
 class Player {
   constructor(topLeftCoord) {
     this.pos = topLeftCoord;
-    this.oldPos = Coord.cloneCoord(this.pos);
+    this.oldPos = Coord.clone(this.pos);
     this.width = 25;
     this.height = DEFAULT_PLAYER_HEIGHT;
     this.color = "#39f";
     this.xSpeed = 0;
     this.ySpeed = 0;
-    this.boundBox = new BoundingBox(Coord.cloneCoord(this.pos), this.width, this.height);
+    this.boundBox = new BoundingBox(Coord.clone(this.pos), this.width, this.height);
   }
 
   applyGravity() {
