@@ -91,6 +91,7 @@ class Player {
     this.oldPos.x = this.pos.x;
     this.pos.x += this.xSpeed;
 
+    this.boundBox.pos.copyCoord(this.pos);
     let hasLanded = this.isColliding();
 
     if (!hasLanded) {
@@ -100,7 +101,6 @@ class Player {
 
     this.pos.y += this.ySpeed;
     this.boundBox.pos.copyCoord(this.pos);
-
     this.keepInsideViewportLimits();
   }
 

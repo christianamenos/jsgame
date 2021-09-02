@@ -38,7 +38,9 @@ This is a platform game with puzzles.
 * [x] Detect door collisions
 * [x] Multiple scenes
 * [x] Change scene
-* [ ] Reposition player on change scene
+* [x] Fix gulp execution
+* [x] Added cool background
+* [x] Reposition player on change scene
 * [ ] Key tutorial in first scene
 * [ ] Doors improved
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
