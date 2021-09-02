@@ -23,3 +23,4 @@ let circle;
 let isPaused = false;
 let isGameOver = false;
 let coinCounter = 0;
+let frame = 0;

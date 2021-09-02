@@ -5,11 +5,26 @@
         <title>Montfoc - js13kgames 2021</title>
         <style>
             body, html {
-                background-color: #fff;
+                background-color: #151515;
             }
 
             #viewport {
-                background-color: #ccc;
+                background-color: #999;
+                background: linear-gradient(90deg, #999 45%, #39c 50%,#999 55%, #999 100%);
+                animation: movingbg 10s ease infinite;
+                background-size: 300%, 300%;
+            }
+
+            @keyframes movingbg {
+                0% {
+                    background-position: 0 0;
+                }
+                50% {
+                    background-position: 100% 0;
+                }
+                100% {
+                    background-position: 0 0;
+                }
             }
         </style>
     </head>

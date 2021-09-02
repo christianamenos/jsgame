@@ -58,6 +58,9 @@ function jsBundle(cb) {
 function minifyJS(cb) {
   src(destinationDir + bundleJSName)
     .pipe(minify())
+    .on("error", () => {
+      console.log("Syntax error preventing to minimize an generate new file. Stopping further execution.");
+    })
     .pipe(dest(destinationDir));
   cb();
 }
@@ -65,8 +68,8 @@ function minifyJS(cb) {
 function zip(cb) {
   cb();
 }
-exports.default = function() {
-    watch(`${sourceDir}*.js`, series(clean, createDestinationFolder, jsBundle, minifyJS));
-}
+exports.default = function () {
+  watch(`${sourceDir}*.js`, series(clean, createDestinationFolder, jsBundle, minifyJS));
+};
 exports.build = series(clean, createDestinationFolder, jsBundle, minifyJS);
 exports.bundle = series(clean, createDestinationFolder, jsBundle, minifyJS, zip);
