@@ -41,7 +41,8 @@ function calculateScene() {
 }
 
 function initializeScene() {
-  const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
+  // const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
+  const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
   player = new Player(playerCoord);
   initializeKeyboardListeners();
   createplatformsAndPlatforms();
@@ -98,10 +99,18 @@ function createplatformsAndPlatforms() {
   const p1L2coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5);
   scene2.platforms.push(new Platform(p1L2coord, 70, PLATFORM_HEIGHT));
 
-  const p2L2coord = Coord.clone(p4coord);
-  scene2.platforms.push(new Platform(p2L2coord, 100, PLATFORM_HEIGHT));
+  const p2L2coord = new Coord(140, 50);
+  const p2L2BottomY = SCREEN_HEIGHT - PLATFORM_HEIGHT - p2L2coord.y;
+  const p2L2BottomPos = new Coord(p2L2coord.x, p2L2BottomY);
+  const p2L2MovSeq = new MovementSequence();
+  p2L2MovSeq.addMovement(new Movement(Coord.clone(p2L2coord), p2L2BottomPos, 8));
+  p2L2MovSeq.addMovement(new Movement(p2L2BottomPos, Coord.clone(p2L2coord), 8));
+  scene2.platforms.push(new Platform(p2L2coord, 60, PLATFORM_HEIGHT, undefined, false, true, p2L2MovSeq));
 
-  const s1L2coord = new Coord(p2L2coord.x + scene2.platforms[1].width/2 - 40, p2L2coord.y - 80);
+  const p3L2coord = Coord.clone(p4coord);
+  scene2.platforms.push(new Platform(p3L2coord, 100, PLATFORM_HEIGHT));
+
+  const s1L2coord = new Coord(p3L2coord.x + scene2.platforms[2].width/2 - 30, p3L2coord.y - 80);
   const s1L2 = new Server(s1L2coord);
   scene2.servers.push(s1L2);
   

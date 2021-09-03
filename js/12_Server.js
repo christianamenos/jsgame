@@ -2,7 +2,7 @@ class Server {
   constructor(topLeftCoord) {
     this.pos = topLeftCoord;
     this.oldPos = Coord.clone(topLeftCoord);
-    this.width = 80;
+    this.width = 60;
     this.height = 80;
     this.color = "#cccc99";
     this.boundBox = new BoundingBox(Coord.clone(this.pos), this.width, this.height);

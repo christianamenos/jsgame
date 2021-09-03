@@ -1,7 +1,7 @@
 class Coin {
   constructor(topLeftCoord, radius, color) {
     if (!color) {
-      color = "#bb0";
+      color = "#fc3";
     }
     this.pos = topLeftCoord;
     this.radius = radius;

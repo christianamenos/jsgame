@@ -42,7 +42,7 @@ This is a platform game with puzzles.
 * [x] Added cool background
 * [x] Reposition player on change scene
 * [x] Sever
-* [ ] Moving platforms
+* [x] Moving platforms
 * [ ] Key tutorial in first scene
 * [ ] Doors improved
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
@@ -63,6 +63,7 @@ This is a platform game with puzzles.
 * [x] Solved undetected jumps
 * [x] When the player jumps goes slower I think
 * [x] In some cases, the lateral collision detection also is not noticed properly, sometimes it happens, sometimes no, so I think it's because of the same nature of error.
+* [ ] Check collisions with moving platforms.
 
 ### Nice to have
 
