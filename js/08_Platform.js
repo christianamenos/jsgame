@@ -26,20 +26,20 @@ class Platform {
   }
 
   move() {
+    this.oldPos.copyCoord(this.pos);
     if (this.movSeq && this.movSeq.sequence) {
       this.pos.x += this.movSeq.sequence[this.currentMovement].xSpeed;
       this.pos.y += this.movSeq.sequence[this.currentMovement].ySpeed;
       if (this.destReached()) {
         this.pos.copyCoord(this.movSeq.sequence[this.currentMovement].toPos);
-        this.boundBox.pos.copyCoord(this.pos);
         this.currentMovement = (this.currentMovement + 1) % this.movSeq.sequence.length;
       }
     } else {
       this.applyGravity();
       this.pos.x += this.xSpeed;
       this.pos.y += this.ySpeed;
-      this.boundBox.pos.copyCoord(this.pos);
     }
+    this.boundBox.pos.copyCoord(this.pos);
   }
 
   destReached() {

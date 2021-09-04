@@ -34,10 +34,10 @@ function cleanViewport() {
 }
 
 function calculateScene() {
-  player.move();
   scenes[currentScene].platforms.map((plat) => {
     plat.move();
   });
+  player.move();
 }
 
 function initializeScene() {

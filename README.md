@@ -52,6 +52,7 @@ This is a platform game with puzzles.
 * [ ] Server logic and dialog
 * [ ] Sounds / Music
 * [ ] Astronaut humanized
+* [ ] Make loop movement a feature for platforms
 
 ### Bugs
 
