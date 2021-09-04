@@ -49,7 +49,13 @@ class Player {
 
   updateStandingPlatform() {
     scenes[currentScene].platforms.forEach((platform) => {
-      this.standingPlatform = null;
+      if (
+        this.standingPlatform &&
+        (this.pos.x + this.width < this.standingPlatform ||
+          this.pos.x > this.standingPlatform + this.standingPlatform.width)
+      ) {
+        this.standingPlatform = null;
+      }
       if (CollisionManager.areBoundingContainersColliding(this.boundBox, platform.boundBox)) {
         if (CollisionManager.isCollidingFromTop(player, platform)) {
           isPlayerJumping = false;
@@ -78,10 +84,7 @@ class Player {
     });
 
     scenes[currentScene].doors.forEach((door) => {
-      if (
-        door.status == 1 &&
-        CollisionManager.areBoundingContainersColliding(this.boundBox, door.boundBox)
-      ) {
+      if (door.status == 1 && CollisionManager.areBoundingContainersColliding(this.boundBox, door.boundBox)) {
         changeScene(door.nextScene, door.nextPlayerPos);
       }
     });
@@ -94,7 +97,6 @@ class Player {
     this.boundBox.pos.copyCoord(this.pos);
     this.updateStandingPlatform();
 
-
     if (this.standingPlatform && this.standingPlatform.movSeq) {
       this.oldPos.y = this.pos.y;
       this.pos.y = this.standingPlatform.pos.y - this.height - COLLISION_SPACER;
@@ -103,7 +105,7 @@ class Player {
       this.applyGravity();
       this.pos.y += this.ySpeed;
     }
-    
+
     this.boundBox.pos.copyCoord(this.pos);
     this.keepInsideViewportLimits();
   }

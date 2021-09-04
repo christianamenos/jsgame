@@ -66,7 +66,7 @@ This is a platform game with puzzles.
 * [x] In some cases, the lateral collision detection also is not noticed properly, sometimes it happens, sometimes no, so I think it's because of the same nature of error.
 * [x] Check collisions with moving platforms.
 * [x] Check change level issue.
-* [ ] Check player jumping when standing over a moving platform going down.
+* [x] Check player jumping when standing over a moving platform going down.
 
 ### Nice to have
 
