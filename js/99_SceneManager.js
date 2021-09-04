@@ -82,7 +82,8 @@ function createplatformsAndPlatforms() {
     SCREEN_WIDTH - PLATFORM_HEIGHT / 2,
     SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT * 1.25
   );
-  const nextPlayerPosD2 = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT * 2);
+  const nextPlayerPosD2 = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
+
   scene1.doors.push(new Door(rightDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 1, nextPlayerPosD2, 1));
 
   const coinCoord = new Coord(SCREEN_WIDTH / 3 + 120, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT / 2);
@@ -99,7 +100,7 @@ function createplatformsAndPlatforms() {
   const p1L2coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5);
   scene2.platforms.push(new Platform(p1L2coord, 70, PLATFORM_HEIGHT));
 
-  const p2L2coord = new Coord(140, 50);
+  const p2L2coord = new Coord(140, 60);
   const p2L2BottomY = SCREEN_HEIGHT - PLATFORM_HEIGHT - p2L2coord.y;
   const p2L2BottomPos = new Coord(p2L2coord.x, p2L2BottomY);
   const p2L2MovSeq = new MovementSequence();
@@ -114,13 +115,14 @@ function createplatformsAndPlatforms() {
   const s1L2 = new Server(s1L2coord);
   scene2.servers.push(s1L2);
   
-  
   scenes.push(scene2);
 }
 
 function changeScene(scene, newpos) {
   currentScene = scene;
-  player.pos = newpos;
+  player.pos.copyCoord(newpos);
+  player.oldPos.copyCoord(player.pos);
+  player.boundBox.pos.copyCoord(player.pos);
 }
 
 function initializeKeyboardListeners() {

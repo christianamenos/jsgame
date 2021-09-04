@@ -64,7 +64,9 @@ This is a platform game with puzzles.
 * [x] Solved undetected jumps
 * [x] When the player jumps goes slower I think
 * [x] In some cases, the lateral collision detection also is not noticed properly, sometimes it happens, sometimes no, so I think it's because of the same nature of error.
-* [ ] Check collisions with moving platforms.
+* [x] Check collisions with moving platforms.
+* [x] Check change level issue.
+* [ ] Check player jumping when standing over a moving platform going down.
 
 ### Nice to have
 
