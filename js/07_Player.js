@@ -51,11 +51,12 @@ class Player {
     scenes[currentScene].platforms.forEach((platform) => {
       if (
         this.standingPlatform &&
-        (this.pos.x + this.width < this.standingPlatform ||
-          this.pos.x > this.standingPlatform + this.standingPlatform.width)
+        (this.pos.x + this.width < this.standingPlatform.pos.x ||
+          this.pos.x > this.standingPlatform.pos.x + this.standingPlatform.width)
       ) {
         this.standingPlatform = null;
       }
+
       if (CollisionManager.areBoundingContainersColliding(this.boundBox, platform.boundBox)) {
         if (CollisionManager.isCollidingFromTop(player, platform)) {
           isPlayerJumping = false;
@@ -86,6 +87,21 @@ class Player {
     scenes[currentScene].doors.forEach((door) => {
       if (door.status == 1 && CollisionManager.areBoundingContainersColliding(this.boundBox, door.boundBox)) {
         changeScene(door.nextScene, door.nextPlayerPos);
+      }
+    });
+
+    scenes[currentScene].servers.forEach((server) => {
+      if (actionKeyPressed && !server.isFixed && CollisionManager.areBoundingContainersColliding(this.boundBox, server.boundBox)) {
+        let msg = '<p>ThE sErVeR iS rUnNinG OuT oF <strong>SPACE</strong>.';
+        if (coinCounter < 3) {
+          msg += '<br/> CoLlEcT 3 sEcUrItY cArDs Or mOrE tO gEt AcCeSs.</p>';
+        } else {
+          msg += '<br/> PrOcEdInG cLeAnInG dIsK sPaCe... Operation succeded. All systems running back to normal.</p>';
+        }
+        server.isFixed = true;
+        Message.openDialog(msg);
+        coinCounter -= 3;
+        actionKeyPressed = false;
       }
     });
   }

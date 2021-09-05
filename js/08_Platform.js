@@ -1,7 +1,7 @@
 class Platform {
   constructor(topLeftCoord, width, height, color, isAffectedByGravity, isSolidObject, movementSequence) {
     if (!color) {
-      color = "#663333";
+      color = "#999";
     }
     this.pos = topLeftCoord;
     this.oldPos = Coord.clone(topLeftCoord);

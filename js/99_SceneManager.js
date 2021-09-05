@@ -3,8 +3,8 @@ function gameLoop() {
   if (!isPaused && !isGameOver) {
     calculateScene();
     drawScene();
-  } else {
-    alert("GAME OVER!");
+  } else if(isGameOver) {
+    alert('GAME OVER!');
     document.location.reload();
   }
   requestAnimationFrame(gameLoop);
@@ -141,6 +141,14 @@ function initializeKeyboardListeners() {
       jumpKeyPressed = true;
     }
 
+    if (!actionKeyPressed && event.key == "Enter") {
+      if (document.getElementsByClassName('msg').length > 0) {
+        Message.closeDialog();
+      } else {
+        actionKeyPressed = true;
+      }
+    }
+
     player.updateSpeed();
   });
 
@@ -169,7 +177,6 @@ function drawBackground(context) {
 
   let borderOpacity = 1;
   let fillOpacity = 1;
-  let borderHexOpacity = Math.floor(255 * borderOpacity).toString(16).padStart(2, '0');
   let fillHexOpacity = Math.floor(255 * fillOpacity).toString(16).padStart(2, '0');
 
   // Draw rows
@@ -177,30 +184,18 @@ function drawBackground(context) {
     let xSpacer = isOddRow ? 0 : colWidthAux;
     // Draw columns
     for (let j = 0; j < numColumns; j++) {
-      drawHexagon(context, size, xSpacer + j * colWidth, i * rowHeight, borderHexOpacity, fillHexOpacity);
+      drawHexagon(context, size, xSpacer + j * colWidth, i * rowHeight, fillHexOpacity);
     }
     isOddRow = !isOddRow;
   }
 }
 
 
-function drawHexagon(context, size, x, y, borderHexOpacity, fillHexOpacity) {
-  drawFigure(context, 6, size, x, y, borderHexOpacity, fillHexOpacity, 0);
+function drawHexagon(context, size, x, y, fillHexOpacity) {
+  drawFigure(context, 6, size, x, y, fillHexOpacity, 0);
 }
 
-function drawFigure(context, sides, radius, x, y, borderHexOpacity, fillHexOpacity, startAt) {
-  // if (!startAt) startAt = 0;
-
-  /*
-  if (!borderOpacity) {
-    borderOpacity = 'ff';
-  }
-
-  if (!fillOpacity) {
-    fillOpacity = '00';
-  }
-  */
-  
+function drawFigure(context, sides, radius, x, y, fillHexOpacity, startAt) {
   const vertexDistance = (2 * Math.PI) / sides;
   context.beginPath();
   for (var i = 0; i < sides; i++) {
@@ -209,17 +204,9 @@ function drawFigure(context, sides, radius, x, y, borderHexOpacity, fillHexOpaci
       y + radius * Math.sin(vertexDistance * i + startAt)
     );
   }
-  // context.lineWidth = 1;
-  // context.strokeStyle = "#3399ff" + borderHexOpacity;
-  // context.strokeStyle = "#ffffff" + borderHexOpacity;
-  // context.shadowBlur = 5;
-  // context.shadowColor = "#006699" + borderHexOpacity;
-  // context.fillStyle = "#3399ff" + fillHexOpacity;
   context.fillStyle = "#ffffff" + fillHexOpacity;
   context.fill();
   context.closePath();
-  // context.stroke();
-  // context.shadowBlur = 0;
 }
 
 initializeScene();

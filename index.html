@@ -1,36 +1,83 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Montfoc - js13kgames 2021</title>
-        <style>
-            body, html {
-                background-color: #151515;
-            }
+  <head>
+    <meta charset="utf-8" />
+    <title>Montfoc - js13kgames 2021</title>
+    <style>
+      body,
+      html {
+        background-color: #151515;
+      }
 
-            #viewport {
-                background-color: #ccc;
-                background: linear-gradient(45deg, #ccc 42%, #19c 48%,#ccc 60%, #ccc 100%);
-                animation: movingbg 10s ease infinite;
-                background-size: 300%, 300%;
-            }
+      #viewportWrapper {
+        width: 600px;
+        height: 300px;
+        position: relative;
+      }
 
-            @keyframes movingbg {
-                0% {
-                    background-position: 0 0;
-                }
-                50% {
-                    background-position: 100% 0;
-                }
-                100% {
-                    background-position: 0 0;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Montfoc - js13kgames 2021</h1>
-        <canvas id="viewport" width="600" height="300"></canvas>
-        <script src="build/build.js"></script>
-    </body>
+      .msg {
+        font-size: 1.5em;
+        width: 560px;
+        height: 260px;
+        outline: 20px solid #000;
+        border: 1px solid #0f0;
+        background-color: #000;
+        color: #0f0;
+        position: absolute;
+        box-sizing: border-box;
+        top: 20px;
+        left: 20px;
+        z-index: 3;
+        padding: 20px;
+        font-family: "Courier New", Courier, monospace;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.5;
+      }
+
+      .msg button {
+        font-size: 0.75em;
+        background-color: transparent;
+        border: 1px solid #0f0;
+        color: #0f0;
+        padding: 0.5em 1em;
+        cursor: pointer;
+      }
+
+      .msg button:hover {
+        font-size: 0.75em;
+        background-color: #0f0;
+        color: #000;
+      }
+
+      #viewport {
+        background-color: #ccc;
+        background: linear-gradient(45deg, #ccc 42%, #19c 48%, #ccc 60%, #ccc 100%);
+        animation: movingbg 10s ease infinite;
+        background-size: 300%, 300%;
+      }
+
+      @keyframes movingbg {
+        0% {
+          background-position: 0 0;
+        }
+        50% {
+          background-position: 100% 0;
+        }
+        100% {
+          background-position: 0 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Montfoc - js13kgames 2021</h1>
+    <div id="viewportWrapper">
+      <canvas id="viewport" width="600" height="300"></canvas>
+    </div>
+    <script src="build/build.js"></script>
+  </body>
 </html>

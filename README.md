@@ -43,13 +43,13 @@ This is a platform game with puzzles.
 * [x] Reposition player on change scene
 * [x] Sever
 * [x] Moving platforms
+* [x] Server logic and dialog
 * [ ] Key tutorial in first scene
 * [ ] Doors improved
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
 * [ ] Improved Game over / End game
 * [ ] Start game
-* [ ] Server logic and dialog
 * [ ] Sounds / Music
 * [ ] Astronaut humanized
 * [ ] Make loop movement a feature for platforms
@@ -67,6 +67,7 @@ This is a platform game with puzzles.
 * [x] Check collisions with moving platforms.
 * [x] Check change level issue.
 * [x] Check player jumping when standing over a moving platform going down.
+* [ ] Player is not jumping on platform moving up
 
 ### Nice to have
 
