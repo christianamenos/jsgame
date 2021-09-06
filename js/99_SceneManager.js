@@ -52,7 +52,7 @@ function initializeScene() {
 function drawCounter(context, count) {
   context.font = "16px Arial";
   context.fillStyle = "#333";
-  context.fillText(`Score: ${count}`, 8, 20);
+  context.fillText(`Security credentials: ${count}`, 8, 20);
 }
 
 function createplatformsAndPlatforms() {

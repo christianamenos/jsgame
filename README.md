@@ -68,6 +68,9 @@ This is a platform game with puzzles.
 * [x] Check change level issue.
 * [x] Check player jumping when standing over a moving platform going down.
 * [ ] Player is not jumping on platform moving up
+* [ ] When interacting with the server we are always substracting 3 sec tokens
+* [ ] The background keeps moving even when the game is paused
+* [ ] The player is not changing facing direction
 
 ### Nice to have
 

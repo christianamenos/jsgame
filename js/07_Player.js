@@ -19,12 +19,33 @@ class Player {
     this.ySpeed = 0;
   }
 
+  isMovingLeft() {
+    return this.oldPos.x > this.pos.x;
+  }
+
+
   draw(context) {
+    const sprites = [
+      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 28), 15, 13), color: () => '#fa7206' }, // upside
+      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 41), 15, 1), color: () => '#151515' }, // belt
+      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 42), 15, 7), color: () => '#fa7206' }, // pants
+      { shape: new Rectangle(new Coord(this.pos.x + 2, this.pos.y + 28), 6, 13), color: () => '#293a66' }, // oxygen
+      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 49), 15, 2), color: () => '#151515' }, // shoe
+      { shape: new Rectangle(new Coord(this.pos.x + 12, this.pos.y + 32), 13, 6), color: () => '#ca5206' }, // arm
+      { shape: new Rectangle(new Coord(this.pos.x + 25, this.pos.y + 32), 2, 6), color: () => '#151515' }, // hand
+      { shape: new Circle(new Coord(this.pos.x + 15, this.pos.y + 15), 15), color: () => '#3cf' }, // helmet
+    ];
+    sprites.forEach((sprite) => {
+      sprite.shape.draw(context, sprite.color());
+    });
+
+    /*
     context.beginPath();
     context.rect(this.pos.x, this.pos.y, this.width, this.height);
     context.fillStyle = this.color;
     context.fill();
     context.closePath();
+    */
   }
 
   keepInsideViewportLimits() {
