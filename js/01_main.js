@@ -11,8 +11,9 @@ const DEFAULT_PLAYER_HEIGHT = 50;
 const COIN_WIDTH = 5;
 const COLLISION_SPACER = 0.001;
 const NUM_SCENES = 2;
+const SCREENS = ['gameMenu', 'story', 'viewportWrapper', 'gameWin', 'gameOver'];
 
-let currentScene = 1; // 0;
+let currentScene = 0;
 let player;
 let scenes = [];
 let rightKeyPressed = false;
@@ -25,3 +26,4 @@ let isPaused = true;
 let isGameOver = false;
 let coinCounter = 0;
 let frame = 0;
+let currentScreen = 0; // 0 => game menu, 1 => story, 2 => game, 3 => game over, 4 => win game

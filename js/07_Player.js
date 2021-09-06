@@ -62,7 +62,7 @@ class Player {
       this.oldPos.x = this.pos.x;
       this.pos.x = SCREEN_WIDTH - this.width;
     }
-    if (this.pos.y + this.height >= SCREEN_HEIGHT) {
+    if (this.pos.y >= SCREEN_HEIGHT) {
       isPaused = true;
       isGameOver = true;
     }

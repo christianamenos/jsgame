@@ -18,4 +18,15 @@ class Message {
     });
     isPaused = false;
   }
+
+  static hideAll() {
+    SCREENS.forEach((screen) => {
+      document.getElementById(screen).classList.add('hidden');
+    });
+  }
+
+  static showCurrentScreen() {
+    Message.hideAll();
+    document.getElementById(SCREENS[currentScreen]).classList.remove('hidden');
+  }
 }

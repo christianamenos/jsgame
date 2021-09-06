@@ -3,9 +3,11 @@ function gameLoop() {
   if (!isPaused && !isGameOver) {
     calculateScene();
     drawScene();
-  } else if(isGameOver) {
-    alert('GAME OVER!');
-    document.location.reload();
+  } else if (isGameOver) {
+    currentScreen = 4;
+    isGameOver = false;
+    Message.showCurrentScreen();
+    restartGame();
   }
   requestAnimationFrame(gameLoop);
 }
@@ -40,13 +42,20 @@ function calculateScene() {
   player.move();
 }
 
-function initializeScene() {
-  // const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
-  const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
+function restartGame() {
+  scenes = [];
+  coinCounter = 0;
+  currentScene = 0;
+  const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
   player = new Player(playerCoord);
-  initializeKeyboardListeners();
-  createplatformsAndPlatforms();
+
+  buildScenes();
   drawScene();
+}
+
+function initGame() {
+  initializeKeyboardListeners();
+  restartGame();
 }
 
 function drawCounter(context, count) {
@@ -55,7 +64,7 @@ function drawCounter(context, count) {
   context.fillText(`Security credentials: ${count}`, 8, 20);
 }
 
-function createplatformsAndPlatforms() {
+function buildScenes() {
   // LEVEL 1
   const scene1 = new Scene();
   const p1coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT);
@@ -94,8 +103,13 @@ function createplatformsAndPlatforms() {
   const scene2 = new Scene();
 
   const doorL2D1Coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT * 1.25);
-  const nextPlayerPosL2D1 = new Coord(SCREEN_WIDTH - 10 - player.width, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
-  scene2.doors.push(new Door(doorL2D1Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 0, nextPlayerPosL2D1, 1));
+  const nextPlayerPosL2D1 = new Coord(
+    SCREEN_WIDTH - 10 - player.width,
+    SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER
+  );
+  scene2.doors.push(
+    new Door(doorL2D1Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 0, nextPlayerPosL2D1, 1)
+  );
 
   const p1L2coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5);
   scene2.platforms.push(new Platform(p1L2coord, 70, PLATFORM_HEIGHT));
@@ -111,10 +125,10 @@ function createplatformsAndPlatforms() {
   const p3L2coord = Coord.clone(p4coord);
   scene2.platforms.push(new Platform(p3L2coord, 100, PLATFORM_HEIGHT));
 
-  const s1L2coord = new Coord(p3L2coord.x + scene2.platforms[2].width/2 - 30, p3L2coord.y - 80);
+  const s1L2coord = new Coord(p3L2coord.x + scene2.platforms[2].width / 2 - 30, p3L2coord.y - 80);
   const s1L2 = new Server(s1L2coord);
   scene2.servers.push(s1L2);
-  
+
   scenes.push(scene2);
 }
 
@@ -127,29 +141,21 @@ function changeScene(scene, newpos) {
 
 function initializeKeyboardListeners() {
   document.addEventListener("keydown", function (event) {
-    if (event.key == "ArrowLeft") {
-      leftKeyPressed = true;
-      event.preventDefault();
+    switch (currentScreen) {
+      case 2:
+        processKeyPressDuringGame(event);
+        break;
+      case 1:
+        isPaused = false;
+      case 0:
+        currentScreen++;
+        Message.showCurrentScreen();
+        break;
+      case 3:
+      case 4:
+        currentScreen = 0;
+        Message.showCurrentScreen();
     }
-
-    if (event.key == "ArrowRight") {
-      rightKeyPressed = true;
-      event.preventDefault();
-    }
-
-    if (!isPlayerJumping && event.key == " ") {
-      jumpKeyPressed = true;
-    }
-
-    if (!actionKeyPressed && event.key == "Enter") {
-      if (document.getElementsByClassName('msg').length > 0) {
-        Message.closeDialog();
-      } else {
-        actionKeyPressed = true;
-      }
-    }
-
-    player.updateSpeed();
   });
 
   document.addEventListener("keyup", function (event) {
@@ -165,19 +171,46 @@ function initializeKeyboardListeners() {
   });
 }
 
+function processKeyPressDuringGame(event) {
+  if (event.key == "ArrowLeft") {
+    leftKeyPressed = true;
+    event.preventDefault();
+  }
+
+  if (event.key == "ArrowRight") {
+    rightKeyPressed = true;
+    event.preventDefault();
+  }
+
+  if (!isPlayerJumping && event.key == " ") {
+    jumpKeyPressed = true;
+  }
+
+  if (!actionKeyPressed && event.key == "Enter") {
+    if (document.getElementsByClassName("msg").length > 0) {
+      Message.closeDialog();
+    } else {
+      actionKeyPressed = true;
+    }
+  }
+
+  player.updateSpeed();
+}
+
 function drawBackground(context) {
   const size = 20;
   const colWidthAux = size * 1.6;
-  
-  const rowHeight = size*0.925;
+
+  const rowHeight = size * 0.925;
   const colWidth = size * 2 * 1.6;
   const numColumns = SCREEN_WIDTH / colWidth + 1;
   const numRows = SCREEN_HEIGHT / rowHeight + 1;
   let isOddRow = false;
 
-  let borderOpacity = 1;
   let fillOpacity = 1;
-  let fillHexOpacity = Math.floor(255 * fillOpacity).toString(16).padStart(2, '0');
+  let fillHexOpacity = Math.floor(255 * fillOpacity)
+    .toString(16)
+    .padStart(2, "0");
 
   // Draw rows
   for (let i = 0; i < numRows; i++) {
@@ -189,7 +222,6 @@ function drawBackground(context) {
     isOddRow = !isOddRow;
   }
 }
-
 
 function drawHexagon(context, size, x, y, fillHexOpacity) {
   drawFigure(context, 6, size, x, y, fillHexOpacity, 0);
@@ -209,5 +241,5 @@ function drawFigure(context, sides, radius, x, y, fillHexOpacity, startAt) {
   context.closePath();
 }
 
-initializeScene();
+initGame();
 gameLoop();

@@ -44,12 +44,13 @@ This is a platform game with puzzles.
 * [x] Sever
 * [x] Moving platforms
 * [x] Server logic and dialog
-* [ ] Key tutorial in first scene
+* [x] Start game
+* [x] End game and restart
 * [ ] Doors improved
+* [ ] Finish story, end game and win game
+* [ ] Key tutorial in first scene
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
-* [ ] Improved Game over / End game
-* [ ] Start game
 * [ ] Sounds / Music
 * [ ] Astronaut humanized
 * [ ] Make loop movement a feature for platforms
