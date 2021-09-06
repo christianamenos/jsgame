@@ -23,17 +23,16 @@ class Player {
     return this.oldPos.x > this.pos.x;
   }
 
-
   draw(context) {
     const sprites = [
-      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 28), 15, 13), color: () => '#fa7206' }, // upside
-      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 41), 15, 1), color: () => '#151515' }, // belt
-      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 42), 15, 7), color: () => '#fa7206' }, // pants
-      { shape: new Rectangle(new Coord(this.pos.x + 2, this.pos.y + 28), 6, 13), color: () => '#293a66' }, // oxygen
-      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 49), 15, 2), color: () => '#151515' }, // shoe
-      { shape: new Rectangle(new Coord(this.pos.x + 12, this.pos.y + 32), 13, 6), color: () => '#ca5206' }, // arm
-      { shape: new Rectangle(new Coord(this.pos.x + 25, this.pos.y + 32), 2, 6), color: () => '#151515' }, // hand
-      { shape: new Circle(new Coord(this.pos.x + 15, this.pos.y + 15), 15), color: () => '#3cf' }, // helmet
+      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 28), 15, 13), color: () => "#fa7206" }, // upside
+      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 41), 15, 1), color: () => "#151515" }, // belt
+      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 42), 15, 7), color: () => "#fa7206" }, // pants
+      { shape: new Rectangle(new Coord(this.pos.x + 2, this.pos.y + 28), 6, 13), color: () => "#293a66" }, // oxygen
+      { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 49), 15, 2), color: () => "#151515" }, // shoe
+      { shape: new Rectangle(new Coord(this.pos.x + 12, this.pos.y + 32), 13, 6), color: () => "#ca5206" }, // arm
+      { shape: new Rectangle(new Coord(this.pos.x + 25, this.pos.y + 32), 2, 6), color: () => "#151515" }, // hand
+      { shape: new Circle(new Coord(this.pos.x + 15, this.pos.y + 15), 15), color: () => "#3cf" }, // helmet
     ];
     sprites.forEach((sprite) => {
       sprite.shape.draw(context, sprite.color());
@@ -106,18 +105,29 @@ class Player {
     });
 
     scenes[currentScene].doors.forEach((door) => {
-      if (door.status == 1 && CollisionManager.areBoundingContainersColliding(this.boundBox, door.boundBox)) {
-        changeScene(door.nextScene, door.nextPlayerPos);
+      if (door.status == 1) {
+        if (CollisionManager.areBoundingContainersColliding(this.boundBox, door.boundBox)) {
+          changeScene(door.nextScene, door.nextPlayerPos);
+        }
+        if (CollisionManager.areBoundingContainersColliding(this.boundBox, door.boundBoxAnim)) {
+          door.open();
+        } else {
+          door.close();
+        }
       }
     });
 
     scenes[currentScene].servers.forEach((server) => {
-      if (actionKeyPressed && !server.isFixed && CollisionManager.areBoundingContainersColliding(this.boundBox, server.boundBox)) {
-        let msg = '<p>ThE sErVeR iS rUnNinG OuT oF <strong>SPACE</strong>.';
+      if (
+        actionKeyPressed &&
+        !server.isFixed &&
+        CollisionManager.areBoundingContainersColliding(this.boundBox, server.boundBox)
+      ) {
+        let msg = "<p>ThE sErVeR iS rUnNinG OuT oF <strong>SPACE</strong>.";
         if (coinCounter < 3) {
-          msg += '<br/> CoLlEcT 3 sEcUrItY cArDs Or mOrE tO gEt AcCeSs.</p>';
+          msg += "<br/> CoLlEcT 3 sEcUrItY cArDs Or mOrE tO gEt AcCeSs.</p>";
         } else {
-          msg += '<br/> PrOcEdInG cLeAnInG dIsK sPaCe... Operation succeded. All systems running back to normal.</p>';
+          msg += "<br/> PrOcEdInG cLeAnInG dIsK sPaCe... Operation succeded. All systems running back to normal.</p>";
         }
         server.isFixed = true;
         Message.openDialog(msg);
