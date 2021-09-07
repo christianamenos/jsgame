@@ -147,6 +147,7 @@ function initializeKeyboardListeners() {
         break;
       case 1:
         isPaused = false;
+        resumeBackground();
       case 0:
         currentScreen++;
         Message.showCurrentScreen();
@@ -195,6 +196,14 @@ function processKeyPressDuringGame(event) {
   }
 
   player.updateSpeed();
+}
+
+function resumeBackground() {
+  document.getElementById('viewport').classList.remove('paused');
+}
+
+function pauseBackground() {
+  document.getElementById('viewport').classList.add('paused');
 }
 
 function drawBackground(context) {

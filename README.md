@@ -43,17 +43,18 @@ This is a platform game with puzzles.
 * [x] Reposition player on change scene
 * [x] Sever
 * [x] Moving platforms
+* [x] Make loop movement a feature for platforms
 * [x] Server logic and dialog
 * [x] Start game
 * [x] End game and restart
-* [ ] Doors improved
+* [x] Doors improved
+* [ ] Astronaut humanized
 * [ ] Finish story, end game and win game
 * [ ] Key tutorial in first scene
+* [ ] Make additional levels
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
 * [ ] Sounds / Music
-* [ ] Astronaut humanized
-* [ ] Make loop movement a feature for platforms
 
 ### Bugs
 
@@ -68,10 +69,10 @@ This is a platform game with puzzles.
 * [x] Check collisions with moving platforms.
 * [x] Check change level issue.
 * [x] Check player jumping when standing over a moving platform going down.
-* [ ] Player is not jumping on platform moving up
-* [ ] When interacting with the server we are always substracting 3 sec tokens
-* [ ] The background keeps moving even when the game is paused
-* [ ] The player is not changing facing direction
+* [x] The background keeps moving even when the game is paused.
+* [ ] Player is not jumping on platform moving up.
+* [ ] When interacting with the server we are always substracting 3 sec tokens.
+* [ ] The player is not changing facing direction.
 
 ### Nice to have
 

@@ -54,13 +54,6 @@
         color: #000;
       }
 
-      #viewport {
-        background-color: #ccc;
-        background: linear-gradient(45deg, #ccc 42%, #19c 48%, #ccc 60%, #ccc 100%);
-        animation: movingbg 10s ease infinite;
-        background-size: 300%, 300%;
-      }
-
       #gameScreen {
         position: relative;
         width: 600px;
@@ -94,6 +87,18 @@
         display: none !important;
       }
 
+      #viewport {
+        background-color: #ccc;
+        background: linear-gradient(45deg, #ccc 42%, #19c 48%, #ccc 60%, #ccc 100%);
+        animation: movingbg 10s ease infinite;
+        background-size: 300%, 300%;
+        animation-play-state: running;
+      }
+
+      #viewport.paused {
+        animation-play-state: paused;
+      }
+
       @keyframes movingbg {
         0% {
           background-position: 0 0;
@@ -119,7 +124,7 @@
         <p>Press any button to start the game.</p>
       </div>
       <div id="viewportWrapper" class="hidden">
-        <canvas id="viewport" width="600" height="300"></canvas>
+        <canvas id="viewport" class="paused" width="600" height="300"></canvas>
       </div>
       <div id="gameWin" class="hidden">
         <p>You saved the Babylon 5, you are the hero!</p>

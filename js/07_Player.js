@@ -9,6 +9,7 @@ class Player {
     this.ySpeed = 0;
     this.boundBox = new BoundingBox(Coord.clone(this.pos), this.width, this.height);
     this.standingPlatform = null;
+    this.movingDirection = this.oldPos.x - this.pos.x;
   }
 
   applyGravity() {
@@ -24,7 +25,7 @@ class Player {
   }
 
   draw(context) {
-    const sprites = [
+    let sprites = [
       { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 28), 15, 13), color: () => "#fa7206" }, // upside
       { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 41), 15, 1), color: () => "#151515" }, // belt
       { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 42), 15, 7), color: () => "#fa7206" }, // pants
@@ -37,14 +38,6 @@ class Player {
     sprites.forEach((sprite) => {
       sprite.shape.draw(context, sprite.color());
     });
-
-    /*
-    context.beginPath();
-    context.rect(this.pos.x, this.pos.y, this.width, this.height);
-    context.fillStyle = this.color;
-    context.fill();
-    context.closePath();
-    */
   }
 
   keepInsideViewportLimits() {
@@ -63,6 +56,7 @@ class Player {
     }
     if (this.pos.y >= SCREEN_HEIGHT) {
       isPaused = true;
+      pauseBackground();
       isGameOver = true;
     }
   }
@@ -106,13 +100,14 @@ class Player {
 
     scenes[currentScene].doors.forEach((door) => {
       if (door.status == 1) {
-        if (CollisionManager.areBoundingContainersColliding(this.boundBox, door.boundBox)) {
+        if (CollisionManager.areBoundingContainersColliding(this.boundBox, door.bBox)) {
           changeScene(door.nextScene, door.nextPlayerPos);
-        }
-        if (CollisionManager.areBoundingContainersColliding(this.boundBox, door.boundBoxAnim)) {
-          door.open();
         } else {
-          door.close();
+          if (CollisionManager.areBoundingContainersColliding(this.boundBox, door.bBoxAnim)) {
+            door.open();
+          } else {
+            door.close();
+          }
         }
       }
     });

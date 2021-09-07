@@ -10,6 +10,7 @@ class Message {
     div.classList.add("msg");
     document.getElementById("viewportWrapper").appendChild(div);
     isPaused = true;
+    pauseBackground();
   }
 
   static closeDialog() {
@@ -17,6 +18,7 @@ class Message {
       elem.remove();
     });
     isPaused = false;
+    resumeBackground();
   }
 
   static hideAll() {
