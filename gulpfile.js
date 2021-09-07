@@ -2,6 +2,8 @@ const { series, watch, src, dest } = require("gulp");
 const fs = require("fs");
 const bundleJSName = "build.js";
 const minify = require("gulp-minify");
+const cleanCSS = require("gulp-clean-css");
+const zip = require("gulp-zip");
 const sourceDir = "./js/";
 const destinationDir = "./build/";
 
@@ -59,17 +61,43 @@ function minifyJS(cb) {
   src(destinationDir + bundleJSName)
     .pipe(minify())
     .on("error", () => {
-      console.log("Syntax error preventing to minimize an generate new file. Stopping further execution.");
+      console.log("Syntax error preventing to minimize while generating the new JS file. Stopping further execution.");
     })
     .pipe(dest(destinationDir));
   cb();
 }
 
-function zip(cb) {
+function minifyCSS(cb) {
+  src("css/*.css")
+    .pipe(cleanCSS())
+    .on("error", () => {
+      console.log("Syntax error preventing to minimize while generating the new CSS file. Stopping further execution.");
+    })
+    .pipe(dest(destinationDir));
+  cb();
+}
+
+function zipBundle(cb) {
+  src(destinationDir + "*")
+    .pipe(zip("montfoc_game.zip"))
+    .pipe(dest(destinationDir));
+  cb();
+}
+
+function cleanBuildjs(cb) {
+  try {
+    console.log(destinationDir + bundleJSName);
+    if (fs.existsSync(destinationDir + bundleJSName)) {
+      // fs.unlinkSync(destinationDir + bundleJSName);
+      console.log('EXISTS');
+    }
+  } catch (err) {
+    console.log("Error on deleting file!");
+  }
   cb();
 }
 exports.default = function () {
-  watch(`${sourceDir}*.js`, series(clean, createDestinationFolder, jsBundle, minifyJS));
+  watch(`${sourceDir}*.js`, series(clean, createDestinationFolder, jsBundle, minifyJS, minifyCSS));
 };
-exports.build = series(clean, createDestinationFolder, jsBundle, minifyJS);
-exports.bundle = series(clean, createDestinationFolder, jsBundle, minifyJS, zip);
+exports.build = series(clean, createDestinationFolder, jsBundle, minifyJS, minifyCSS, cleanBuildjs);
+exports.bundle = series(clean, createDestinationFolder, jsBundle, minifyJS, zipBundle);

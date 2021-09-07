@@ -48,14 +48,17 @@ This is a platform game with puzzles.
 * [x] Start game
 * [x] End game and restart
 * [x] Doors improved
-* [ ] Astronaut humanized
+* [x] Astronaut humanized
+* [x] Adding music
+* [x] Minimize css
+* [ ] Package the build
+* [ ] Silence music button
 * [ ] Finish story, end game and win game
 * [ ] Make additional levels
 * [ ] Key tutorial in first scene
 * [ ] Move security tokens to it's own space in the screen, outisde the canvas
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
-* [ ] Sounds / Music
 
 ### Bugs
 
@@ -74,6 +77,7 @@ This is a platform game with puzzles.
 * [x] The player is not changing facing direction.
 * [x] When interacting with the server we are always substracting 3 sec tokens.
 * [ ] Player is not jumping on platform moving up.
+* [ ] I can go though the door even if it's not fully opened
 
 ### Nice to have
 

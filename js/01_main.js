@@ -27,3 +27,5 @@ let isGameOver = false;
 let coinCounter = 0;
 let frame = 0;
 let currentScreen = 0; // 0 => game menu, 1 => story, 2 => game, 3 => game over, 4 => win game
+let isSongPlaying = false;
+let isSongGenerated = false;

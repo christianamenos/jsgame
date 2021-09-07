@@ -1,3 +1,7 @@
+let songPlayer = new CPlayer();
+songPlayer.init(song);
+isSongGenerated = songPlayer.generate() >= 1;
+
 function gameLoop() {
   frame = (frame + 1) % 180;
   if (!isPaused && !isGameOver) {
@@ -146,8 +150,24 @@ function initializeKeyboardListeners() {
         processKeyPressDuringGame(event);
         break;
       case 1:
-        isPaused = false;
-        resumeBackground();
+        if (!isSongGenerated) {
+          try {
+            isSongGenerated = songPlayer.generate() >= 1;
+          } catch(err) {
+            console.log('ASD');
+          }
+        }
+        if (!isSongPlaying && isSongGenerated) {
+          isSongPlaying = true;
+          var wave = songPlayer.createWave();
+          var audio = document.createElement("audio");
+          audio.src = URL.createObjectURL(new Blob([wave], { type: "audio/wav" }));
+          audio.play();
+          audio.volume = 0.1;
+          audio.loop = true;
+          isPaused = false;
+          resumeBackground();
+        }
       case 0:
         currentScreen++;
         Message.showCurrentScreen();
@@ -199,11 +219,11 @@ function processKeyPressDuringGame(event) {
 }
 
 function resumeBackground() {
-  document.getElementById('viewport').classList.remove('paused');
+  document.getElementById("viewport").classList.remove("paused");
 }
 
 function pauseBackground() {
-  document.getElementById('viewport').classList.add('paused');
+  document.getElementById("viewport").classList.add("paused");
 }
 
 function drawBackground(context) {
@@ -221,10 +241,8 @@ function drawBackground(context) {
     .toString(16)
     .padStart(2, "0");
 
-  // Draw rows
   for (let i = 0; i < numRows; i++) {
     let xSpacer = isOddRow ? 0 : colWidthAux;
-    // Draw columns
     for (let j = 0; j < numColumns; j++) {
       drawHexagon(context, size, xSpacer + j * colWidth, i * rowHeight, fillHexOpacity);
     }

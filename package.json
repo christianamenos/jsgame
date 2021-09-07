@@ -18,6 +18,8 @@
   "homepage": "https://github.com/montfoc/js13kgames2021#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
-    "gulp-minify": "^3.1.0"
+    "gulp-clean-css": "^4.3.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-zip": "^5.1.0"
   }
 }

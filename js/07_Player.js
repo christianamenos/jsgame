@@ -135,9 +135,9 @@ class Player {
           msg += "<br/> CoLlEcT 3 sEcUrItY cArDs Or mOrE tO gEt AcCeSs.</p>";
         } else {
           coinCounter -= 3;
+          server.isFixed = true;
           msg += "<br/> PrOcEdInG cLeAnInG dIsK sPaCe... Operation succeded. All systems running back to normal.</p>";
         }
-        server.isFixed = true;
         Message.openDialog(msg);
         actionKeyPressed = false;
       }
