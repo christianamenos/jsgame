@@ -9,7 +9,7 @@ class Player {
     this.ySpeed = 0;
     this.boundBox = new BoundingBox(Coord.clone(this.pos), this.width, this.height);
     this.standingPlatform = null;
-    this.movingDirection = this.oldPos.x - this.pos.x;
+    this.movingDirection = 1;
   }
 
   applyGravity() {
@@ -20,21 +20,33 @@ class Player {
     this.ySpeed = 0;
   }
 
-  isMovingLeft() {
-    return this.oldPos.x > this.pos.x;
+  updateMovingDirection() {
+    if (this.movingDirection < 0 && this.oldPos.x < this.pos.x) {
+      this.movingDirection = 1;
+    } else if (this.movingDirection > 0 && this.oldPos.x > this.pos.x) {
+      this.movingDirection = -1;
+    }
   }
 
   draw(context) {
+    this.updateMovingDirection();
     let sprites = [
       { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 28), 15, 13), color: () => "#fa7206" }, // upside
       { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 41), 15, 1), color: () => "#151515" }, // belt
       { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 42), 15, 7), color: () => "#fa7206" }, // pants
-      { shape: new Rectangle(new Coord(this.pos.x + 2, this.pos.y + 28), 6, 13), color: () => "#293a66" }, // oxygen
       { shape: new Rectangle(new Coord(this.pos.x + 8, this.pos.y + 49), 15, 2), color: () => "#151515" }, // shoe
-      { shape: new Rectangle(new Coord(this.pos.x + 12, this.pos.y + 32), 13, 6), color: () => "#ca5206" }, // arm
-      { shape: new Rectangle(new Coord(this.pos.x + 25, this.pos.y + 32), 2, 6), color: () => "#151515" }, // hand
       { shape: new Circle(new Coord(this.pos.x + 15, this.pos.y + 15), 15), color: () => "#3cf" }, // helmet
     ];
+    if (this.movingDirection >= 0) {
+      sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 2, this.pos.y + 28), 6, 13), color: () => "#293a66" }); // oxygen tanks
+      sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 12, this.pos.y + 32), 13, 6), color: () => "#ca5206" }); // arm
+      sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 25, this.pos.y + 32), 2, 6), color: () => "#151515" }); // hand
+    } else {
+      sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 23, this.pos.y + 28), 6, 13), color: () => "#293a66" }); // oxygen tanks
+      sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 6, this.pos.y + 32), 13, 6), color: () => "#ca5206" }); // arm
+      sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 4, this.pos.y + 32), 2, 6), color: () => "#151515" }); // hand
+    }
+    
     sprites.forEach((sprite) => {
       sprite.shape.draw(context, sprite.color());
     });
@@ -122,11 +134,11 @@ class Player {
         if (coinCounter < 3) {
           msg += "<br/> CoLlEcT 3 sEcUrItY cArDs Or mOrE tO gEt AcCeSs.</p>";
         } else {
+          coinCounter -= 3;
           msg += "<br/> PrOcEdInG cLeAnInG dIsK sPaCe... Operation succeded. All systems running back to normal.</p>";
         }
         server.isFixed = true;
         Message.openDialog(msg);
-        coinCounter -= 3;
         actionKeyPressed = false;
       }
     });

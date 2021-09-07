@@ -50,8 +50,9 @@ This is a platform game with puzzles.
 * [x] Doors improved
 * [ ] Astronaut humanized
 * [ ] Finish story, end game and win game
-* [ ] Key tutorial in first scene
 * [ ] Make additional levels
+* [ ] Key tutorial in first scene
+* [ ] Move security tokens to it's own space in the screen, outisde the canvas
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
 * [ ] Sounds / Music
@@ -70,9 +71,9 @@ This is a platform game with puzzles.
 * [x] Check change level issue.
 * [x] Check player jumping when standing over a moving platform going down.
 * [x] The background keeps moving even when the game is paused.
+* [x] The player is not changing facing direction.
+* [x] When interacting with the server we are always substracting 3 sec tokens.
 * [ ] Player is not jumping on platform moving up.
-* [ ] When interacting with the server we are always substracting 3 sec tokens.
-* [ ] The player is not changing facing direction.
 
 ### Nice to have
 
