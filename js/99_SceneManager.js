@@ -49,9 +49,7 @@ function restartGame() {
   isGameOver = false;
   scenes = [];
   coinCounter = 0;
-  currentScene = 0;
-  const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
-  player = new Player(playerCoord);
+  changeScene(0, new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER));
   buildScenes();
   drawScene();
 }
@@ -130,10 +128,18 @@ function buildScenes() {
 }
 
 function changeScene(scene, newpos) {
+  player = new Player(newpos);
   currentScene = scene;
   player.pos.copyCoord(newpos);
   player.oldPos.copyCoord(player.pos);
   player.boundBox.pos.copyCoord(player.pos);
+  document.querySelectorAll(".scencetut").forEach((scenetut) => {
+    scenetut.classList.add("hidden");
+  });
+  const scenetut = document.getElementById("scene" + (currentScene + 1).toString().padStart(2, "0"));
+  if (scenetut) {
+    scenetut.classList.remove("hidden");
+  }
 }
 
 function initializeKeyboardListeners() {
@@ -146,8 +152,8 @@ function initializeKeyboardListeners() {
         if (!isSongGenerated) {
           try {
             isSongGenerated = songPlayer.generate() >= 1;
-          } catch(err) {
-            console.log('Song loading');
+          } catch (err) {
+            console.log("Song loading");
           }
         }
         if (!isSongPlaying && isSongGenerated) {
@@ -269,27 +275,27 @@ function editVolume(isIncrement) {
   }
   if (currentVolume > 0.9) {
     currentVolume = 0.9;
-  } else if(currentVolume < 0) {
+  } else if (currentVolume < 0) {
     currentVolume = 0;
   }
-  const lis = document.querySelectorAll('#ui-status li');
+  const lis = document.querySelectorAll("#ui-status li");
   lis.forEach((li, index) => {
-    li.classList.remove('active');
+    li.classList.remove("active");
     if (0.3 * (index + 1) <= currentVolume) {
-      li.classList.add('active');
+      li.classList.add("active");
     }
   });
   audio.volume = currentVolume;
 }
-document.getElementById('lvol').addEventListener('click', () => {
+document.getElementById("lvol").addEventListener("click", () => {
   editVolume(false);
 });
-document.getElementById('mvol').addEventListener('click', () => {
+document.getElementById("mvol").addEventListener("click", () => {
   editVolume(true);
 });
 
 function updateCounter(count) {
-  document.getElementById('counter').innerHTML = count;
+  document.getElementById("counter").innerHTML = count;
 }
 
 initGame();
