@@ -9,21 +9,28 @@
     <h1>Montfoc - js13kgames 2021</h1>
     <div id="gameScreen">
       <div id="gameMenu">
-        <h2>GameTitle</h2>
-        <p>Press any button to start the game.</p>
+        <h2>Joe's Space</h2>
+        <code>Press any button to start the game.</code>
       </div>
       <div id="story" class="hidden">
-        <p>In a galaxy far far away...</p>
-        <p>Press any button to start the game.</p>
+        <p>Joe works maintaining and repairing spaceships. Today his job is no different from other days.</p>
+        <p>Or that's what he thought...</p>
+        <code>Press any button to start the game.</code>
       </div>
       <div id="viewportWrapper" class="hidden">
+        <div id="ui-status">
+          <strong>Security credentials: <span id="counter">0</span></strong>
+          <div>VOL. <kbd id="lvol">-</kbd><ul><li class="active"></li><li></li><li></li></ul><kbd id="mvol">+</kbd></div>
+        </div>
         <canvas id="viewport" class="paused" width="600" height="300"></canvas>
       </div>
       <div id="gameWin" class="hidden">
-        <p>You saved the Babylon 5, you are the hero!</p>
+        <p>As expected... Just another day in Joe's life. Now that he has repaired the spaceship is time for a break!</p>
+        <code>Press any button to go to the menu.</code>
       </div>
       <div id="gameOver" class="hidden">
-        <p>Unfortunately you weren't able to save the spaceship and it got autodestroyed.</p>
+        <p>Unfortunately Joe wasn't able to save the spaceship. What started as a normal day ended being his last day.</p>
+        <code>Press any button to go to the menu.</code>
       </div>
     </div>
     <script src="build/build.js"></script>

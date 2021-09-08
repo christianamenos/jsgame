@@ -53,9 +53,9 @@ class Player {
   }
 
   keepInsideViewportLimits() {
-    if (this.pos.y <= 0) {
+    if (this.pos.y <= 30) {
       this.oldPos.y = this.pos.y;
-      this.pos.y = 0;
+      this.pos.y = 30;
       this.ySpeed = 0;
     }
     if (this.pos.x <= 0) {
@@ -70,6 +70,9 @@ class Player {
       isPaused = true;
       pauseBackground();
       isGameOver = true;
+      audio.pause();
+      audio.currentTime = 0;
+      isSongPlaying = false;
     }
   }
 

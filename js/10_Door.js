@@ -10,7 +10,7 @@ class Door {
     this.status = status;
     this.nextScene = nextScene;
     this.nextPlayerPos = nextPlayerPos;
-    this.doorSpeed = 2;
+    this.doorSpeed = 4;
     let bbPos;
     if (this.pos.x == 0) {
       const bbPosAnim = new Coord(this.pos.x + 25, this.pos.y);

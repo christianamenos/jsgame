@@ -9,7 +9,6 @@ function gameLoop() {
     drawScene();
   } else if (isGameOver) {
     currentScreen = 4;
-    isGameOver = false;
     Message.showCurrentScreen();
     restartGame();
   }
@@ -19,7 +18,7 @@ function gameLoop() {
 function drawScene() {
   cleanViewport();
   drawBackground(context);
-  drawCounter(context, coinCounter);
+  updateCounter(coinCounter);
   scenes[currentScene].platforms.forEach((plat) => {
     plat.draw(context);
   });
@@ -47,12 +46,12 @@ function calculateScene() {
 }
 
 function restartGame() {
+  isGameOver = false;
   scenes = [];
   coinCounter = 0;
   currentScene = 0;
   const playerCoord = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
   player = new Player(playerCoord);
-
   buildScenes();
   drawScene();
 }
@@ -60,12 +59,6 @@ function restartGame() {
 function initGame() {
   initializeKeyboardListeners();
   restartGame();
-}
-
-function drawCounter(context, count) {
-  context.font = "16px Arial";
-  context.fillStyle = "#333";
-  context.fillText(`Security credentials: ${count}`, 8, 20);
 }
 
 function buildScenes() {
@@ -154,20 +147,20 @@ function initializeKeyboardListeners() {
           try {
             isSongGenerated = songPlayer.generate() >= 1;
           } catch(err) {
-            console.log('ASD');
+            console.log('Song loading');
           }
         }
         if (!isSongPlaying && isSongGenerated) {
           isSongPlaying = true;
           var wave = songPlayer.createWave();
-          var audio = document.createElement("audio");
           audio.src = URL.createObjectURL(new Blob([wave], { type: "audio/wav" }));
           audio.play();
-          audio.volume = 0.1;
-          audio.loop = true;
           isPaused = false;
           resumeBackground();
+          currentScreen++;
+          Message.showCurrentScreen();
         }
+        break;
       case 0:
         currentScreen++;
         Message.showCurrentScreen();
@@ -266,6 +259,37 @@ function drawFigure(context, sides, radius, x, y, fillHexOpacity, startAt) {
   context.fillStyle = "#ffffff" + fillHexOpacity;
   context.fill();
   context.closePath();
+}
+
+function editVolume(isIncrement) {
+  if (isIncrement) {
+    currentVolume += 0.3;
+  } else {
+    currentVolume -= 0.3;
+  }
+  if (currentVolume > 0.9) {
+    currentVolume = 0.9;
+  } else if(currentVolume < 0) {
+    currentVolume = 0;
+  }
+  const lis = document.querySelectorAll('#ui-status li');
+  lis.forEach((li, index) => {
+    li.classList.remove('active');
+    if (0.3 * (index + 1) <= currentVolume) {
+      li.classList.add('active');
+    }
+  });
+  audio.volume = currentVolume;
+}
+document.getElementById('lvol').addEventListener('click', () => {
+  editVolume(false);
+});
+document.getElementById('mvol').addEventListener('click', () => {
+  editVolume(true);
+});
+
+function updateCounter(count) {
+  document.getElementById('counter').innerHTML = count;
 }
 
 initGame();

@@ -29,3 +29,7 @@ let frame = 0;
 let currentScreen = 0; // 0 => game menu, 1 => story, 2 => game, 3 => game over, 4 => win game
 let isSongPlaying = false;
 let isSongGenerated = false;
+let currentVolume = 0.3;
+let audio = document.createElement("audio");
+audio.volume = currentVolume;
+audio.loop = true;

@@ -1,8 +1,9 @@
-const { series, watch, src, dest } = require("gulp");
+const { series, watch, src, dest,  } = require("gulp");
 const fs = require("fs");
 const bundleJSName = "build.js";
-const minify = require("gulp-minify");
-const cleanCSS = require("gulp-clean-css");
+const jsMinifier = require("gulp-minify");
+const cssMinifier = require("gulp-clean-css");
+const deleteFile = require('gulp-delete-file');
 const zip = require("gulp-zip");
 const sourceDir = "./js/";
 const destinationDir = "./build/";
@@ -59,7 +60,7 @@ function jsBundle(cb) {
 
 function minifyJS(cb) {
   src(destinationDir + bundleJSName)
-    .pipe(minify())
+    .pipe(jsMinifier())
     .on("error", () => {
       console.log("Syntax error preventing to minimize while generating the new JS file. Stopping further execution.");
     })
@@ -69,7 +70,7 @@ function minifyJS(cb) {
 
 function minifyCSS(cb) {
   src("css/*.css")
-    .pipe(cleanCSS())
+    .pipe(cssMinifier())
     .on("error", () => {
       console.log("Syntax error preventing to minimize while generating the new CSS file. Stopping further execution.");
     })
@@ -85,19 +86,13 @@ function zipBundle(cb) {
 }
 
 function cleanBuildjs(cb) {
-  try {
-    console.log(destinationDir + bundleJSName);
-    if (fs.existsSync(destinationDir + bundleJSName)) {
-      // fs.unlinkSync(destinationDir + bundleJSName);
-      console.log('EXISTS');
-    }
-  } catch (err) {
-    console.log("Error on deleting file!");
-  }
+  fs.unlinkSync(destinationDir + bundleJSName);
   cb();
 }
 exports.default = function () {
   watch(`${sourceDir}*.js`, series(clean, createDestinationFolder, jsBundle, minifyJS, minifyCSS));
 };
-exports.build = series(clean, createDestinationFolder, jsBundle, minifyJS, minifyCSS, cleanBuildjs);
-exports.bundle = series(clean, createDestinationFolder, jsBundle, minifyJS, zipBundle);
+exports.build = series(clean, createDestinationFolder, jsBundle, minifyJS, minifyCSS);
+exports.bundle = series(clean, createDestinationFolder, jsBundle, minifyJS);
+//exports.clean = series(cleanBuildjs);
+exports.package = series(cleanBuildjs, zipBundle);
