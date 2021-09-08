@@ -58,6 +58,7 @@ This is a platform game with puzzles.
 * [x] Key tutorial in first scene
 * [ ] Make security credentials server dependent and logic to win the game
 * [ ] Make additional levels
+* [ ] Unfix servers on restart game
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
 * [ ] Package the build

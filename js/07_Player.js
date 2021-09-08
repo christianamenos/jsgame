@@ -39,14 +39,20 @@ class Player {
     ];
     if (this.movingDirection >= 0) {
       sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 2, this.pos.y + 28), 6, 13), color: () => "#293a66" }); // oxygen tanks
-      sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 12, this.pos.y + 32), 13, 6), color: () => "#ca5206" }); // arm
+      sprites.push({
+        shape: new Rectangle(new Coord(this.pos.x + 12, this.pos.y + 32), 13, 6),
+        color: () => "#ca5206",
+      }); // arm
       sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 25, this.pos.y + 32), 2, 6), color: () => "#151515" }); // hand
     } else {
-      sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 23, this.pos.y + 28), 6, 13), color: () => "#293a66" }); // oxygen tanks
+      sprites.push({
+        shape: new Rectangle(new Coord(this.pos.x + 23, this.pos.y + 28), 6, 13),
+        color: () => "#293a66",
+      }); // oxygen tanks
       sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 6, this.pos.y + 32), 13, 6), color: () => "#ca5206" }); // arm
       sprites.push({ shape: new Rectangle(new Coord(this.pos.x + 4, this.pos.y + 32), 2, 6), color: () => "#151515" }); // hand
     }
-    
+
     sprites.forEach((sprite) => {
       sprite.shape.draw(context, sprite.color());
     });
@@ -67,12 +73,7 @@ class Player {
       this.pos.x = SCREEN_WIDTH - this.width;
     }
     if (this.pos.y >= SCREEN_HEIGHT) {
-      isPaused = true;
-      pauseBackground();
-      isGameOver = true;
-      audio.pause();
-      audio.currentTime = 0;
-      isSongPlaying = false;
+      gameOver(false);
     }
   }
 
@@ -134,15 +135,21 @@ class Player {
         CollisionManager.areBoundingContainersColliding(this.boundBox, server.boundBox)
       ) {
         let msg = "<p>ThE sErVeR iS rUnNinG OuT oF <strong>SPACE</strong>.";
-        if (coinCounter < 3) {
-          msg += "<br/> CoLlEcT 3 sEcUrItY cArDs Or mOrE tO gEt AcCeSs.</p>";
+        if (coinCounter < server.secCredsReq) {
+          msg += `<br/> CoLlEcT ${server.secCredsReq} sEcUrItY cArDs Or mOrE tO gEt AcCeSs.</p>`;
+          Message.openDialog(msg);
+          actionKeyPressed = false;
         } else {
-          coinCounter -= 3;
+          coinCounter -= server.secCredsReq;
           server.isFixed = true;
-          msg += "<br/> PrOcEdInG cLeAnInG dIsK sPaCe... Operation succeded. All systems running back to normal.</p>";
+          if (!server.doesActivateDoors()) {
+            gameOver(true);
+          } else {
+            msg += "<br/> PrOcEdInG cLeAnInG dIsK sPaCe... Operation succeded. All systems running back to normal.</p>";
+            Message.openDialog(msg);
+            actionKeyPressed = false;
+          }
         }
-        Message.openDialog(msg);
-        actionKeyPressed = false;
       }
     });
   }

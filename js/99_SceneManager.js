@@ -298,5 +298,20 @@ function updateCounter(count) {
   document.getElementById("counter").innerHTML = count;
 }
 
+function gameOver(isWin) {
+  isPaused = true;
+  pauseBackground();
+  isGameOver = true;
+  audio.pause();
+  audio.currentTime = 0;
+  isSongPlaying = false;
+  if (isWin) {
+    currentScreen = 4;
+  } else {
+    currentScreen = 3;
+  }
+  Message.showCurrentScreen();
+}
+
 initGame();
 gameLoop();
