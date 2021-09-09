@@ -56,12 +56,11 @@ This is a platform game with puzzles.
 * [x] Finish story, end game and win game
 * [x] Move security tokens to it's own space in the screen, outisde the canvas
 * [x] Key tutorial in first scene
-* [ ] Make security credentials server dependent and logic to win the game
+* [x] Make security credentials server dependent and logic to win the game
+* [x] Unfix servers on restart game
 * [ ] Make additional levels
-* [ ] Unfix servers on restart game
-* [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
-* [ ] Electric components
-* [ ] Package the build
+* [ ] Player does not animate when moving
+* [ ] Sounds on jump and accessing server
 
 ### Bugs
 
@@ -83,10 +82,12 @@ This is a platform game with puzzles.
 * [ ] Player is not jumping on platform moving up.
 * [ ] Problem when changing from level 1, to level 2, to level 1, to level 2
 
-
 ### Nice to have
 
 * [ ] Map (?)
+* [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
+* [ ] Electric components
+* [ ] Package the build
 
 ### Questions
 

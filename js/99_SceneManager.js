@@ -7,10 +7,6 @@ function gameLoop() {
   if (!isPaused && !isGameOver) {
     calculateScene();
     drawScene();
-  } else if (isGameOver) {
-    currentScreen = 4;
-    Message.showCurrentScreen();
-    restartGame();
   }
   requestAnimationFrame(gameLoop);
 }
@@ -143,7 +139,7 @@ function changeScene(scene, newpos) {
 }
 
 function initializeKeyboardListeners() {
-  document.addEventListener("keydown", function (event) {
+  keyDownListener = document.addEventListener("keydown", function (event) {
     switch (currentScreen) {
       case 2:
         processKeyPressDuringGame(event);
@@ -178,7 +174,7 @@ function initializeKeyboardListeners() {
     }
   });
 
-  document.addEventListener("keyup", function (event) {
+  keyUpListener = document.addEventListener("keyup", function (event) {
     if (event.key == "ArrowLeft") {
       leftKeyPressed = false;
     }
@@ -269,24 +265,25 @@ function drawFigure(context, sides, radius, x, y, fillHexOpacity, startAt) {
 
 function editVolume(isIncrement) {
   if (isIncrement) {
-    currentVolume += 0.3;
+    currentVolume += 3;
   } else {
-    currentVolume -= 0.3;
+    currentVolume -= 3;
   }
-  if (currentVolume > 0.9) {
-    currentVolume = 0.9;
+  if (currentVolume > 9) {
+    currentVolume = 9;
   } else if (currentVolume < 0) {
     currentVolume = 0;
   }
   const lis = document.querySelectorAll("#ui-status li");
   lis.forEach((li, index) => {
     li.classList.remove("active");
-    if (0.3 * (index + 1) <= currentVolume) {
+    if (3 * (index + 1) <= currentVolume) {
       li.classList.add("active");
     }
   });
-  audio.volume = currentVolume;
+  audio.volume = currentVolume/10;
 }
+
 document.getElementById("lvol").addEventListener("click", () => {
   editVolume(false);
 });
@@ -306,11 +303,12 @@ function gameOver(isWin) {
   audio.currentTime = 0;
   isSongPlaying = false;
   if (isWin) {
-    currentScreen = 4;
-  } else {
     currentScreen = 3;
+  } else {
+    currentScreen = 4;
   }
   Message.showCurrentScreen();
+  restartGame();
 }
 
 initGame();
