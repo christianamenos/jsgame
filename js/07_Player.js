@@ -10,6 +10,7 @@ class Player {
     this.boundBox = new BoundingBox(Coord.clone(this.pos), this.width, this.height);
     this.standingPlatform = null;
     this.movingDirection = 1;
+    this.jumpTimer = 0;
   }
 
   applyGravity() {
@@ -88,7 +89,7 @@ class Player {
       }
 
       if (CollisionManager.areBoundingContainersColliding(this.boundBox, platform.boundBox)) {
-        if (CollisionManager.isCollidingFromTop(player, platform)) {
+        if (this.jumpTimer <=0 && CollisionManager.isCollidingFromTop(player, platform)) {
           isPlayerJumping = false;
           this.stopFalling();
           this.adjustPositonToTopOfElement(platform);
@@ -172,6 +173,8 @@ class Player {
 
     this.boundBox.pos.copyCoord(this.pos);
     this.keepInsideViewportLimits();
+    this.jumpTimer--;
+    if (this.jumpTimer < 0) this.jumpTimer = 0;
   }
 
   adjustPositonToTopOfElement(object) {
@@ -198,6 +201,7 @@ class Player {
       this.ySpeed -= 4;
       this.standingPlatform = null;
       isPlayerJumping = true;
+      this.jumpTimer = 3;
       jumpKeyPressed = false;
       this.oldPos.y = this.pos.y;
       this.pos.y -= COLLISION_SPACER;

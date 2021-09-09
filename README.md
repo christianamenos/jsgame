@@ -59,7 +59,7 @@ This is a platform game with puzzles.
 * [x] Make security credentials server dependent and logic to win the game
 * [x] Unfix servers on restart game
 * [ ] Make additional levels
-* [ ] Player does not animate when moving
+* [ ] Animate player while moving
 * [ ] Sounds on jump and accessing server
 
 ### Bugs
@@ -79,7 +79,7 @@ This is a platform game with puzzles.
 * [x] The player is not changing facing direction.
 * [x] When interacting with the server we are always substracting 3 sec tokens.
 * [x] I can go though the door even if it's not fully opened
-* [ ] Player is not jumping on platform moving up.
+* [x] Player is not jumping on platform moving up.
 * [ ] Problem when changing from level 1, to level 2, to level 1, to level 2
 
 ### Nice to have
@@ -88,8 +88,3 @@ This is a platform game with puzzles.
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
 * [ ] Electric components
 * [ ] Package the build
-
-### Questions
-
-* [x] Can we build a computer like the one in Code Lyoko show?
-* 
