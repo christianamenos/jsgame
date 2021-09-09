@@ -34,6 +34,13 @@ class Server {
     ];
   }
 
+  fix() {
+    this.isFixed = true;
+    this.activatesDoors.forEach((door) => {
+      door.enable();
+    });
+  }
+
   doesActivateDoors() {
     return this.activatesDoors.length > 0;
   }

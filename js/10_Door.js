@@ -37,6 +37,10 @@ class Door {
     this.sprite.draw(context, color);
   }
 
+  enable() {
+    this.status = 1;
+  }
+
   open() {
     if (this.pos.y >= this.bBox.pos.y - DEFAULT_PLAYER_HEIGHT) {
       this.pos.y -= this.doorSpeed;

@@ -142,7 +142,7 @@ class Player {
           actionKeyPressed = false;
         } else {
           coinCounter -= server.secCredsReq;
-          server.isFixed = true;
+          server.fix();
           if (!server.doesActivateDoors()) {
             gameOver(true);
           } else {

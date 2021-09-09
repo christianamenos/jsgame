@@ -128,18 +128,16 @@ function buildScene1() {
   const p5coord = new Coord(SCREEN_WIDTH - 75, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5);
   scene.platforms.push(new Platform(p5coord, 75, PLATFORM_HEIGHT));
 
-  const s1coord = new Coord(p3coord.x + scene.platforms[2].width / 2 - 30, p3coord.y - 80);
-  const s1 = new Server(s1coord);
-
   const rightDoorCoord = new Coord(
     SCREEN_WIDTH - PLATFORM_HEIGHT / 2,
     SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT * 1.25
   );
-
   const nextPlayerPosD2 = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
+  const d2 = new Door(rightDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 2, nextPlayerPosD2, 0)
+  scene.doors.push(d2);
 
-  scene.doors.push(new Door(rightDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 2, nextPlayerPosD2, 1));
-
+  const s1coord = new Coord(p3coord.x + scene.platforms[2].width / 2 - 30, p3coord.y - 80);
+  const s1 = new Server(s1coord, 1, [d2]);
   scene.servers.push(s1);
 
   scenes.push(scene);
