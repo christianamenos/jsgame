@@ -42,10 +42,14 @@ function calculateScene() {
 }
 
 function restartGame() {
+  // currentScene = 0; // TODO: uncomment this when finished creating the levels
+  // const playerInitialPos = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER) // TODO: uncomment this when finished creating the levels
+  const playerInitialPos = new Coord(SCREEN_WIDTH - 40, 150); // TODO: remove this when finished creating the levels
+  player = new Player(playerInitialPos);
   isGameOver = false;
   scenes = [];
   coinCounter = 0;
-  changeScene(0, new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER));
+  changeScene(currentScene, playerInitialPos);
   buildScenes();
   drawScene();
 }
@@ -196,10 +200,55 @@ function buildScene2() {
   scenes.push(scene);
 }
 
+function buildScene5() {
+  const movePlatWidth = 30;
+  const color = "#454545";
+  
+  const scene = new Scene();
+
+  const p1 = new Coord(SCREEN_WIDTH - 60, SCREEN_HEIGHT - 40);
+  scene.platforms.push(new Platform(p1, 70, PLATFORM_HEIGHT));
+
+  const d1Coord = new Coord(
+    SCREEN_WIDTH - PLATFORM_HEIGHT / 2,
+    SCREEN_HEIGHT - (40 + DEFAULT_PLAYER_HEIGHT * 1.25)
+  );
+  const d1 = new Door(d1Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 2, undefined, 1)
+  scene.doors.push(d1);
+
+  const p2x = SCREEN_WIDTH - 160;
+  scene.platforms.push(
+    buildVerticalMovingPlatform(p2x, 160, movePlatWidth, movePlatWidth, SCREEN_HEIGHT - PLATFORM_HEIGHT - 30, 8, color)
+  );
+
+  const p3x = SCREEN_WIDTH - 260;
+  scene.platforms.push(
+    buildVerticalMovingPlatform(p3x, 120, movePlatWidth, movePlatWidth, SCREEN_HEIGHT - PLATFORM_HEIGHT - 40 - 30, 5, color)
+  );
+
+  const p4x = SCREEN_WIDTH - 360;
+  scene.platforms.push(
+    buildVerticalMovingPlatform(p4x, 90, movePlatWidth, movePlatWidth, SCREEN_HEIGHT - PLATFORM_HEIGHT - 50, 7, color)
+  );
+
+  const p5 = new Coord(30, SCREEN_HEIGHT - 40);
+  scene.platforms.push(new Platform(p5, 100, PLATFORM_HEIGHT));
+
+  const c1Coord = new Coord(255, 220);
+  scene.coins.push(new Coin(c1Coord, COIN_WIDTH));
+
+  const s1coord = new Coord(50, SCREEN_HEIGHT - 120);
+  const s1 = new Server(s1coord, 3);
+  scene.servers.push(s1);
+
+  scenes.push(scene);
+}
+
 function buildScenes() {
   buildScene0();
   buildScene1();
   buildScene2();
+  buildScene5();
 }
 
 function buildVerticalMovingPlatform(x, y, width, height, bottomY, velocity, color) {
@@ -212,10 +261,9 @@ function buildVerticalMovingPlatform(x, y, width, height, bottomY, velocity, col
 }
 
 function changeScene(scene, newpos) {
-  player = new Player(newpos);
   currentScene = scene;
   player.pos.copyCoord(newpos);
-  player.oldPos.copyCoord(player.pos);
+  player.oldPos.copyCoord(newpos);
   player.boundBox.pos.copyCoord(player.pos);
   document.querySelectorAll(".scencetut").forEach((scenetut) => {
     scenetut.classList.add("hidden");

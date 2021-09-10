@@ -13,7 +13,7 @@ const COLLISION_SPACER = 0.001;
 const NUM_SCENES = 2;
 const SCREENS = ['gameMenu', 'story', 'viewportWrapper', 'gameWin', 'gameOver'];
 
-let currentScene = 0;
+let currentScene = 3;
 let player;
 let scenes = [];
 let rightKeyPressed = false;

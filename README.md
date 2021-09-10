@@ -80,7 +80,7 @@ This is a platform game with puzzles.
 * [x] When interacting with the server we are always substracting 3 sec tokens.
 * [x] I can go though the door even if it's not fully opened
 * [x] Player is not jumping on platform moving up.
-* [ ] Problem when changing from level 1, to level 2, to level 1, to level 2
+* [x] Problem when changing from level 1, to level 2, to level 1, to level 2
 
 ### Nice to have
 
