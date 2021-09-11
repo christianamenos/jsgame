@@ -59,8 +59,6 @@ This is a platform game with puzzles.
 * [x] Make security credentials server dependent and logic to win the game
 * [x] Unfix servers on restart game
 * [ ] Make additional levels
-* [ ] Animate player while moving
-* [ ] Sounds on jump and accessing server
 
 ### Bugs
 
@@ -84,7 +82,9 @@ This is a platform game with puzzles.
 
 ### Nice to have
 
-* [ ] Map (?)
+* [ ] Animate player while moving
+* [ ] Sounds on jump and accessing server
 * [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
-* [ ] Electric components
 * [ ] Package the build
+* [ ] Electric components
+* [ ] Map (?)

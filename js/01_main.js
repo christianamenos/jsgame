@@ -13,7 +13,12 @@ const COLLISION_SPACER = 0.001;
 const NUM_SCENES = 2;
 const SCREENS = ['gameMenu', 'story', 'viewportWrapper', 'gameWin', 'gameOver'];
 
-let currentScene = 3;
+const DEFAULT_PLATFORM_WIDTH = 70;
+const DEFAULT_MOVING_PLATFORM_WIDTH = 30;
+const DEFAULT_MOVING_PLATFORM_COLOR = "#454545";
+const DEFAULT_PLATFORM_SPEED = 8;
+
+let currentScene = 2 // 4;
 let player;
 let scenes = [];
 let rightKeyPressed = false;
@@ -29,7 +34,7 @@ let frame = 0;
 let currentScreen = 0; // 0 => game menu, 1 => story, 2 => game, 3 => game over, 4 => win game
 let isSongPlaying = false;
 let isSongGenerated = false;
-let currentVolume = 0; // 3;
+let currentVolume = 0; // 3; // TODO: uncomment this when the game is ready
 let audio = document.createElement("audio");
 let keyDownListener;
 let keyUpListener;
