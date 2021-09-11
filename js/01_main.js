@@ -18,7 +18,7 @@ const DEFAULT_MOVING_PLATFORM_WIDTH = 30;
 const DEFAULT_MOVING_PLATFORM_COLOR = "#454545";
 const DEFAULT_PLATFORM_SPEED = 8;
 
-let currentScene = 4 // 0;
+let currentScene = 0;
 let player;
 let scenes = [];
 let rightKeyPressed = false;
@@ -34,9 +34,9 @@ let frame = 0;
 let currentScreen = 0; // 0 => game menu, 1 => story, 2 => game, 3 => game over, 4 => win game
 let isSongPlaying = false;
 let isSongGenerated = false;
-let currentVolume = 0; // 3; // TODO: uncomment this when the game is ready
+let currentVolume = 3;
 let audio = document.createElement("audio");
 let keyDownListener;
 let keyUpListener;
-audio.volume = currentVolume;
+audio.volume = currentVolume / 10;
 audio.loop = true;

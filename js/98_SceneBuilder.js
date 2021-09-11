@@ -80,7 +80,7 @@ class SceneBuilder {
 
     scene.platforms.push(
       SceneBuilder.buildVerticalMovingPlatform(
-        SCREEN_WIDTH / 3 + 200,
+        SCREEN_WIDTH / 3 + 220,
         SCREEN_HEIGHT - PLATFORM_HEIGHT,
         SCREEN_HEIGHT - PLATFORM_HEIGHT - p2y / 2,
         undefined,
@@ -151,10 +151,13 @@ class SceneBuilder {
       platformsBottomY * 0.6 - DEFAULT_PLAYER_HEIGHT - PLATFORM_HEIGHT
     );
 
-    const c1Coord = new Coord(p6X + DEFAULT_PLATFORM_WIDTH / 2 - 20, 220);
+    const c1Coord = new Coord(p3coord.x + DEFAULT_PLATFORM_WIDTH / 2 - 2, p3coord.y -20);
     scene.coins.push(new Coin(c1Coord, COIN_WIDTH));
 
-    const nextPlayerPosD2 = new Coord(10, platformsBottomY - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
+    const c2Coord = new Coord(p6X + DEFAULT_PLATFORM_WIDTH / 2 - 20, 220);
+    scene.coins.push(new Coin(c2Coord, COIN_WIDTH));
+
+    const nextPlayerPosD2 = new Coord(20, p7coord.y - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER);
 
     scene.doors.push(
       new Door(rightDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 3, nextPlayerPosD2, 1)
@@ -165,6 +168,90 @@ class SceneBuilder {
 
   static buildScene3() {
     const scene = new Scene();
+
+    const platformsBottomY = SCREEN_HEIGHT - PLATFORM_HEIGHT * 5;
+
+    const p1coord = new Coord(0, platformsBottomY * 0.6 - 3);
+    scene.platforms.push(new Platform(p1coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
+
+    const leftDoorCoord = new Coord(0, platformsBottomY * 0.6 - DEFAULT_PLAYER_HEIGHT - PLATFORM_HEIGHT);
+
+    const nextPlayerPosD1 = new Coord(
+      SCREEN_WIDTH - 40,
+      platformsBottomY * 0.6 - 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER
+    );
+
+    scene.doors.push(new Door(leftDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 2, nextPlayerPosD1, 1));
+
+    scene.platforms.push(
+      this.buildHorizontalMovingPlatform(
+        DEFAULT_PLATFORM_WIDTH + 50,
+        platformsBottomY * 0.6 - 3,
+        SCREEN_WIDTH - DEFAULT_PLATFORM_WIDTH - 180,
+        5
+      )
+    );
+
+    const c1Coord = new Coord(SCREEN_WIDTH / 2 - 15, platformsBottomY * 0.3);
+    scene.coins.push(new Coin(c1Coord, COIN_WIDTH));
+
+    const p4coord = new Coord(SCREEN_WIDTH - DEFAULT_PLATFORM_WIDTH - 80, platformsBottomY * 0.6 - 3);
+    scene.platforms.push(new Platform(p4coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
+
+    scene.platforms.push(
+      this.buildVerticalMovingPlatform(
+        SCREEN_WIDTH - 20,
+        platformsBottomY * 0.6 - 3,
+        SCREEN_HEIGHT - 40,
+        4,
+        20,
+        40,
+        "#999"
+      )
+    );
+
+    const p5coord = new Coord(SCREEN_WIDTH - DEFAULT_PLATFORM_WIDTH - 120, SCREEN_HEIGHT - PLATFORM_HEIGHT);
+    scene.platforms.push(new Platform(p5coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
+
+    scene.platforms.push(
+      this.buildVerticalMovingPlatform(
+        DEFAULT_PLATFORM_WIDTH * 2 + 150,
+        SCREEN_HEIGHT - PLATFORM_HEIGHT - 20,
+        SCREEN_HEIGHT * 0.65,
+        3,
+        DEFAULT_PLATFORM_WIDTH,
+        PLATFORM_HEIGHT,
+        "#999"
+      )
+    );
+
+    scene.platforms.push(
+      this.buildVerticalMovingPlatform(
+        DEFAULT_PLATFORM_WIDTH + 75,
+        SCREEN_HEIGHT - PLATFORM_HEIGHT,
+        SCREEN_HEIGHT * 0.7,
+        2,
+        DEFAULT_PLATFORM_WIDTH,
+        PLATFORM_HEIGHT,
+        "#999"
+      )
+    );
+
+    const p6coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT);
+    scene.platforms.push(new Platform(p6coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
+
+    const leftBottomDoorCoord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT * 1.25);
+
+    new Coord(40, SCREEN_HEIGHT - 90 - COLLISION_SPACER);
+    const nextPlayerPosD2 = new Coord(SCREEN_WIDTH - 40, DEFAULT_PLAYER_HEIGHT + 23);
+
+    const d2 = new Door(leftBottomDoorCoord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 4, nextPlayerPosD2, 0);
+    scene.doors.push(d2);
+
+    const s1coord = new Coord(p4coord.x + scene.platforms[2].width / 2 - 30, p4coord.y - 80);
+    const s1 = new Server(s1coord, 3, [d2]);
+    scene.servers.push(s1);
+
     scenes.push(scene);
   }
 
@@ -172,11 +259,25 @@ class SceneBuilder {
     const scene = new Scene();
 
     const d1Coord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25);
-    const d1 = new Door(d1Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 3, new Coord(40, DEFAULT_PLAYER_HEIGHT * 1.25), 1);
+    const d1 = new Door(
+      d1Coord,
+      PLATFORM_HEIGHT / 2,
+      DEFAULT_PLAYER_HEIGHT * 1.25,
+      3,
+      new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER),
+      1
+    );
     scene.doors.push(d1);
 
     const d2Coord = new Coord(0, SCREEN_HEIGHT - (40 + DEFAULT_PLAYER_HEIGHT * 1.25));
-    const d2 = new Door(d2Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 5, new Coord(SCREEN_WIDTH - 40, SCREEN_HEIGHT - 90 - COLLISION_SPACER), 1);
+    const d2 = new Door(
+      d2Coord,
+      PLATFORM_HEIGHT / 2,
+      DEFAULT_PLAYER_HEIGHT * 1.25,
+      5,
+      new Coord(SCREEN_WIDTH - 40, SCREEN_HEIGHT - 90 - COLLISION_SPACER),
+      1
+    );
     scene.doors.push(d2);
 
     const c1Coord = new Coord(SCREEN_WIDTH / 2 + 20, SCREEN_HEIGHT / 2 + 36);
@@ -207,8 +308,8 @@ class SceneBuilder {
       let j1 = i % vertexes;
       let j1Next = (i + 1) % vertexes;
       moveSeq1.addMovement(new Movement(Coord.clone(positions[j1]), Coord.clone(positions[j1Next]), 4));
-      let j2 = (i + Math.ceil(vertexes/2)) % vertexes;
-      let j2Next = (i + Math.ceil(vertexes/2) + 1) % vertexes;
+      let j2 = (i + Math.ceil(vertexes / 2)) % vertexes;
+      let j2Next = (i + Math.ceil(vertexes / 2) + 1) % vertexes;
       moveSeq2.addMovement(new Movement(Coord.clone(positions[j2]), Coord.clone(positions[j2Next]), 4));
     }
 
@@ -234,7 +335,14 @@ class SceneBuilder {
     scene.platforms.push(new Platform(p1, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
 
     const d1Coord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT / 2, SCREEN_HEIGHT - (40 + DEFAULT_PLAYER_HEIGHT * 1.25));
-    const d1 = new Door(d1Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 4, new Coord(40, SCREEN_HEIGHT - 90 - COLLISION_SPACER), 1);
+    const d1 = new Door(
+      d1Coord,
+      PLATFORM_HEIGHT / 2,
+      DEFAULT_PLAYER_HEIGHT * 1.25,
+      4,
+      new Coord(40, SCREEN_HEIGHT - 90 - COLLISION_SPACER),
+      1
+    );
     scene.doors.push(d1);
 
     const p2x = SCREEN_WIDTH - 160;

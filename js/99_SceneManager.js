@@ -42,9 +42,11 @@ function calculateScene() {
 }
 
 function restartGame() {
-  // currentScene = 0; // TODO: uncomment this when finished creating the levels
-  // const playerInitialPos = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER) // TODO: uncomment this when finished creating the levels
-  const playerInitialPos = new Coord(SCREEN_WIDTH - 40, 30); // TODO: remove this when finished creating the levels
+  currentScene = 0;
+  const playerInitialPos = new Coord(
+    10,
+    SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER
+  );
   player = new Player(playerInitialPos);
   isGameOver = false;
   scenes = [];
@@ -60,10 +62,10 @@ function initGame() {
 }
 
 function changeScene(scene, newpos) {
-  currentScene = scene;
   player.pos.copyCoord(newpos);
   player.oldPos.copyCoord(newpos);
   player.boundBox.pos.copyCoord(player.pos);
+  currentScene = scene;
   document.querySelectorAll(".scencetut").forEach((scenetut) => {
     scenetut.classList.add("hidden");
   });
