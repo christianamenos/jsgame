@@ -165,6 +165,7 @@ class Player {
     if (this.standingPlatform && this.standingPlatform.movSeq) {
       this.oldPos.y = this.pos.y;
       this.pos.y = this.standingPlatform.pos.y - this.height - COLLISION_SPACER;
+      this.pos.x += (this.standingPlatform.pos.x - this.standingPlatform.oldPos.x);
     } else {
       this.oldPos.y = this.pos.y;
       this.applyGravity();
