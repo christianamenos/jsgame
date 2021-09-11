@@ -146,7 +146,7 @@ class Player {
           if (!server.doesActivateDoors()) {
             gameOver(true);
           } else {
-            msg += "<br/> PrOcEdInG cLeAnInG dIsK sPaCe... Operation succeded. All systems running back to normal.</p>";
+            msg += "<br/> PrOceEdInG cLeAnInG dIsK sPaCe... Operation succeded. All systems running back to normal.</p>";
             Message.openDialog(msg);
             actionKeyPressed = false;
           }
