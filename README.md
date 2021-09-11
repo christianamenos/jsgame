@@ -58,7 +58,7 @@ This is a platform game with puzzles.
 * [x] Key tutorial in first scene
 * [x] Make security credentials server dependent and logic to win the game
 * [x] Unfix servers on restart game
-* [ ] Make additional levels
+* [x] Make additional levels
 
 ### Bugs
 
