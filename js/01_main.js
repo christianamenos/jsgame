@@ -18,7 +18,7 @@ const DEFAULT_MOVING_PLATFORM_WIDTH = 30;
 const DEFAULT_MOVING_PLATFORM_COLOR = "#454545";
 const DEFAULT_PLATFORM_SPEED = 8;
 
-let currentScene = 2 // 4;
+let currentScene = 4 // 0;
 let player;
 let scenes = [];
 let rightKeyPressed = false;

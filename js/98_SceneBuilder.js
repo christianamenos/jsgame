@@ -14,11 +14,11 @@ class SceneBuilder {
       const p1coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT);
       scene.platforms.push(new Platform(p1coord, SCREEN_WIDTH / 3, PLATFORM_HEIGHT));
       const p2coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 2);
-      scene.platforms.push(new Platform(p2coord, 70, PLATFORM_HEIGHT));
+      scene.platforms.push(new Platform(p2coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
       const p3coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3);
       scene.platforms.push(new Platform(p3coord, 40, PLATFORM_HEIGHT));
   
-      const p4coord = new Coord(SCREEN_WIDTH / 3 + 70, SCREEN_HEIGHT - PLATFORM_HEIGHT);
+      const p4coord = new Coord(SCREEN_WIDTH / 3 + DEFAULT_PLATFORM_WIDTH, SCREEN_HEIGHT - PLATFORM_HEIGHT);
       scene.platforms.push(new Platform(p4coord, 100, PLATFORM_HEIGHT));
   
       const p5coord = new Coord(SCREEN_WIDTH / 3 + 220, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3);
@@ -61,7 +61,7 @@ class SceneBuilder {
       scene.doors.push(new Door(doorD1Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 0, nextPlayerPosD1, 1));
   
       const p1coord = new Coord(0, SCREEN_HEIGHT - PLATFORM_HEIGHT * 5);
-      scene.platforms.push(new Platform(p1coord, 70, PLATFORM_HEIGHT));
+      scene.platforms.push(new Platform(p1coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
   
       const p2y = SCREEN_HEIGHT - PLATFORM_HEIGHT;
       scene.platforms.push(
@@ -76,7 +76,7 @@ class SceneBuilder {
         )
       );
   
-      const p3coord = new Coord(SCREEN_WIDTH / 3 + 70, SCREEN_HEIGHT - PLATFORM_HEIGHT);
+      const p3coord = new Coord(SCREEN_WIDTH / 3 + DEFAULT_PLATFORM_WIDTH, SCREEN_HEIGHT - PLATFORM_HEIGHT);
       scene.platforms.push(new Platform(p3coord, 100, PLATFORM_HEIGHT));
   
       scene.platforms.push(
@@ -172,13 +172,27 @@ class SceneBuilder {
     static buildScene4() {
       const scene = new Scene();
   
-      const d1Coord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT / 2, SCREEN_HEIGHT - (40 + DEFAULT_PLAYER_HEIGHT * 1.25));
+      const d1Coord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25);
       const d1 = new Door(d1Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 2, undefined, 1);
       scene.doors.push(d1);
   
       const d2Coord = new Coord(0, SCREEN_HEIGHT - (40 + DEFAULT_PLAYER_HEIGHT * 1.25));
       const d2 = new Door(d2Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 2, undefined, 0);
       scene.doors.push(d2);
+
+      const p1Coord = new Coord(SCREEN_WIDTH - DEFAULT_PLATFORM_WIDTH, DEFAULT_PLAYER_HEIGHT * 1.25 + 62);
+      scene.platforms.push(new Platform(p1Coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
+
+      const p2Coord = new Coord(SCREEN_WIDTH - 60, SCREEN_HEIGHT - 40);
+      scene.platforms.push(new Platform(p2Coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
+
+      const p3Coord = new Coord(SCREEN_WIDTH - 60, SCREEN_HEIGHT - 40);
+      scene.platforms.push(new Platform(p3Coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
+
+      scene.platforms.push(SceneBuilder.buildHorizontalMovingPlatform(20, DEFAULT_PLAYER_HEIGHT + 50, 150));
+
+      const p5Coord = new Coord(0, SCREEN_HEIGHT - 40);
+      scene.platforms.push(new Platform(p5Coord, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
   
       scenes.push(scene);
     }
@@ -187,7 +201,7 @@ class SceneBuilder {
       const scene = new Scene();
   
       const p1 = new Coord(SCREEN_WIDTH - 60, SCREEN_HEIGHT - 40);
-      scene.platforms.push(new Platform(p1, 70, PLATFORM_HEIGHT));
+      scene.platforms.push(new Platform(p1, DEFAULT_PLATFORM_WIDTH, PLATFORM_HEIGHT));
   
       const d1Coord = new Coord(SCREEN_WIDTH - PLATFORM_HEIGHT / 2, SCREEN_HEIGHT - (40 + DEFAULT_PLAYER_HEIGHT * 1.25));
       const d1 = new Door(d1Coord, PLATFORM_HEIGHT / 2, DEFAULT_PLAYER_HEIGHT * 1.25, 2, undefined, 1);
@@ -237,5 +251,26 @@ class SceneBuilder {
       pMovSeq.addMovement(new Movement(pBottomPos, Coord.clone(pCoord), speed));
       return new Platform(pCoord, width, height, color, false, true, pMovSeq);
     }
+
+    static buildHorizontalMovingPlatform(x, y, rightX, speed, width, height, color) {
+        if (!speed) {
+          speed = DEFAULT_PLATFORM_SPEED;
+        }
+        if (!color) {
+          color = "#999";
+        }
+        if (!width) {
+          width = DEFAULT_PLATFORM_WIDTH;
+        }
+        if (!height) {
+          height = PLATFORM_HEIGHT;
+        }
+        const pCoord = new Coord(x, y);
+        const pRightPos = new Coord(rightX, pCoord.y);
+        const pMovSeq = new MovementSequence();
+        pMovSeq.addMovement(new Movement(Coord.clone(pCoord), pRightPos, speed));
+        pMovSeq.addMovement(new Movement(pRightPos, Coord.clone(pCoord), speed));
+        return new Platform(pCoord, width, height, color, false, true, pMovSeq);
+      }
   }
   

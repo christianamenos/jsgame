@@ -44,7 +44,7 @@ function calculateScene() {
 function restartGame() {
   // currentScene = 0; // TODO: uncomment this when finished creating the levels
   // const playerInitialPos = new Coord(10, SCREEN_HEIGHT - PLATFORM_HEIGHT * 3 - DEFAULT_PLAYER_HEIGHT - COLLISION_SPACER) // TODO: uncomment this when finished creating the levels
-  const playerInitialPos = new Coord(40, 150); // TODO: remove this when finished creating the levels
+  const playerInitialPos = new Coord(SCREEN_WIDTH - 40, 30); // TODO: remove this when finished creating the levels
   player = new Player(playerInitialPos);
   isGameOver = false;
   scenes = [];
