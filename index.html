@@ -1,68 +1,74 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Montfoc - js13kgames 2021</title>
-    <link href="css/styles.css" rel="stylesheet" />
-  </head>
-  <body>
-    <h1>Montfoc - js13kgames 2021</h1>
-    <div id="gameScreen">
-      <div id="gameMenu">
-        <h2>Joe's Space</h2>
-        <code>Press any button to start the game.</code>
-      </div>
-      <div id="story" class="hidden">
-        <p>Joe works maintaining and repairing spaceships. Today his job is no different from other days.</p>
-        <p>Or that's what he thought...</p>
-        <code>Press any button to start the game.</code>
-      </div>
-      <div id="viewportWrapper" class="hidden">
-        <div id="scene01" class="scencetut hidden">
-          <div class="keyWrapper" style="top:100px;left:70px;">
-            <div class="explanation">Move<br/>left</div>
-            <kbd>&lt;</kbd>
-          </div>
-          <div class="keyWrapper" style="top:100px;left:140px;">
-            <div class="explanation">Move<br/>right</div>
-            <kbd>&gt;</kbd>
-          </div>
-          <div class="keyWrapper" style="top:100px;left:270px;">
-            <div class="explanation">Jump</div>
-            <kbd>SPACE</kbd>
-          </div>
-        </div>
-        <div id="scene02" class="scencetut hidden">
-          <div class="keyWrapper" style="top:100px;left:270px;">
-            <div class="explanation">Action button</div>
-            <kbd>ENTER</kbd>
-          </div>
-        </div>
-        <div id="ui-status">
-          <strong>Security credentials: <span id="counter">0</span></strong>
-          <div>
-            VOL. <kbd id="lvol">-</kbd>
-            <ul>
-              <li class="active"></li><li></li><li></li>
-            </ul>
-            <kbd id="mvol">+</kbd>
-          </div>
-        </div>
-        <canvas id="viewport" class="paused" width="600" height="300"></canvas>
-      </div>
-      <div id="gameWin" class="hidden">
-        <p>
-          As expected... Just another day in Joe's life. Now that he has repaired the spaceship is time for a break!
-        </p>
-        <code>Press any button to go to the menu.</code>
-      </div>
-      <div id="gameOver" class="hidden">
-        <p>
-          Unfortunately Joe wasn't able to save the spaceship. What started as a normal day ended being his last day.
-        </p>
-        <code>Press any button to go to the menu.</code>
-      </div>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS Game learning</title>
+  <link href="css/styles.css" rel="stylesheet" />
+  <script type="module" src="js/main.js"></script>
+</head>
+
+<body onload="start()">
+  <h1>JS Game learning</h1>
+  <!--div id="gameScreen">
+    <div id="gameMenu">
+      <h2>Joe's Space</h2>
+      <code>Press any button to start the game.</code>
     </div>
-    <script src="build/build.js"></script>
-  </body>
+    <div id="story" class="hidden">
+      <p>Joe works maintaining and repairing spaceships. Today his job is no different from other days.</p>
+      <p>Or that's what he thought...</p>
+      <code>Press any button to start the game.</code>
+    </div>
+    <div id="viewportWrapper" class="hidden">
+      <div id="scene01" class="scencetut hidden">
+        <div class="keyWrapper" style="top:100px;left:70px;">
+          <div class="explanation">Move<br />left</div>
+          <kbd>&lt;</kbd>
+        </div>
+        <div class="keyWrapper" style="top:100px;left:140px;">
+          <div class="explanation">Move<br />right</div>
+          <kbd>&gt;</kbd>
+        </div>
+        <div class="keyWrapper" style="top:100px;left:270px;">
+          <div class="explanation">Jump</div>
+          <kbd>SPACE</kbd>
+        </div>
+      </div>
+      <div id="scene02" class="scencetut hidden">
+        <div class="keyWrapper" style="top:100px;left:270px;">
+          <div class="explanation">Action button</div>
+          <kbd>ENTER</kbd>
+        </div>
+      </div>
+      <div id="ui-status">
+        <strong>Security credentials: <span id="counter">0</span></strong>
+        <div>
+          VOL. <kbd id="lvol">-</kbd>
+          <ul>
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+          </ul>
+          <kbd id="mvol">+</kbd>
+        </div>
+      </div>
+      <canvas id="viewport" class="paused" width="600" height="300"></canvas>
+    </div>
+    <div id="gameWin" class="hidden">
+      <p>
+        As expected... Just another day in Joe's life. Now that he has repaired the spaceship is time for a break!
+      </p>
+      <code>Press any button to go to the menu.</code>
+    </div>
+    <div id="gameOver" class="hidden">
+      <p>
+        Unfortunately Joe wasn't able to save the spaceship. What started as a normal day ended being his last day.
+      </p>
+      <code>Press any button to go to the menu.</code>
+    </div>
+  </div-->
+</body>
+
 </html>

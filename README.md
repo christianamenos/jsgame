@@ -18,6 +18,8 @@ I want to also document the learnings and findings, to be able to reuse the know
 
 Tasks to do:
 
+- [X] Create a local server to load the project
+- [ ] Do the setup to generate TypeScript code for the project
 - [ ] Review the character creation
 - [ ] Review the logic of collisions
 - [ ] Creation of a floor to keep the character in the floor
@@ -33,7 +35,17 @@ Tasks to do:
 
 ## Run the project
 
+Initially the project was created with the bundle of the different files into a single one. And the index.html file was executing the project according to the built assets.
 
+This time, I will just go with the simple import of the `main.js` file from the `index.html`, and will create an onload attribute that will be executing the initial function to execute the game loop.
+
+Nowadays, browsers do not allow to load local javascript files without using `file://` protocol, instead we need to use `http://` protocol.
+
+We can use different alternatives, like using Python, Node.js to create local servers. Another option is to just intall extensions that allow to do it from the IDE. In this case, I will use the VS Code extension called [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), that allows to serve the project as we program it.
+
+Once we install the extension, we should see an icon in the bottom right corner of the editor, that says **Go Live**. If we click into it, it will load the content of the page in the system default browser.
+
+The extension works with hot-reload, meaning that the page will reload when we save the files.
 
 ## Questions
 
