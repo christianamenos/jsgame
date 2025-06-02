@@ -1,26 +1,29 @@
 {
-  "name": "js13kgames2021",
+  "name": "jsgame",
   "version": "1.0.0",
-  "description": "This is a game developed during the js13kgames during 2021.",
-  "main": "main.js",
+  "description": "This is a game based on the game created during the js13kgames of 2021.",
+  "main": "dist/main.js",
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/montfoc/js13kgames2021.git"
+    "url": "git+https://github.com/christianamenos/jsgame.git"
   },
-  "author": "",
+  "author": "Christian Amenós",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/montfoc/js13kgames2021/issues"
+    "url": "https://github.com/christianamenos/jsgame/issues"
   },
-  "homepage": "https://github.com/montfoc/js13kgames2021#readme",
+  "homepage": "https://github.com/christianamenos/jsgame#readme",
   "devDependencies": {
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.1",
     "gulp-clean-css": "^4.3.0",
     "gulp-delete-file": "^1.0.2",
     "gulp-minify": "^3.1.0",
-    "gulp-zip": "^5.1.0"
+    "gulp-zip": "^6.1.0",
+    "typescript": "^5.8.3"
   }
 }

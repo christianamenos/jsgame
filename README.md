@@ -19,7 +19,7 @@ I want to also document the learnings and findings, to be able to reuse the know
 Tasks to do:
 
 - [X] Create a local server to load the project
-- [ ] Do the setup to generate TypeScript code for the project
+- [X] Do the setup to generate TypeScript code for the project
 - [ ] Review the character creation
 - [ ] Review the logic of collisions
 - [ ] Creation of a floor to keep the character in the floor
@@ -46,6 +46,22 @@ We can use different alternatives, like using Python, Node.js to create local se
 Once we install the extension, we should see an icon in the bottom right corner of the editor, that says **Go Live**. If we click into it, it will load the content of the page in the system default browser.
 
 The extension works with hot-reload, meaning that the page will reload when we save the files.
+
+## Migration to TypeScript
+
+```bash
+# Install TypeScript as development dependency
+npm install typescript --save-dev
+
+# Initialize a TypeScript configuration file (this will generate a tsconfig.json file)
+npx tsc --init
+```
+
+I have made some changes to `tsconfig.json`, like changing the target JS Version selecting the latest `target`. I have also configured the `rootDir` to match the locations of the project files (TS files). I have added the `outDir` to the `public/dist` folder (this helps to remove problems with live server), so all the generated JS files will be saved there. Finally I have specified the `include` attribute to setup the files that we need to include as part of the compilation, including all subfolders of the `src` folder.
+
+To run the project I will continue using the Live Server extension. But I have added the folder `.vscode`, with the file `settings.json` . This allows to override certain configurations at the project level. One of the configurations is to setup the load folder for the extension, pointing to the public folder, where the `index.html` file lives.
+
+In addition to start the Live Server, I need to run also the command `npm install && npm run dev`.
 
 ## Questions
 
