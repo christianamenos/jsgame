@@ -1,90 +1,49 @@
-# js13kgames2021
-This is a game developed during the js13kgames during 2021.
+# JS Game
 
-This is a gane about astronaut that arrives to a spaceship to fix it. The ship has problemas with some servers. We
-have to arrive to the servers and empty them.
+This projects take over from a game I created for [13K Games](https://js13kgames.com/) in 2021. The idea of this project is to review some of the elements created back then, and improve them.
 
-This is a platform game with puzzles.
+In the [original project](https://github.com/montfoc/js13kgames2021), there were multiple elements that had some flaws in the design and code. I would like to haver a better understanding of how to make the character to work with gravity over platforms, specially over moving platfroms.
 
-## TO DOs
+This time, size is not a contraint, so I want to use sprites if needed, and improve the music.
 
-* [x] Create player as a rectangle
-* [x] Move player
-* [x] Add gravity
-* [x] Fix gravity function
-* [x] Fix set interval to get 60 FPS
-* [x] Add a floor
-* [x] Lateral movement
-* [x] Add keyboard input as the play keys
-* [x] Add limits to the screen, at the top and each horizontal side
-* [x] Add jump capability
-* [x] Add objects as rectangles
-* [x] Add objects as circle
-* [x] Solid objects => Collisions
-* [x] Platforms
-* [x] Convert floor to platform and draw the floor
-* [x] Make floor solid and player stand
-* [x] Add solid object
-* [x] Separate code in different files
-* [x] Join JavaScript files into a single one minimizing the code as a results of watching the changes, try to avoid manual steps
-* [x] Generalize collisions and implement collision from bottom
-* [x] Created additional platforms
-* [x] Holes in the floor
-* [x] Game over
-* [x] Update game loop for chrome and firefox
-* [x] First level design
-* [x] Objects to collect
-* [x] Add a counter
-* [x] Detect door collisions
-* [x] Multiple scenes
-* [x] Change scene
-* [x] Fix gulp execution
-* [x] Added cool background
-* [x] Reposition player on change scene
-* [x] Sever
-* [x] Moving platforms
-* [x] Make loop movement a feature for platforms
-* [x] Server logic and dialog
-* [x] Start game
-* [x] End game and restart
-* [x] Doors improved
-* [x] Astronaut humanized
-* [x] Adding music
-* [x] Minimize css
-* [x] Silence music button
-* [x] Stop the music unless we are playing
-* [x] Finish story, end game and win game
-* [x] Move security tokens to it's own space in the screen, outisde the canvas
-* [x] Key tutorial in first scene
-* [x] Make security credentials server dependent and logic to win the game
-* [x] Unfix servers on restart game
-* [x] Make additional levels
+My plan for this project is just learning, so I will use external resources to learn as well as Gen AI to improve code are have better understanding of cretain parts.
 
-### Bugs
+## Project overview
 
-* [x] The player disapears after some time colliding with the ground
-* [x] Jump is not working
-* [x] Fall over floor is failing
-* [x] Jumping over solid object
-* [x] Fix issues with lateral collisions
-* [x] Solved undetected jumps
-* [x] When the player jumps goes slower I think
-* [x] In some cases, the lateral collision detection also is not noticed properly, sometimes it happens, sometimes no, so I think it's because of the same nature of error.
-* [x] Check collisions with moving platforms.
-* [x] Check change level issue.
-* [x] Check player jumping when standing over a moving platform going down.
-* [x] The background keeps moving even when the game is paused.
-* [x] The player is not changing facing direction.
-* [x] When interacting with the server we are always substracting 3 sec tokens.
-* [x] I can go though the door even if it's not fully opened
-* [x] Player is not jumping on platform moving up.
-* [x] Problem when changing from level 1, to level 2, to level 1, to level 2
+The initial project was a 2D platform game. We reincarnated an astronaut that had to repair a spacesheep by fixing the terminals. In order to do that, the player needed to move from platform to platform and collect some elements before arriving to the terminals.
 
-### Nice to have
+In this project I want to create something similar. I want to start with a simple scene, and keep making them more and more complex.
 
-* [ ] Animate player while moving
-* [ ] Sounds on jump and accessing server
-* [ ] Refactor, now we are using position and old position, but this should be respect to the bounding box
-* [ ] Package the build
-* [ ] Electric components
-* [ ] Map (?)
+I want to also document the learnings and findings, to be able to reuse the knowledge if I ever need it.
+
+Tasks to do:
+
+- [ ] Review the character creation
+- [ ] Review the logic of collisions
+- [ ] Creation of a floor to keep the character in the floor
+- [ ] Review the logic to move the player (right and left, with rotation of character depending on the movement direction)
+- [ ] Review creation of the limits of the screen. I would like to have:
+    - [ ] Fixed scenarios (all is in the screen)
+    - [ ] Fixed camera on scenarios (scenario is bigger than the camera, the camera moves along the character)
+- [ ] Review the player jump logic
+- [ ] Review differentiation between solid objects and collectable items
+- [ ] Check how to improve event games. I think it would be great to manage events in a general way, not in each class
+- [ ] Create a second scence, and create transition between scenes
+- [ ] Review creation of moving platforms and improve logic for collisions with player and other objects
+
+## Run the project
+
+
+
+## Questions
+
+- **Why was Gulp used in the original project? Should I continue using it?**
+  - This project was created for a participation on [13K Games](https://js13kgames.com/), and to follow the contest requirements, I had to be very mindful about the space that the game uses. Since I worked using several files the conde was taking more than 13KB without minifying the project. Gulp is a tool to automate workflows, and in the original project I added multiple tasks to generate the bundle in a zip file, which contained the minified versions f the files, both JS and CSS.
+- **Should I use a library or a framework or use custom made implementations?**
+  - I want to learn or review some basic knowledge respect to how to build some parts manually, before using existing frameworks to create games. I'm specially interested on learning about the hit boxes, and the gravity on moving platforms, but also about how to work with sprites.
+
+
+
+
+## Resources
+
