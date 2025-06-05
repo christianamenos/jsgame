@@ -63,6 +63,30 @@ To run the project I will continue using the Live Server extension. But I have a
 
 In addition to start the Live Server, I need to run also the command `npm install && npm run dev`.
 
+## Configuring unit testing
+
+```bash
+# Install Jest as dependency for the project, incling TypeScript types. ts-jest is to integrate TypeScript with Jest autmatically
+npm install --save-dev jest ts-jest @types/jest
+
+# Create jest.config.js file with initial configuration, ready to start tests
+npx ts-test config:init
+```
+
+Modify `package.json`, to add jest execution for the `test` script:
+
+```json
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+```
+
+Additionally, modify `jest.config.js` file to only run jest for test files and ignore `node_modules`, `src` and `public` folders explicitly.
+
+Now simply run: `npm run test`
+
 ## Questions
 
 - **Why was Gulp used in the original project? Should I continue using it?**
