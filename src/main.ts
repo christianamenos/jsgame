@@ -1,8 +1,12 @@
-import Test from './test.js';
+import Point from './point.js';
 
 function start() {
     console.log('Hello world');
-    new Test();
+    // Testing Point class
+    const pointA = new Point(12, 15);
+    pointA.move(3, 3);
+    const pointB = Point.clone(pointA);
+    console.log(pointB.toString());
 }
 
 // Expose the function globally

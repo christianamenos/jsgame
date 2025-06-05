@@ -70,8 +70,12 @@ In addition to start the Live Server, I need to run also the command `npm instal
 - **Should I use a library or a framework or use custom made implementations?**
   - I want to learn or review some basic knowledge respect to how to build some parts manually, before using existing frameworks to create games. I'm specially interested on learning about the hit boxes, and the gravity on moving platforms, but also about how to work with sprites.
 
+## Troubleshooting
 
+- When using `type="module"` when importing a JavaScript file from an HTML page, we need to add global objects and variables part of the `window` object. For example: `(window as any).start = start;`, or in vanilla JS: `window.start = start;`.
+- I found an issue when using TypeScript imports serving the project with Live Server. The server was not able to find JS files, because the src was not finding the files. Eventually I realised that the file it was trying to import was missing the `.js` extension given that I was using imports without extension as I am used to do. Appending the extension make the project to work.
 
 
 ## Resources
 
+- [Original project (Github)](https://github.com/montfoc/js13kgames2021)
