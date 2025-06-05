@@ -85,7 +85,9 @@ Modify `package.json`, to add jest execution for the `test` script:
 
 Additionally, modify `jest.config.js` file to only run jest for test files and ignore `node_modules`, `src` and `public` folders explicitly.
 
-Now simply run: `npm run test`
+Now simply run: `npm run test`.
+
+To run coverage, simply run: `npm run coverage`.
 
 ## Questions
 

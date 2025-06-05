@@ -3,3 +3,4 @@ build
 package
 package.zip
 dist
+coverage
