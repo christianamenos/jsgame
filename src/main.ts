@@ -1,7 +1,7 @@
-import Point from './point.js';
-import Rectangle from './rectangle.js';
-import Circle from './circle.js';
-import Line from './line.js';
+import Point from './shared/point.js';
+import Rectangle from './rendering/rectangle.js';
+import Circle from './rendering/circle.js';
+import Line from './rendering/line.js';
 
 function start() {
     console.log('Hello world');
@@ -18,16 +18,16 @@ function start() {
 
     const rectPosition = new Point(100, 100);
     const rect = new Rectangle(rectPosition, 100, 100, '#ff0', 10, '#00f');
-    rect.draw(context);
+    rect.render(context);
 
     const circlePosition = new Point(400, 100);
     const circle = new Circle(circlePosition, 10, '#ff0', 5, '#00f');
-    circle.draw(context);
+    circle.render(context);
 
     const lineStart = new Point(100, 100);
     const lineEnd = new Point(200, 100);
     const line = new Line(lineStart, lineEnd, 5, '#f00');
-    line.draw(context);
+    line.render(context);
 }
 
 // Expose the function globally

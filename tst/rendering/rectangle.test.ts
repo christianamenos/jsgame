@@ -1,5 +1,5 @@
-import Rectangle from '../src/rectangle';
-import Point from '../src/point';
+import Rectangle from '../../src/rendering/rectangle';
+import Point from '../../src/shared/point';
 
 describe('Rectangle', () => {
   let mockCtx: jest.Mocked<Partial<CanvasRenderingContext2D>>;
@@ -17,11 +17,11 @@ describe('Rectangle', () => {
     } as jest.Mocked<Partial<CanvasRenderingContext2D>>;
   });
 
-  it('should draw a rectangle without border', () => {
+  it('should render a rectangle without border', () => {
     const position = new Point(10, 20);
     const rectangle = new Rectangle(position, 100, 50, '#ff0000');
 
-    rectangle.draw(mockCtx as CanvasRenderingContext2D);
+    rectangle.render(mockCtx as CanvasRenderingContext2D);
 
     expect(mockCtx.beginPath).toHaveBeenCalled();
     expect(mockCtx.fillStyle).toBe('#ff0000');
@@ -31,11 +31,11 @@ describe('Rectangle', () => {
     expect(mockCtx.closePath).toHaveBeenCalled();
   });
 
-  it('should draw a rectangle with border on specific border color', () => {
+  it('should render a rectangle with border on specific border color', () => {
     const position = new Point(5, 15);
     const rectangle = new Rectangle(position, 200, 100, '#00ff00', 2, '#0000ff');
 
-    rectangle.draw(mockCtx as CanvasRenderingContext2D);
+    rectangle.render(mockCtx as CanvasRenderingContext2D);
 
     expect(mockCtx.beginPath).toHaveBeenCalled();
     expect(mockCtx.fillStyle).toBe('#00ff00');
@@ -47,11 +47,11 @@ describe('Rectangle', () => {
     expect(mockCtx.closePath).toHaveBeenCalled();
   });
 
-  it('should draw a rectangle with border and default border color', () => {
+  it('should render a rectangle with border and default border color', () => {
     const position = new Point(0, 0);
     const rectangle = new Rectangle(position, 50, 50, '#ccc', 3);
 
-    rectangle.draw(mockCtx as CanvasRenderingContext2D);
+    rectangle.render(mockCtx as CanvasRenderingContext2D);
 
     expect(mockCtx.lineWidth).toBe(3);
     expect(mockCtx.strokeStyle).toBe('#000');

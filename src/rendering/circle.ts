@@ -1,4 +1,4 @@
-import Point from "./point.js";
+import Point from "../shared/point.js";
 
 export default class Circle {
     private centerPosition: Point;
@@ -16,7 +16,7 @@ export default class Circle {
 
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
+    render(ctx: CanvasRenderingContext2D) {
         ctx.beginPath();
         ctx.arc(this.centerPosition.x, this.centerPosition.y, this.radius, 0, 2 * Math.PI);
         ctx.fillStyle = this.fillColor;

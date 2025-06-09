@@ -1,4 +1,4 @@
-import Point from "./point.js";
+import Point from "../shared/point.js";
 
 export default class Rectangle {
     private topLeftPosition: Point;
@@ -17,7 +17,7 @@ export default class Rectangle {
         this.borderColor = borderColor ?? '#000';
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
+    render(ctx: CanvasRenderingContext2D) {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.rect(this.topLeftPosition.x, this.topLeftPosition.y, this.width, this.height);

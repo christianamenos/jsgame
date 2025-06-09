@@ -1,4 +1,4 @@
-import Point from '../src/point';
+import Point from '../../src/shared/point';
 
 describe('Point', () => {
     it('should create a point with correct coordinates', () => {

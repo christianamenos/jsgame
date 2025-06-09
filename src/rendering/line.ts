@@ -1,5 +1,5 @@
-import Point from './point.js';
-// Create a class to draw lines using HTML Canvas 2D context
+import Point from '../shared/point.js';
+
 export default class Line {
     private startPosition: Point;
     private endPosition: Point;
@@ -13,7 +13,7 @@ export default class Line {
         this.color = color;
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
+    render(ctx: CanvasRenderingContext2D) {
         ctx.beginPath();
         ctx.moveTo(this.startPosition.x, this.startPosition.y);
         ctx.lineTo(this.endPosition.x, this.endPosition.y);

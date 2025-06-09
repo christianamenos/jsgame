@@ -1,5 +1,5 @@
-import Circle from '../src/circle';
-import Point from '../src/point';
+import Circle from '../../src/rendering/circle';
+import Point from '../../src/shared/point';
 
 describe('Circle', () => {
   let mockCtx: jest.Mocked<Partial<CanvasRenderingContext2D>>;
@@ -17,11 +17,11 @@ describe('Circle', () => {
     } as jest.Mocked<Partial<CanvasRenderingContext2D>>;
   });
 
-  it('should draw a circle without border', () => {
+  it('should render a circle without border', () => {
     const center = new Point(100, 100);
     const circle = new Circle(center, 50, '#ff0000');
 
-    circle.draw(mockCtx as CanvasRenderingContext2D);
+    circle.render(mockCtx as CanvasRenderingContext2D);
 
     expect(mockCtx.beginPath).toHaveBeenCalled();
     expect(mockCtx.arc).toHaveBeenCalledWith(100, 100, 50, 0, 2 * Math.PI);
@@ -31,11 +31,11 @@ describe('Circle', () => {
     expect(mockCtx.closePath).toHaveBeenCalled();
   });
 
-  it('should draw a circle with specified border and a custom border color', () => {
+  it('should render a circle with specified border and a custom border color', () => {
     const center = new Point(150, 150);
     const circle = new Circle(center, 75, '#00ff00', 3, '#0000ff');
 
-    circle.draw(mockCtx as CanvasRenderingContext2D);
+    circle.render(mockCtx as CanvasRenderingContext2D);
 
     expect(mockCtx.beginPath).toHaveBeenCalled();
     expect(mockCtx.arc).toHaveBeenCalledWith(150, 150, 75, 0, 2 * Math.PI);
@@ -47,11 +47,11 @@ describe('Circle', () => {
     expect(mockCtx.closePath).toHaveBeenCalled();
   });
 
-  it('should draw a circle with specified border and the default border color', () => {
+  it('should render a circle with specified border and the default border color', () => {
     const center = new Point(200, 200);
     const circle = new Circle(center, 100, '#ccc', 5);
 
-    circle.draw(mockCtx as CanvasRenderingContext2D);
+    circle.render(mockCtx as CanvasRenderingContext2D);
 
     expect(mockCtx.lineWidth).toBe(5);
     expect(mockCtx.strokeStyle).toBe('#000');
